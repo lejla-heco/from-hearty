@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MyService>();
-builder.Services.AddDbContext<BloggingContext>();
+builder.Services.AddDbContext<MyContext>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

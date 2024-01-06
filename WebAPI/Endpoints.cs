@@ -5,36 +5,36 @@ static class Endpoints
 
     public static void MapEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/post", (PostDto postDto, BloggingContext context) =>
-        {
-            var post = new Post
-            {
-                Title = postDto.Title,
-                Content = postDto.Content,
-                BlogId = postDto.BlogId
-            };
+        // app.MapPost("/post", (PostDto postDto, MyContext context) =>
+        // {
+        //     var post = new Post
+        //     {
+        //         Title = postDto.Title,
+        //         Content = postDto.Content,
+        //         BlogId = postDto.BlogId
+        //     };
 
-            context.Posts.Add(post);
-            context.SaveChanges();
+        //     context.Posts.Add(post);
+        //     context.SaveChanges();
 
-            return post;
-        });
+        //     return post;
+        // });
 
-        app.MapPost("/blog", (BlogDto blogDto, BloggingContext context) =>
-        {
-            var blog = new Blog
-            {
-                Url = blogDto.Url
-            };
+        // app.MapPost("/blog", (BlogDto blogDto, MyContext context) =>
+        // {
+        //     var blog = new Blog
+        //     {
+        //         Url = blogDto.Url
+        //     };
 
-            context.Blogs.Add(blog);
-            context.SaveChanges();
+        //     context.Blogs.Add(blog);
+        //     context.SaveChanges();
 
-            return blog;
-        });
+        //     return blog;
+        // });
 
-        app.MapGet("/blogs", (BloggingContext context) => context.Blogs.ToArray());
+        // app.MapGet("/blogs", (MyContext context) => context.Blogs.ToArray());
 
-        app.MapGet("/posts", (BloggingContext context) => context.Posts.ToArray());
+        // app.MapGet("/posts", (MyContext context) => context.Posts.ToArray());
     }
 }
