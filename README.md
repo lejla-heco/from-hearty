@@ -48,3 +48,9 @@ Each of us has a formal as well as informal education and is currently in the la
 - Start container: `docker start my-backend-container`
 - Stop container: `docker stop my-backend-container`
 - Remove container: `docker rm core-counter`
+
+4. Serilog
+- Added: `dotnet add package Serilog.AspNetCore --version 8.0.0`
+- Added `dotnet add package Serilog.Sinks.Seq --version 7.0.0-dev-00276`
+- Added `dotnet add package SerilogTimings --version 3.0.2-dev-00041`
+- Logging for now to a file at `./WebAPI/Logs/log.txt`
