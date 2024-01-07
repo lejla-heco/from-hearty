@@ -5,26 +5,31 @@ using var db = new MyContext();
 var houseDoctors = new List<HouseDoctor>() {
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Malaya",
         LastName = "Bradley"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Charley",
         LastName = "Rosales"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Wilder",
         LastName = "Lynn"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Samira",
         LastName = "Peters"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Patrick",
         LastName = "Willis"
     },
@@ -34,26 +39,31 @@ var houseDoctors = new List<HouseDoctor>() {
 var cardiologists = new List<Cardiologist>() {
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Alexia",
         LastName = "Weiss"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Koa",
         LastName = "Giles"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Daniel",
         LastName = "Beasley"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Autumn",
         LastName = "Griffith"
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Franklin",
         LastName = "Acosta"
     },
@@ -62,6 +72,7 @@ var cardiologists = new List<Cardiologist>() {
 var patients = new List<Patient>() {
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Kamiyah",
         LastName = "House",
         BirthDate = new DateTime(),
@@ -71,6 +82,7 @@ var patients = new List<Patient>() {
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Abigail",
         LastName = "Atkins",
         BirthDate = new DateTime(),
@@ -80,6 +92,7 @@ var patients = new List<Patient>() {
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Lyanna",
         LastName = "Jacobs",
         BirthDate = new DateTime(),
@@ -89,6 +102,7 @@ var patients = new List<Patient>() {
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Madisyn",
         LastName = "Solis",
         BirthDate = new DateTime(),
@@ -98,6 +112,7 @@ var patients = new List<Patient>() {
     },
     new()
     {
+        Id = Generator.NewGuid(),
         FirstName = "Maliyah",
         LastName = "Poole",
         BirthDate = new DateTime(),
@@ -109,6 +124,7 @@ var patients = new List<Patient>() {
 
 var findings = new List<Finding>() {
     new () {
+        Id = Generator.NewGuid(),
         CreatedOn = new DateTime(),
         FeatureA = "Feature A 1",
         FeatureB = "Feature B 1",
@@ -121,6 +137,7 @@ var findings = new List<Finding>() {
         HouseDoctorId = houseDoctors[0].Id
     },
     new () {
+        Id = Generator.NewGuid(),
         CreatedOn = new DateTime(),
         FeatureA = "Feature A 2",
         FeatureB = "Feature B 2",
@@ -134,11 +151,12 @@ var findings = new List<Finding>() {
     },
 };
 
-db.HouseDoctors.AddOrUpdate(houseDoctors);
-db.Cardiologists.AddOrUpdate(cardiologists);
-db.Patients.AddOrUpdate(patients);
-db.Findings.AddOrUpdate(findings);
+db.HouseDoctors.AddOrUpdateRange(houseDoctors);
+db.Cardiologists.AddOrUpdateRange(cardiologists);
+db.Patients.AddOrUpdateRange(patients);
+db.Findings.AddOrUpdateRange(findings);
 db.SaveChanges();
+
 
 // // Read
 // var blog = db.Blogs

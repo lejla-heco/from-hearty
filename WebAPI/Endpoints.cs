@@ -1,40 +1,47 @@
 static class Endpoints
 {
-    public record BlogDto(string Url);
-    public record PostDto(string Title, string Content, Guid BlogId);
-
     public static void MapEndpoints(this IEndpointRouteBuilder app)
     {
-        // app.MapPost("/post", (PostDto postDto, MyContext context) =>
-        // {
-        //     var post = new Post
-        //     {
-        //         Title = postDto.Title,
-        //         Content = postDto.Content,
-        //         BlogId = postDto.BlogId
-        //     };
+        app.MapGet("/patients", (MyContext context) =>
+            context.Patients.Where(x => !x.IsRemoved).ToArray());
 
-        //     context.Posts.Add(post);
-        //     context.SaveChanges();
+        app.MapPut("/patient", (Patient patient, MyContext context) => 
+        {
+            context.Patients.AddOrUpdate(patient);
+            context.SaveChanges();
+            return patient;
+        });
 
-        //     return post;
-        // });
+        app.MapGet("/cardiologists", (MyContext context) =>
+            context.Cardiologists.Where(x => !x.IsRemoved).ToArray());
 
-        // app.MapPost("/blog", (BlogDto blogDto, MyContext context) =>
-        // {
-        //     var blog = new Blog
-        //     {
-        //         Url = blogDto.Url
-        //     };
+        app.MapPut("/cardiologists", (Cardiologist cardiologist, MyContext context) => 
+        {
+            context.Cardiologists.AddOrUpdate(cardiologist);
+            context.SaveChanges();
+            return cardiologist;
+        });
 
-        //     context.Blogs.Add(blog);
-        //     context.SaveChanges();
+        app.MapGet("/house-doctors", (MyContext context) =>
+            context.HouseDoctors.Where(x => !x.IsRemoved).ToArray());
 
-        //     return blog;
-        // });
+        app.MapPut("/house-doctors", (HouseDoctor houseDoctor, MyContext context) =>
+        {
+            context.HouseDoctors.AddOrUpdate(houseDoctor);
+            context.SaveChanges();
+            return houseDoctor;
+        });
 
-        // app.MapGet("/blogs", (MyContext context) => context.Blogs.ToArray());
+        app.MapGet("/findings", (MyContext context) =>
+            context.Findings.Where(x => !x.IsRemoved).ToArray());
 
-        // app.MapGet("/posts", (MyContext context) => context.Posts.ToArray());
+        app.MapPut("/findings", (Finding finding, MyContext context) =>
+        {
+            finding.IsSickPrediction = AiPredictEngine.Predict(finding.FeatureA); // <--- AI
+
+            context.Findings.AddOrUpdate(finding);
+            context.SaveChanges();
+            return finding;
+        });
     }
 }

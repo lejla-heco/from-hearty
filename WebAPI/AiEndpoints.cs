@@ -1,4 +1,3 @@
-using Microsoft.ML;
 using static SampleClassification.ConsoleApp.SampleClassification;
 
 static class AiEndpoints
@@ -6,11 +5,7 @@ static class AiEndpoints
     public static void MapAiEndpoints(this IEndpointRouteBuilder app) =>
         app.MapGet("/ai-service/{message}", (string message) =>
         {
-            var mlContext = new MLContext();
-            var mlModel = mlContext.Model.Load("../SampleClassification/SampleClassification.mlnet", out _);
-
-            var predEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
-
+            var predEngine = AiPredictEngine.PredictEngine;
             var input = new ModelInput
             {
                 Col0 = message
