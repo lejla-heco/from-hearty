@@ -96,7 +96,7 @@ namespace HeartyBase.ConsoleApp
                                     .Append(mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"BMI", @"BMI"),new InputOutputColumnPair(@"PhysicalHealth", @"PhysicalHealth"),new InputOutputColumnPair(@"MentalHealth", @"MentalHealth"),new InputOutputColumnPair(@"SleepTime", @"SleepTime")}))      
                                     .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName:@"AgeCategory",outputColumnName:@"AgeCategory"))      
                                     .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"Smoking",@"AlcoholDrinking",@"Stroke",@"DiffWalking",@"Sex",@"Diabetic",@"PhysicalActivity",@"GenHealth",@"Asthma",@"KidneyDisease",@"SkinCancer",@"BMI",@"PhysicalHealth",@"MentalHealth",@"SleepTime",@"AgeCategory"}))      
-                                    .Append(mlContext.BinaryClassification.Trainers.FastForest(new FastForestBinaryTrainer.Options(){NumberOfTrees=8,NumberOfLeaves=7,FeatureFraction=1F,LabelColumnName=@"HeartDisease",FeatureColumnName=@"Features"}))      
+                                    .Append(mlContext.BinaryClassification.Trainers.FastForest(new FastForestBinaryTrainer.Options(){NumberOfTrees=34,NumberOfLeaves=5,FeatureFraction=1F,LabelColumnName=@"HeartDisease",FeatureColumnName=@"Features"}))      
                                     .Append(mlContext.BinaryClassification.Calibrators.Naive(labelColumnName:@"HeartDisease",scoreColumnName:@"Score"));
 
             return pipeline;

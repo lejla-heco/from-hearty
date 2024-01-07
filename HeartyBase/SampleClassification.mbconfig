@@ -158,8 +158,8 @@
         "Version": 1,
         "Type": "Trial",
         "TrainerName": "FastForestBinary",
-        "Score": 0.9191374663072777,
-        "RuntimeInSeconds": 0.077,
+        "Score": 0.921832884097035,
+        "RuntimeInSeconds": 0.123,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e8 * e9",
           "e0": {
@@ -230,8 +230,8 @@
             "OutputColumnName": "Features"
           },
           "e8": {
-            "NumberOfTrees": 8,
-            "NumberOfLeaves": 7,
+            "NumberOfTrees": 34,
+            "NumberOfLeaves": 5,
             "FeatureFraction": 1.0,
             "LabelColumnName": "HeartDisease",
             "FeatureColumnName": "Features"
@@ -280,11 +280,11 @@
       {
         "Version": 1,
         "Type": "Trial",
-        "TrainerName": "FastTreeBinary",
-        "Score": 0.9164420485175202,
-        "RuntimeInSeconds": 0.366,
+        "TrainerName": "SdcaLogisticRegressionBinary",
+        "Score": 0.921832884097035,
+        "RuntimeInSeconds": 0.225,
         "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e7",
           "e0": {
             "OutputColumnNames": [
               "Smoking",
@@ -352,11 +352,391 @@
             ],
             "OutputColumnName": "Features"
           },
+          "e7": {
+            "L1Regularization": 0.057681564,
+            "L2Regularization": 0.0323011,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
           "e4": {
             "NumberOfLeaves": 4,
             "MinimumExampleCountPerLeaf": 20,
             "NumberOfTrees": 4,
-            "MaximumBinCountPerFeature": 254,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "LearningRate": 0.09999999999999998,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 1.0,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 1.0,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "L1Regularization": 1.0,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e8": {
+            "NumberOfTrees": 4,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e9": {
+            "LabelColumnName": "HeartDisease",
+            "ScoreColumnName": "Score"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "SdcaLogisticRegressionBinary",
+        "Score": 0.921832884097035,
+        "RuntimeInSeconds": 0.228,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e7",
+          "e0": {
+            "OutputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ],
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ],
+            "InputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ]
+          },
+          "e2": {
+            "InputColumnName": "AgeCategory",
+            "OutputColumnName": "AgeCategory"
+          },
+          "e3": {
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer",
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime",
+              "AgeCategory"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e7": {
+            "L1Regularization": 0.054868944,
+            "L2Regularization": 0.033322223,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "NumberOfTrees": 4,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "LearningRate": 0.09999999999999998,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 1.0,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 1.0,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "L1Regularization": 1.0,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e8": {
+            "NumberOfTrees": 4,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e9": {
+            "LabelColumnName": "HeartDisease",
+            "ScoreColumnName": "Score"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "SdcaLogisticRegressionBinary",
+        "Score": 0.921832884097035,
+        "RuntimeInSeconds": 0.171,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e7",
+          "e0": {
+            "OutputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ],
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ],
+            "InputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ]
+          },
+          "e2": {
+            "InputColumnName": "AgeCategory",
+            "OutputColumnName": "AgeCategory"
+          },
+          "e3": {
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer",
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime",
+              "AgeCategory"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e7": {
+            "L1Regularization": 0.0572396,
+            "L2Regularization": 0.034243055,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "NumberOfTrees": 4,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "LearningRate": 0.09999999999999998,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 1.0,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 1.0,
+            "MaximumBinCountPerFeature": 255,
+            "FeatureFraction": 1.0,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "L1Regularization": 1.0,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e8": {
+            "NumberOfTrees": 4,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e9": {
+            "LabelColumnName": "HeartDisease",
+            "ScoreColumnName": "Score"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastForestBinary",
+        "Score": 0.921832884097035,
+        "RuntimeInSeconds": 0.117,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e8 * e9",
+          "e0": {
+            "OutputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ],
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ],
+            "InputColumnNames": [
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime"
+            ]
+          },
+          "e2": {
+            "InputColumnName": "AgeCategory",
+            "OutputColumnName": "AgeCategory"
+          },
+          "e3": {
+            "InputColumnNames": [
+              "Smoking",
+              "AlcoholDrinking",
+              "Stroke",
+              "DiffWalking",
+              "Sex",
+              "Diabetic",
+              "PhysicalActivity",
+              "GenHealth",
+              "Asthma",
+              "KidneyDisease",
+              "SkinCancer",
+              "BMI",
+              "PhysicalHealth",
+              "MentalHealth",
+              "SleepTime",
+              "AgeCategory"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e8": {
+            "NumberOfTrees": 20,
+            "NumberOfLeaves": 5,
+            "FeatureFraction": 1.0,
+            "LabelColumnName": "HeartDisease",
+            "FeatureColumnName": "Features"
+          },
+          "e9": {
+            "LabelColumnName": "HeartDisease",
+            "ScoreColumnName": "Score"
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "NumberOfTrees": 4,
+            "MaximumBinCountPerFeature": 255,
             "FeatureFraction": 1.0,
             "LearningRate": 0.09999999999999998,
             "LabelColumnName": "HeartDisease",
@@ -386,386 +766,6 @@
             "L2Regularization": 0.1,
             "LabelColumnName": "HeartDisease",
             "FeatureColumnName": "Features"
-          },
-          "e8": {
-            "NumberOfTrees": 4,
-            "NumberOfLeaves": 4,
-            "FeatureFraction": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e9": {
-            "LabelColumnName": "HeartDisease",
-            "ScoreColumnName": "Score"
-          }
-        }
-      },
-      {
-        "Version": 1,
-        "Type": "Trial",
-        "TrainerName": "FastTreeBinary",
-        "Score": 0.9164420485175202,
-        "RuntimeInSeconds": 0.066,
-        "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
-          "e0": {
-            "OutputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ],
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ]
-          },
-          "e1": {
-            "OutputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ],
-            "InputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ]
-          },
-          "e2": {
-            "InputColumnName": "AgeCategory",
-            "OutputColumnName": "AgeCategory"
-          },
-          "e3": {
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer",
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime",
-              "AgeCategory"
-            ],
-            "OutputColumnName": "Features"
-          },
-          "e4": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 34,
-            "NumberOfTrees": 4,
-            "MaximumBinCountPerFeature": 133,
-            "FeatureFraction": 0.99999999,
-            "LearningRate": 0.01401800150453363,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e5": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 20,
-            "LearningRate": 1.0,
-            "NumberOfTrees": 4,
-            "SubsampleFraction": 1.0,
-            "MaximumBinCountPerFeature": 255,
-            "FeatureFraction": 1.0,
-            "L1Regularization": 2E-10,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e6": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e7": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 0.1,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e8": {
-            "NumberOfTrees": 4,
-            "NumberOfLeaves": 4,
-            "FeatureFraction": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e9": {
-            "LabelColumnName": "HeartDisease",
-            "ScoreColumnName": "Score"
-          }
-        }
-      },
-      {
-        "Version": 1,
-        "Type": "Trial",
-        "TrainerName": "FastTreeBinary",
-        "Score": 0.9164420485175202,
-        "RuntimeInSeconds": 0.068,
-        "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
-          "e0": {
-            "OutputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ],
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ]
-          },
-          "e1": {
-            "OutputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ],
-            "InputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ]
-          },
-          "e2": {
-            "InputColumnName": "AgeCategory",
-            "OutputColumnName": "AgeCategory"
-          },
-          "e3": {
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer",
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime",
-              "AgeCategory"
-            ],
-            "OutputColumnName": "Features"
-          },
-          "e4": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 30,
-            "NumberOfTrees": 4,
-            "MaximumBinCountPerFeature": 264,
-            "FeatureFraction": 0.99999999,
-            "LearningRate": 0.36248463369887024,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e5": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 20,
-            "LearningRate": 1.0,
-            "NumberOfTrees": 4,
-            "SubsampleFraction": 1.0,
-            "MaximumBinCountPerFeature": 255,
-            "FeatureFraction": 1.0,
-            "L1Regularization": 2E-10,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e6": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e7": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 0.1,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e8": {
-            "NumberOfTrees": 4,
-            "NumberOfLeaves": 4,
-            "FeatureFraction": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e9": {
-            "LabelColumnName": "HeartDisease",
-            "ScoreColumnName": "Score"
-          }
-        }
-      },
-      {
-        "Version": 1,
-        "Type": "Trial",
-        "TrainerName": "FastTreeBinary",
-        "Score": 0.9164420485175202,
-        "RuntimeInSeconds": 0.069,
-        "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
-          "e0": {
-            "OutputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ],
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer"
-            ]
-          },
-          "e1": {
-            "OutputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ],
-            "InputColumnNames": [
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime"
-            ]
-          },
-          "e2": {
-            "InputColumnName": "AgeCategory",
-            "OutputColumnName": "AgeCategory"
-          },
-          "e3": {
-            "InputColumnNames": [
-              "Smoking",
-              "AlcoholDrinking",
-              "Stroke",
-              "DiffWalking",
-              "Sex",
-              "Diabetic",
-              "PhysicalActivity",
-              "GenHealth",
-              "Asthma",
-              "KidneyDisease",
-              "SkinCancer",
-              "BMI",
-              "PhysicalHealth",
-              "MentalHealth",
-              "SleepTime",
-              "AgeCategory"
-            ],
-            "OutputColumnName": "Features"
-          },
-          "e4": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 34,
-            "NumberOfTrees": 7,
-            "MaximumBinCountPerFeature": 275,
-            "FeatureFraction": 0.8124094500842348,
-            "LearningRate": 0.1403750538823403,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e5": {
-            "NumberOfLeaves": 4,
-            "MinimumExampleCountPerLeaf": 20,
-            "LearningRate": 1.0,
-            "NumberOfTrees": 4,
-            "SubsampleFraction": 1.0,
-            "MaximumBinCountPerFeature": 255,
-            "FeatureFraction": 1.0,
-            "L1Regularization": 2E-10,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e6": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e7": {
-            "L1Regularization": 1.0,
-            "L2Regularization": 0.1,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e8": {
-            "NumberOfTrees": 4,
-            "NumberOfLeaves": 4,
-            "FeatureFraction": 1.0,
-            "LabelColumnName": "HeartDisease",
-            "FeatureColumnName": "Features"
-          },
-          "e9": {
-            "LabelColumnName": "HeartDisease",
-            "ScoreColumnName": "Score"
           }
         }
       }
@@ -791,7 +791,7 @@
   "TrainingOption": {
     "Version": 1,
     "Type": "ClassificationTrainingOption",
-    "TrainingTime": 10,
+    "TrainingTime": 3600,
     "LabelColumn": "HeartDisease",
     "ValidationOption": {
       "Version": 0,

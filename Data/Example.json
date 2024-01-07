@@ -24,7 +24,7 @@
         "stroke": true,
         "physicalHealth": 0,
         "mentalHealth": 0,
-        "diffWalking": false,
+        "diffWalking": true,
         "sex": "Female",
         "ageCategory": "80 or older",
         "diabetic": false,
