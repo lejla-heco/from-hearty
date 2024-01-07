@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleMachineLearning", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{52F9536E-9673-45CD-8B62-1769C8800B86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartyBase", "HeartyBase\HeartyBase.csproj", "{4DDF5E98-47E0-4C15-A983-80A16E42B9D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{52F9536E-9673-45CD-8B62-1769C8800B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52F9536E-9673-45CD-8B62-1769C8800B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52F9536E-9673-45CD-8B62-1769C8800B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DDF5E98-47E0-4C15-A983-80A16E42B9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DDF5E98-47E0-4C15-A983-80A16E42B9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DDF5E98-47E0-4C15-A983-80A16E42B9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DDF5E98-47E0-4C15-A983-80A16E42B9D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

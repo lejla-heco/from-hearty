@@ -13,7 +13,7 @@ Each of us has a formal as well as informal education and is currently in the la
 - ML.NET Example 1: `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
 - ML.NET Example 2: `mlnet classification --dataset "wikipedia-detox-250-line-data.tsv" --label-col "Sentiment" --ignore-cols "LoggedIn" --has-header true --train-time 10`
 
-## Changelog
+### Changelog
 1. Default .NET project.
 - Added .sln `dotnet new sln --name FromHeart`
 - Created WebAPI project: `dotnet new webapi -n WebAPI`
@@ -54,3 +54,6 @@ Each of us has a formal as well as informal education and is currently in the la
 - Added `dotnet add package Serilog.Sinks.Seq --version 7.0.0-dev-00276`
 - Added `dotnet add package SerilogTimings --version 3.0.2-dev-00041`
 - Logging for now to a file at `./WebAPI/Logs/log.txt`
+
+6. HeartyBase
+-  `mlnet classification --dataset "./Other/Datasets/indicators-of-heart-disease-319797/indicators-of-heart-disease-small.csv" --label-col HeartDisease --has-header true --train-time 10`
