@@ -37,7 +37,7 @@ namespace HeartyBase.ConsoleApp
 
 
             // Use the model and Prediction Engine to predict on new sample data
-            var predictionResult = predEngine.Predict(sampleData);
+            var predictionResult = HeartyBase.Predict(sampleData);
 
             Console.WriteLine($"\n\nPredicted Sentiment: {predictionResult.PredictedLabel}\n\n");
             Console.WriteLine("=============== End of process, hit any key to finish ===============");

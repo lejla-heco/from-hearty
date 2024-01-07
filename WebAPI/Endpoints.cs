@@ -35,13 +35,25 @@ static class Endpoints
         app.MapGet("/findings", (MyContext context) =>
             context.Findings.Where(x => !x.IsRemoved).ToArray());
 
-        app.MapPut("/findings", (Finding finding, MyContext context) =>
+        app.MapPut("/finding", (Finding finding, MyContext context) =>
         {
             finding.IsSickPrediction = AiPredictEngine.Predict(finding.FeatureA); // <--- AI
 
             context.Findings.AddOrUpdate(finding);
             context.SaveChanges();
             return finding;
+        });
+
+        app.MapGet("/findings-base", (MyContext context) =>
+            context.FindingsBase.Where(x => !x.IsRemoved).ToArray());
+
+        app.MapPut("/finding-base", (FindingBase findingBase, MyContext context) =>
+        {
+            findingBase.IsSickPrediction = FindingBasePredictEngine.Predict(findingBase);
+
+            context.FindingsBase.AddOrUpdate(findingBase);
+            context.SaveChanges();
+            return findingBase;
         });
     }
 }

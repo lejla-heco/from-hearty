@@ -71,7 +71,6 @@ namespace Data.Migrations
                     IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false),
                     FeatureA = table.Column<string>(type: "TEXT", nullable: false),
-                    FeatureB = table.Column<string>(type: "TEXT", nullable: false),
                     IsSickPrediction = table.Column<bool>(type: "INTEGER", nullable: true),
                     IsSick = table.Column<bool>(type: "INTEGER", nullable: true),
                     PatientId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -101,6 +100,58 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FindingsBase",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    BMI = table.Column<float>(type: "REAL", nullable: false),
+                    Smoking = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AlcoholDrinking = table.Column<string>(type: "TEXT", nullable: false),
+                    Stroke = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PhysicalHealth = table.Column<float>(type: "REAL", nullable: false),
+                    MentalHealth = table.Column<float>(type: "REAL", nullable: false),
+                    DiffWalking = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Sex = table.Column<string>(type: "TEXT", nullable: false),
+                    AgeCategory = table.Column<string>(type: "TEXT", nullable: false),
+                    Diabetic = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PhysicalActivity = table.Column<bool>(type: "INTEGER", nullable: false),
+                    GenHealth = table.Column<string>(type: "TEXT", nullable: false),
+                    SleepTime = table.Column<float>(type: "REAL", nullable: false),
+                    Asthma = table.Column<bool>(type: "INTEGER", nullable: false),
+                    KidneyDisease = table.Column<bool>(type: "INTEGER", nullable: false),
+                    SkinCancer = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSickPrediction = table.Column<bool>(type: "INTEGER", nullable: true),
+                    IsSick = table.Column<bool>(type: "INTEGER", nullable: true),
+                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CardiologistId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    HouseDoctorId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    HouseDoctorNote = table.Column<string>(type: "TEXT", nullable: true),
+                    CardiologistNote = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FindingsBase", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FindingsBase_Cardiologists_CardiologistId",
+                        column: x => x.CardiologistId,
+                        principalTable: "Cardiologists",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FindingsBase_HouseDoctors_HouseDoctorId",
+                        column: x => x.HouseDoctorId,
+                        principalTable: "HouseDoctors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FindingsBase_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Findings_CardiologistId",
                 table: "Findings",
@@ -117,6 +168,21 @@ namespace Data.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FindingsBase_CardiologistId",
+                table: "FindingsBase",
+                column: "CardiologistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FindingsBase_HouseDoctorId",
+                table: "FindingsBase",
+                column: "HouseDoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FindingsBase_PatientId",
+                table: "FindingsBase",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_HouseDoctorId",
                 table: "Patients",
                 column: "HouseDoctorId");
@@ -127,6 +193,9 @@ namespace Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Findings");
+
+            migrationBuilder.DropTable(
+                name: "FindingsBase");
 
             migrationBuilder.DropTable(
                 name: "Cardiologists");
