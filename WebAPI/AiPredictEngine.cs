@@ -1,5 +1,5 @@
 using Microsoft.ML;
-using static SampleClassification.ConsoleApp.SampleClassification;
+using static ExampleMachineLearning.ConsoleApp.ExampleMachineLearning;
 
 public static class AiPredictEngine
 {
@@ -11,7 +11,7 @@ public static class AiPredictEngine
             if (_predictEngine == null)
             {
                 var mlContext = new MLContext();
-                var mlModel = mlContext.Model.Load("../SampleClassification/SampleClassification.mlnet", out _);
+                var mlModel = mlContext.Model.Load("../ExampleMachineLearning/ExampleMachineLearning.mlnet", out _);
                 _predictEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
             }
 

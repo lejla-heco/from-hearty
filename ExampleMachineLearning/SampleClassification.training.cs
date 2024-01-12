@@ -9,9 +9,9 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Trainers;
 
-namespace SampleClassification.ConsoleApp
+namespace ExampleMachineLearning.ConsoleApp
 {
-    public partial class SampleClassification
+    public partial class ExampleMachineLearning
     {
         public const string RetrainFilePath =  @"./yelp_labelled.txt";
         public const char RetrainSeparatorChar = '	';

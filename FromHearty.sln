@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{C0B28547-F8D4-41EC-8BA6-8C94E36F19FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleClassification", "SampleClassification\SampleClassification.csproj", "{CC49269C-422F-4094-8F38-1DFAA85ADED8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleMachineLearning", "ExampleMachineLearning\ExampleMachineLearning.csproj", "{CC49269C-422F-4094-8F38-1DFAA85ADED8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{52F9536E-9673-45CD-8B62-1769C8800B86}"
 EndProject

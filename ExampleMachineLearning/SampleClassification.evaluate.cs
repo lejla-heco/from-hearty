@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SampleClassification.ConsoleApp
+namespace ExampleMachineLearning.ConsoleApp
 {
-    public partial class SampleClassification
+    public partial class ExampleMachineLearning
     {
         /// <summary>
         /// Permutation feature importance (PFI) is a technique to determine the importance 

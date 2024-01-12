@@ -6,8 +6,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="2.0.0" />
   </ItemGroup>
-  <ItemGroup Label="SampleClassification">
-    <None Include="SampleClassification.mlnet">
+  <ItemGroup Label="ExampleMachineLearning">
+    <None Include="ExampleMachineLearning.mlnet">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

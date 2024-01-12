@@ -5,12 +5,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-namespace SampleClassification.ConsoleApp
+namespace ExampleMachineLearning.ConsoleApp
 {
-    public partial class SampleClassification
+    public partial class ExampleMachineLearning
     {
         /// <summary>
-        /// model input class for SampleClassification.
+        /// model input class for ExampleMachineLearning.
         /// </summary>
         #region model input class
         public class ModelInput
@@ -28,7 +28,7 @@ namespace SampleClassification.ConsoleApp
         #endregion
 
         /// <summary>
-        /// model output class for SampleClassification.
+        /// model output class for ExampleMachineLearning.
         /// </summary>
         #region model output class
         public class ModelOutput
@@ -52,7 +52,7 @@ namespace SampleClassification.ConsoleApp
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("SampleClassification.mlnet");
+        private static string MLNetModelPath = Path.GetFullPath("ExampleMachineLearning.mlnet");
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

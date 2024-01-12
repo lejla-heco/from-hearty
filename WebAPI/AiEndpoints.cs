@@ -1,4 +1,4 @@
-using static SampleClassification.ConsoleApp.SampleClassification;
+using static ExampleMachineLearning.ConsoleApp.ExampleMachineLearning;
 
 static class AiExampleEndpoints
 {

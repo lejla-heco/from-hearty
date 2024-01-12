@@ -3,14 +3,14 @@
 
 using System;
 
-namespace SampleClassification.ConsoleApp
+namespace ExampleMachineLearning.ConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
             // Create single instance of sample data from first line of dataset for model input
-            SampleClassification.ModelInput sampleData = new SampleClassification.ModelInput()
+            ExampleMachineLearning.ModelInput sampleData = new ExampleMachineLearning.ModelInput()
             {
                 Col0 = @"Wow... Loved this place.",
             };
@@ -22,7 +22,7 @@ namespace SampleClassification.ConsoleApp
             Console.WriteLine($"Col1: {1F}");
 
 
-            var sortedScoresWithLabel = SampleClassification.PredictAllLabels(sampleData);
+            var sortedScoresWithLabel = ExampleMachineLearning.PredictAllLabels(sampleData);
             Console.WriteLine($"{"Class",-40}{"Score",-20}");
             Console.WriteLine($"{"-----",-40}{"-----",-20}");
 

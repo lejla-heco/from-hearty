@@ -18,13 +18,13 @@ Each of us has a formal as well as informal education and is currently in the la
 - Added .sln `dotnet new sln --name FromHeart`
 - Created WebAPI project: `dotnet new webapi -n WebAPI`
 - Adding project to .sln: `dotnet sln add ./WebAPI/WebAPI.csproj`
-- Run SampleClassification: `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
+- Run ExampleMachineLearning: `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
 
 2. ML.NET
-- Command to create SampleClassification `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
-- Adding project to .sln: `dotnet sln add ./SampleClassification/SampleClassification.csproj`
+- Command to create ExampleMachineLearning `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
+- Adding project to .sln: `dotnet sln add ./ExampleMachineLearning/ExampleMachineLearning.csproj`
 - Go to the folder`cd WebAPI`
-- Add reference of .csproj `dotnet add reference ../SampleClassification/SampleClassification.csproj`
+- Add reference of .csproj `dotnet add reference ../ExampleMachineLearning/ExampleMachineLearning.csproj`
 
 3. Database
 - Add new Data project: `dotnet new console -o Data`
@@ -49,7 +49,7 @@ Each of us has a formal as well as informal education and is currently in the la
 - Stop container: `docker stop my-backend-container`
 - Remove container: `docker rm core-counter`
 
-4. Serilog
+5. Serilog
 - Added: `dotnet add package Serilog.AspNetCore --version 8.0.0`
 - Added `dotnet add package Serilog.Sinks.Seq --version 7.0.0-dev-00276`
 - Added `dotnet add package SerilogTimings --version 3.0.2-dev-00041`
