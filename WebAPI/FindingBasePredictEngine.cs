@@ -11,7 +11,14 @@ public static class FindingBasePredictEngine
             if (_predictEngine == null)
             {
                 var mlContext = new MLContext();
-                var mlModel = mlContext.Model.Load("../HeartyBase/HeartyBase.mlnet", out _);
+                ITransformer mlModel = default!;
+
+                #if DEBUG
+                    mlModel = mlContext.Model.Load("../HeartyBase/HeartyBase.mlnet", out _);
+                #else
+                    mlModel = mlContext.Model.Load("./HeartyBase.mlnet", out _);
+                #endif
+
                 _predictEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
             }
 

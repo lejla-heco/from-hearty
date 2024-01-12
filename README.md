@@ -41,6 +41,7 @@ Each of us has a formal as well as informal education and is currently in the la
 - Added `Dockerfile`
 - Publish .NET app: `dotnet publish -c Release`
 - Build image: `docker build -t my-backend-image -f Dockerfile .`
+- Build image linux/amd64: `docker build --platform linux/amd64 -t my-backend-image -f Dockerfile .`
 > Then
 - Single run: `docker run -p 5000:8080 -it --rm my-backend-image`
 > Or
@@ -56,4 +57,14 @@ Each of us has a formal as well as informal education and is currently in the la
 - Logging for now to a file at `./WebAPI/Logs/log.txt`
 
 6. HeartyBase
--  `mlnet classification --dataset "./Other/Datasets/indicators-of-heart-disease-319797/indicators-of-heart-disease-small.csv" --label-col HeartDisease --has-header true --train-time 10`
+- ML.NET Command used: `mlnet classification --dataset "./Other/Datasets/indicators-of-heart-disease-319797/indicators-of-heart-disease-small.csv" --label-col HeartDisease --has-header true --train-time 10`
+- ML.NET Command used: `mlnet classification --dataset "./Other/Datasets/indicators-of-heart-disease-319797/indicators-of-heart-disease-small.csv" --label-col HeartDisease --has-header true --train-time 10`
+
+7. Deploying to Docker Hub
+- Login: `docker login`
+- Rebuild with username/image-name:tag `docker build -t muhamedkarajic/my-backend-image:v3 -f Dockerfile .`
+- Build image linux/amd64: `docker build -t muhamedkarajic/my-backend-image:v3 -f Dockerfile .`
+- Push: `docker push muhamedkarajic/my-backend-image:v3`
+- URL: `https://hub.docker.com/r/muhamedkarajic/my-backend-image`
+- Pull: `docker pull muhamedkarajic/my-backend-image`
+- Start: `docker run -p 5000:8080 -it --rm muhamedkarajic/my-backend-image:v1`

@@ -11,7 +11,14 @@ public static class AiPredictEngine
             if (_predictEngine == null)
             {
                 var mlContext = new MLContext();
-                var mlModel = mlContext.Model.Load("../ExampleMachineLearning/ExampleMachineLearning.mlnet", out _);
+                ITransformer mlModel = default!;
+
+                #if DEBUG
+                    mlModel = mlContext.Model.Load("../HeartyBase/ExampleMachineLearning.mlnet", out _);
+                #else
+                    mlModel = mlContext.Model.Load("./ExampleMachineLearning.mlnet", out _);
+                #endif
+
                 _predictEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
             }
 
