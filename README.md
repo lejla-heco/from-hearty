@@ -23,5 +23,16 @@ Each of us has a formal as well as informal education and is currently in the la
 2. ML.NET
 - Command to create SampleClassification `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
 - Adding project to .sln: `dotnet sln add ./SampleClassification/SampleClassification.csproj`
-- cd WebAPI
-- 
+- Go to the folder`cd WebAPI`
+- Add reference of .csproj `dotnet add reference ../SampleClassification/SampleClassification.csproj`
+
+3. Database
+- Add new Data project: `dotnet new console -o Data`
+- Adding project to .sln: `dotnet sln add ./Data/Data.csproj`
+- Go to the folder`cd Data`
+- Install Globaly EF: `dotnet tool install --global dotnet-ef`
+- Install Sqlite: `dotnet add package Microsoft.EntityFrameworkCore.Sqlite`
+- Install EF Design package: `dotnet add package Microsoft.EntityFrameworkCore.Design`
+- Add Migration `dotnet ef migrations add InitialCreate`
+- Update database: `dotnet ef database update`
+- Run console: `dotnet run`

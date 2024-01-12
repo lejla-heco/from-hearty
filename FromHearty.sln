@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleClassification", "SampleClassification\SampleClassification.csproj", "{CC49269C-422F-4094-8F38-1DFAA85ADED8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{52F9536E-9673-45CD-8B62-1769C8800B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{CC49269C-422F-4094-8F38-1DFAA85ADED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC49269C-422F-4094-8F38-1DFAA85ADED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC49269C-422F-4094-8F38-1DFAA85ADED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F9536E-9673-45CD-8B62-1769C8800B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F9536E-9673-45CD-8B62-1769C8800B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F9536E-9673-45CD-8B62-1769C8800B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F9536E-9673-45CD-8B62-1769C8800B86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
