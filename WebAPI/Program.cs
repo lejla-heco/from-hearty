@@ -22,7 +22,15 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.AddScoped<MyService>();
     builder.Services.AddDbContext<MyContext>();
-
+    builder.Services.AddCors(p => 
+        p.AddPolicy("ANY_ORIGIN", builder =>
+        {
+            builder
+                .WithOrigins("*")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        })
+    );
     var app = builder.Build();
     if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     {
@@ -35,6 +43,7 @@ try
         configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     });
 
+    app.UseCors("ANY_ORIGIN");
     app.UseHttpsRedirection();
     app.MapEndpoints();
     app.MapAiExampleEndpoints();
