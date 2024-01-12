@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "WebAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "watch",
+            "program": "${workspaceFolder}/Test01/bin/Debug/net8.0/WebAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/WebAPI",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+    ]
+}

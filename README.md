@@ -36,3 +36,15 @@ Each of us has a formal as well as informal education and is currently in the la
 - Add Migration `dotnet ef migrations add InitialCreate`
 - Update database: `dotnet ef database update`
 - Run console: `dotnet run`
+
+4. Dockerized
+- Added `Dockerfile`
+- Publish .NET app: `dotnet publish -c Release`
+- Build image: `docker build -t my-backend-image -f Dockerfile .`
+> Then
+- Single run: `docker run -p 5000:8080 -it --rm my-backend-image`
+> Or
+- Create container: `docker create --name my-backend-container my-backend-image`
+- Start container: `docker start my-backend-container`
+- Stop container: `docker stop my-backend-container`
+- Remove container: `docker rm core-counter`

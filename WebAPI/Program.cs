@@ -8,7 +8,7 @@ builder.Services.AddScoped<MyService>();
 builder.Services.AddDbContext<MyContext>();
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -16,6 +16,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapEndpoints();
-app.MapAiEndpoints();
-app.MapExampleEndpoints();
+app.MapAiExampleEndpoints();
+// app.MapExampleEndpoints();
+app.TryMigrateAndSeedData();
+
 app.Run();

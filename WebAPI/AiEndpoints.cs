@@ -1,8 +1,8 @@
 using static SampleClassification.ConsoleApp.SampleClassification;
 
-static class AiEndpoints
+static class AiExampleEndpoints
 {
-    public static void MapAiEndpoints(this IEndpointRouteBuilder app) =>
+    public static void MapAiExampleEndpoints(this IEndpointRouteBuilder app) =>
         app.MapGet("/ai-service/{message}", (string message) =>
         {
             var predEngine = AiPredictEngine.PredictEngine;
