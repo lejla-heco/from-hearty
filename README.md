@@ -10,9 +10,18 @@ Each of us has a formal as well as informal education and is currently in the la
 - Run: `dotnet run --project WebAPI`
 - Swagger URL: `http://localhost:5000/swagger/index.html`
 - Add package: `dotnet add package RhoMicro.MicroDI --version 4.3.1`
+- ML.NET Example 1: `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
+- ML.NET Example 2: `mlnet classification --dataset "wikipedia-detox-250-line-data.tsv" --label-col "Sentiment" --ignore-cols "LoggedIn" --has-header true --train-time 10`
 
 ## Changelog
 1. Default .NET project.
 - Added .sln `dotnet new sln --name FromHeart`
 - Created WebAPI project: `dotnet new webapi -n WebAPI`
 - Adding project to .sln: `dotnet sln add ./WebAPI/WebAPI.csproj`
+- Run SampleClassification: `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
+
+2. ML.NET
+- Command to create SampleClassification `mlnet classification --dataset "yelp_labelled.txt" --label-col 1 --has-header false --train-time 10`
+- Adding project to .sln: `dotnet sln add ./SampleClassification/SampleClassification.csproj`
+- cd WebAPI
+- 
