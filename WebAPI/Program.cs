@@ -1,6 +1,7 @@
 using static ExampleEndpoints;
 using Serilog;
 using Serilog.Events;
+using System.Net;
 
 try
 {
@@ -19,7 +20,9 @@ try
     );
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGenWithBearer();
+
+    builder.Services.AddSingleton<LoginService>();
     builder.Services.AddScoped<MyService>();
     builder.Services.AddDbContext<MyContext>();
     builder.Services.AddCors(p => 
@@ -45,11 +48,14 @@ try
 
     app.UseCors("ANY_ORIGIN");
     app.UseHttpsRedirection();
+
+    app.UseMyAuthorization();
+
     app.MapEndpoints();
     app.MapAiExampleEndpoints();
-    // app.MapExampleEndpoints();
+    app.MapExampleEndpoints();
     app.TryMigrateAndSeedData();
-
+    
     app.Run();
 }
 catch (Exception exception)

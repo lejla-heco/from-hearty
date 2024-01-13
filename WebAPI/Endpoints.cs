@@ -2,6 +2,10 @@ static class Endpoints
 {
     public static void MapEndpoints(this IEndpointRouteBuilder app)
     {
+        app.MapPost(Extensions.LOGIN_PATH, (LoginRequest loginRequest, LoginService loginService) =>
+            loginService.TryLogin(loginRequest)
+        );
+        
         app.MapGet("/patients", (MyContext context) =>
             context.Patients.Where(x => !x.IsRemoved).ToArray());
 
