@@ -1,0 +1,38 @@
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  dockerRegistryServiceConnection: '412c74a0-92ab-4d12-99af-132ea05fd509'
+  imageRepository: 'image-fromheartyofficial'
+  containerRegistry: 'fromheartyofficial.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'Azure for Students(4d7714af-e278-404d-ad9b-65d6bd5d0a35)'
+        appName: 'fromheartywebapp'
+        containers: 'fromheartyofficial.azurecr.io/$(imageRepository):$(tag)'
