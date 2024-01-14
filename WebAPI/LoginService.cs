@@ -16,12 +16,14 @@ public class LoginService
         if (!this.users.TryGetValue(loginRequest, out var loginToken))
             return null;
 
-        if (loginToken == null)
+        if(loginToken?.ValidUntil < DateTime.Now)
+            this.tokens.Remove(loginToken.Id);
+        
+        if (loginToken == null || loginToken.ValidUntil < DateTime.Now)
         {
             loginToken = new LoginToken(Guid.NewGuid(), DateTime.Now.AddHours(12));
             this.users[loginRequest] = loginToken;
             this.tokens.Add(loginToken.Id, loginToken);
-            return loginToken;
         }
 
         return loginToken;
