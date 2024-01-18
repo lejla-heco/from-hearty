@@ -2,6 +2,7 @@ using static ExampleEndpoints;
 using Serilog;
 using Serilog.Events;
 using System.Net;
+using FromHeartyAI.ML_Model;
 
 try
 {
@@ -23,6 +24,7 @@ try
     builder.Services.AddSwaggerGenWithBearer();
 
     builder.Services.AddSingleton<LoginService>();
+    builder.Services.AddSingleton<MLModel>();
     builder.Services.AddScoped<MyService>();
     builder.Services.AddDbContext<MyContext>();
     builder.Services.AddCors(p => 

@@ -1,3 +1,6 @@
+using FromHeartyAI.DataStructures;
+using FromHeartyAI.ML_Model;
+
 static class Endpoints
 {
     public static void MapEndpoints(this IEndpointRouteBuilder app)
@@ -59,5 +62,11 @@ static class Endpoints
             context.SaveChanges();
             return findingBase;
         });
+
+        app.MapPost("/predict", (FromHeartyData predictionRequest, MLModel mlModel) =>
+        {
+            return $"{(float)Math.Round(mlModel.Predict(predictionRequest).Probability * 100, 2):0.00} %";
+        });
+
     }
 }
