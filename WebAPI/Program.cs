@@ -1,8 +1,7 @@
-using static ExampleEndpoints;
 using Serilog;
 using Serilog.Events;
-using System.Net;
-using FromHeartyAI.ML_Model;
+using Service;
+using WebAPI;
 
 try
 {
@@ -20,43 +19,13 @@ try
         .Enrich.FromLogContext()
     );
 
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGenWithBearer();
-
-    builder.Services.AddSingleton<LoginService>();
-    builder.Services.AddSingleton<MLModel>();
-    builder.Services.AddScoped<MyService>();
-    builder.Services.AddDbContext<MyContext>();
-    builder.Services.AddCors(p => 
-        p.AddPolicy("ANY_ORIGIN", builder =>
-        {
-            builder
-                .WithOrigins("*")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        })
-    );
+    builder.Services.RegisterWebApi()
+        .RegisterServices()
+        .RegisterMachineLearning();
+    
     var app = builder.Build();
-    if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
 
-    app.UseSerilogRequestLogging(configure =>
-    {
-        configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
-    });
-
-    app.UseCors("ANY_ORIGIN");
-    app.UseHttpsRedirection();
-
-    app.UseMyAuthorization();
-
-    app.MapEndpoints();
-    app.MapAiExampleEndpoints();
-    app.MapExampleEndpoints();
-    app.TryMigrateAndSeedData();
+    app.SetupApplication();
     
     app.Run();
 }

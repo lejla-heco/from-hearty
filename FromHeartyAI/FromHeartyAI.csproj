@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DataSets\FromHeartyTrainingDS.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DataSets\FromHeartyTrainingDS.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageReference Include="Microsoft.ML" Version="3.0.0" />
     <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.0" />
   </ItemGroup>
