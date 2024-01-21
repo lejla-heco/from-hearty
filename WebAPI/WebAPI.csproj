@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\HeartyBase\HeartyBase.csproj" />
 	<ProjectReference Include="..\FromHeartyAI\FromHeartyAI.csproj" />
+	<ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 </Project>

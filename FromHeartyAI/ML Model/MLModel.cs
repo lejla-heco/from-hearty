@@ -7,12 +7,10 @@ namespace FromHeartyAI.ML_Model
     public class MLModel
     {
         private readonly MLContext mlContext;
-        private ITransformer trainedModel = null;
+        private ITransformer? trainedModel = null;
 
-        private static string BaseDatasetsRelativePath = IsWindows() 
-            ? $"{AppDomain.CurrentDomain.BaseDirectory}\\Data" : $"{AppDomain.CurrentDomain.BaseDirectory}DataSets";
-        private static string TrainDataRelativePath = IsWindows() 
-            ? $"{BaseDatasetsRelativePath}\\FromHeartyTrainingDS.csv" : $"{BaseDatasetsRelativePath}/FromHeartyTrainingDS.csv";
+        private static string BaseDatasetsRelativePath = $"{AppDomain.CurrentDomain.BaseDirectory}DataSets";
+        private static string TrainDataRelativePath = $"{BaseDatasetsRelativePath}/FromHeartyTrainingDS.csv";
 
         private static string TrainDataPath = GetAbsolutePath(TrainDataRelativePath);
 
@@ -41,11 +39,6 @@ namespace FromHeartyAI.ML_Model
             string fullPath = Path.Combine(projectDirectory, relativePath);
 
             return fullPath;
-        }
-
-        private static bool IsWindows()
-        {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         }
     }
 }
