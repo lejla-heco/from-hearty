@@ -1,12 +1,5 @@
 ﻿using FromHeartyAI.DataStructures;
 using Microsoft.ML;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FromHeartyAI.ML_Model
 {
@@ -15,7 +8,7 @@ namespace FromHeartyAI.ML_Model
         private readonly MLContext mlContext;
         private ITransformer trainedModel = null;
 
-        private static string BaseDatasetsRelativePath = @"..\..\..\..\FromHeartyAI\Data";
+        private static string BaseDatasetsRelativePath = $"{AppDomain.CurrentDomain.BaseDirectory}\\Data";
         private static string TrainDataRelativePath = $"{BaseDatasetsRelativePath}\\FromHeartyTrainingDS.csv";
 
         private static string TrainDataPath = GetAbsolutePath(TrainDataRelativePath);

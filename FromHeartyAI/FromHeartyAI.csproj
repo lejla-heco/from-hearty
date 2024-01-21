@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\FromHeartyTrainingDS.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
