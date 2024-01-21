@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <None Update="Data\FromHeartyTrainingDS.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
