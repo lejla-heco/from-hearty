@@ -65,7 +65,7 @@ static class Endpoints
 
         app.MapPost("/predict", (FromHeartyData predictionRequest, MLModel mlModel) =>
         {
-            return $"{(float)Math.Round(mlModel.Predict(predictionRequest).Probability * 100, 2):0.00} %";
+            return (float) Math.Round(mlModel.Predict(predictionRequest).Probability * 100, 2);
         });
 
     }
