@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginRequest } from './models/login-request.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -12,12 +12,17 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginRequest: LoginRequest = new LoginRequest();
 
   constructor(private httpClient: HttpClient, private router: Router, public loginService: LoginService,
     private toastr: ToastrService) {
   }
+
+  ngOnInit(): void {
+    if (AuthentificationHelper.getLoginToken().id) {
+      this.router.navigateByUrl('home-page');
+    };
   }
 
   login(): void {
