@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     if (AuthentificationHelper.getLoginToken().id) {
-      this.router.navigateByUrl('home-page');
+      this.router.navigateByUrl('ai-prediction');
     };
   }
 
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
     this.httpClient.post(Config.serverAddress + this.loginService.api.login, this.loginRequest).subscribe((response: any) => {
       if (response) {
         AuthentificationHelper.setLoginToken(response);
-        this.router.navigateByUrl("home-page");
+        this.router.navigateByUrl("ai-prediction");
       } else {
         this.toastr.error("Invalid credentials. Please check your login information.");
       }

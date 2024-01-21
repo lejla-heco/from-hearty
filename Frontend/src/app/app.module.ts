@@ -10,12 +10,14 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './authentification/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AiPredictionComponent } from './home-doctor/ai-prediction/ai-prediction.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomePageComponent
+    HomePageComponent,
+    AiPredictionComponent
   ],
   imports: [
     BrowserModule,
