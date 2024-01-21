@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Config } from '../configuration/config';
 import { AuthentificationHelper } from '../authentification/authentification-helper';
 import { LoginService } from './login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,19 @@ import { LoginService } from './login.service';
 export class LoginComponent {
   loginRequest: LoginRequest = new LoginRequest();
 
-  constructor(private httpClient: HttpClient, private router: Router, public loginService: LoginService) {
+  constructor(private httpClient: HttpClient, private router: Router, public loginService: LoginService,
+    private toastr: ToastrService) {
+  }
   }
 
   login(): void {
     this.httpClient.post(Config.serverAddress + this.loginService.api.login, this.loginRequest).subscribe((response: any) => {
-      AuthentificationHelper.setLoginToken(response);
-      this.router.navigateByUrl("home-page");
+      if (response) {
+        AuthentificationHelper.setLoginToken(response);
+        this.router.navigateByUrl("home-page");
+      } else {
+        this.toastr.error("Invalid credentials. Please check your login information.");
+      }
     });
   }
 }
