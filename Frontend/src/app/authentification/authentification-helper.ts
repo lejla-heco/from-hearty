@@ -1,12 +1,17 @@
 import { LoginToken } from "../login/models/login-token.model";
 
 export class AuthentificationHelper {
+  
+  static isLoggedIn(): boolean {
+    const loginTokenFromLS = localStorage.getItem("Authorization");
+    return loginTokenFromLS !== null;
+  }
+
 
   static setLoginToken(loginToken: LoginToken): void {
     if (loginToken == null)
       loginToken = new LoginToken();
     localStorage.setItem("Authorization", JSON.stringify(loginToken));
-    console.log(loginToken);
   }
 
   static getLoginToken(): LoginToken {

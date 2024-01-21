@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit{
     this.httpClient.post(Config.serverAddress + this.loginService.api.login, this.loginRequest).subscribe((response: any) => {
       if (response) {
         AuthentificationHelper.setLoginToken(response);
+        AuthentificationHelper.isLoggedIn(); 
         this.router.navigateByUrl("ai-prediction");
       } else {
         this.toastr.error("Invalid credentials. Please check your login information.");
