@@ -1,3 +1,20 @@
+<div class="container-fluid">
+  <div class="row page-titles">
+      <div class="col-md-5 align-self-center">
+          <h4 class="text-themecolor">AI Prediction</h4>
+      </div>
+      <div class="col-md-7 align-self-center text-end">
+          <div class="d-flex justify-content-end align-items-center">
+              <ol class="breadcrumb justify-content-end">
+                  <li class="breadcrumb-item">Pages</li>
+                  <li class="breadcrumb-item active">AI Prediction</li>
+              </ol>
+              <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white" (click)="clearPredictionForm()"><i class="fas fa-eraser"></i> Clear prediction form</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 <form (ngSubmit)="predict()" #predictionForm="ngForm" class="m-4">
     <div class="form-group">
         <label for="cp">Chest Pain Type (Cp)</label>
@@ -63,5 +80,5 @@
       <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3" [disabled]="!predictionForm.form.valid">Predict</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
 </form>

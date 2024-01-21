@@ -1,1 +1,96 @@
-<router-outlet></router-outlet>
+<body class="skin-megna fixed-layout">
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <a class="navbar-brand"><b>
+                            <img src="../assets/images/logo.png" alt="logo" class="light-logo" />
+                        </b>
+                        <span class="hidden-xs"> FromHearty</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        <!--
+                        <li class="nav-item"> <a class="nav-link nav-toggler d-block d-md-none waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a
+                                class="nav-link sidebartoggler d-none d-lg-block d-md-block waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="icon-menu"></i></a> </li>
+                        <li class="nav-item">
+                            <form class="app-search d-none d-md-block d-lg-block">
+                                <input type="text" class="form-control" placeholder="Search & enter">
+                            </form>
+                        </li>
+                        -->
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href=""
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="ti-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end mailbox animated bounceInDown">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="icon-note"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox dropdown-menu-end animated bounceInDown"
+                                aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Messages</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown u-pro">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src=""
+                                    alt="user" class=""></a>
+                            <div class="dropdown-menu dropdown-menu-end animated flipInY">
+                                <a class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item"><i class="ti-settings"></i> Account Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">--- PAGES</li>
+                        <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
+                                    class="fas fa-home"></i><span class="hide-menu">Home
+                                    Page</span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="#" routerLink="ai-prediction"><i
+                                    class="fas fa-heartbeat"></i><span class="hide-menu">AI Prediction</span></a></li>
+                        <li class="nav-small-cap">--- SUPPORT</li>
+                        <li><a class="waves-effect waves-dark" aria-expanded="false"><i
+                                    class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+        <footer class="footer">
+            © 2024 FromHearty
+        </footer>
+    </div>
