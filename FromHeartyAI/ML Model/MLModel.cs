@@ -8,8 +8,8 @@ namespace FromHeartyAI.ML_Model
         private readonly MLContext mlContext;
         private ITransformer trainedModel = null;
 
-        private static string BaseDatasetsRelativePath = $"{AppDomain.CurrentDomain.BaseDirectory}\\Data";
-        private static string TrainDataRelativePath = $"{BaseDatasetsRelativePath}\\FromHeartyTrainingDS.csv";
+        private static string BaseDatasetsRelativePath = $"{AppDomain.CurrentDomain.BaseDirectory}DataSets";
+        private static string TrainDataRelativePath = $"{BaseDatasetsRelativePath}/FromHeartyTrainingDS.csv";
 
         private static string TrainDataPath = GetAbsolutePath(TrainDataRelativePath);
 
