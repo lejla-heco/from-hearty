@@ -17,7 +17,7 @@ namespace WebAPI
             services.AddSwaggerGenWithBearer();
            
             services.AddScoped<MyService>();
-            services.AddDbContext<MyContext>();
+           
             services.AddCors(p =>
                 p.AddPolicy("ANY_ORIGIN", builder =>
                 {
@@ -72,6 +72,7 @@ namespace WebAPI
                 context.SetUpData();
             }
         }
+
         public static void AddSwaggerGenWithBearer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSwaggerGen(config =>

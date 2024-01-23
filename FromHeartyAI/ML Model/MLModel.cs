@@ -1,6 +1,5 @@
 ﻿using FromHeartyAI.DataStructures;
 using Microsoft.ML;
-using System.Runtime.InteropServices;
 
 namespace FromHeartyAI.ML_Model
 {

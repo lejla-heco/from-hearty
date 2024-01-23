@@ -1,5 +1,4 @@
-﻿Console.WriteLine("Hello World!");
-
+﻿
 using var db = new MyContext();
 
 db.SetUpData();

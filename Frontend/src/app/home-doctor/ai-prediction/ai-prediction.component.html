@@ -80,5 +80,9 @@
       <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
+    <div class="d-flex flex-row gap-1">
+      <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
+      <button type="button" class="btn btn-secondary ml-2" [disabled]="!predictionForm.form.valid" (click)="predictWithOpenAI()">Predict with Open AI</button>
+    </div>
+    
 </form>

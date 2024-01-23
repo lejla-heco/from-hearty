@@ -20,5 +20,6 @@ export class AiPredictionService {
 
     api = {
         predict: '/predict',
+        openAiPredict: '/open-ai-predict'
     }
 }

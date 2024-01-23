@@ -19,8 +19,9 @@ try
         .Enrich.FromLogContext()
     );
 
-    builder.Services.RegisterWebApi()
+    builder.Services
         .RegisterServices()
+        .RegisterWebApi()
         .RegisterMachineLearning();
     
     var app = builder.Build();

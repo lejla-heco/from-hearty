@@ -33,6 +33,14 @@ export class AiPredictionComponent {
     }
   }
 
+  predictWithOpenAI(): void {
+    if (this.validateFields()) {
+      this.httpClient.post(Config.serverAddress + this.aiPredictionService.api.openAiPredict, this.predictionRequest, Config.httpOptions()).subscribe((response: any) => {
+        alert(response.choices[0].text);
+      });
+    }
+  }
+
   validateFields(): any {
     if (this.predictionRequest.trestBps < 1 ||
       this.predictionRequest.chol < 1 ||

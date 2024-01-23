@@ -1,5 +1,6 @@
 using FromHeartyAI.DataStructures;
 using FromHeartyAI.ML_Model;
+using Service.Services;
 using WebAPI.AIPredictEngine;
 
 namespace WebAPI.ApiControllers
@@ -69,6 +70,11 @@ namespace WebAPI.ApiControllers
             app.MapPost("/predict", (FromHeartyData predictionRequest, MLModel mlModel) =>
             {
                 return (float)Math.Round(mlModel.Predict(predictionRequest).Probability * 100, 2);
+            });
+
+            app.MapPost("/open-ai-predict", async (FromHeartyData predictionRequest, IPredictionService _predictionService) =>
+            {
+                return await _predictionService.GetOpenAiDescriptivePrediction(predictionRequest);
             });
 
         }
