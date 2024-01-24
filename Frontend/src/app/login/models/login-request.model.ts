@@ -1,4 +1,4 @@
 export class LoginRequest {
-    username!: string;
-    password!: string;
+    username: string = 'from.hearty@edu.fit.ba';
+    password: string = '1234';
 }
