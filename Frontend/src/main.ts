@@ -2,6 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 import { routes } from './routes';
+import { useHashLocationStrategy } from './.shared/use-hash-location-strategy.helper';
 import { provideRouter } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -9,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 
 const config: ApplicationConfig = { providers: [] };
 
+useHashLocationStrategy(config);
 config.providers.push(provideRouter(routes));
 config.providers.push(importProvidersFrom(
     ToastrModule.forRoot(),
