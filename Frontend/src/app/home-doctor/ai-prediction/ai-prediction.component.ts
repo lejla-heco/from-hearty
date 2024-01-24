@@ -4,11 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../../configuration/config';
 import { AiPredictionService } from './ai-prediction.service';
 import { ToastrService } from 'ngx-toastr';
+import { SharedModule } from '../../.shared/shared.module';
 
 @Component({
   selector: 'app-ai-prediction',
   templateUrl: './ai-prediction.component.html',
-  styleUrl: './ai-prediction.component.css'
+  styleUrl: './ai-prediction.component.css',
+  standalone: true,
+  imports: [
+    SharedModule
+  ]
 })
 export class AiPredictionComponent {
   predictionRequest: PredictionRequest = new PredictionRequest();

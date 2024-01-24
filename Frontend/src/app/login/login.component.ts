@@ -6,11 +6,16 @@ import { Config } from '../configuration/config';
 import { AuthentificationHelper } from '../authentification/authentification-helper';
 import { LoginService } from './login.service';
 import { ToastrService } from 'ngx-toastr';
+import { SharedModule } from '../.shared/shared.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  standalone: true,
+  imports: [
+    SharedModule
+  ]
 })
 export class LoginComponent implements OnInit{
   loginRequest: LoginRequest = new LoginRequest();

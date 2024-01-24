@@ -1,12 +1,28 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { LoginService } from './login/login.service';
+import { Component, DoCheck } from '@angular/core';
 import { AuthentificationHelper } from './authentification/authentification-helper';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './authentification/auth.interceptor';
+import { LoginComponent } from './login/login.component';
+import { SharedModule } from './.shared/shared.module';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  imports: [
+    SharedModule,
+    RouterOutlet,
+    LoginComponent
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ]
 })
 export class AppComponent implements DoCheck{
   title = 'FromHearty';
