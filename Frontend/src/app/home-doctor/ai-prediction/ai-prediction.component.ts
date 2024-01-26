@@ -1,3 +1,4 @@
+// ai-prediction.component.ts
 import { Component } from '@angular/core';
 import { PredictionRequest } from './models/prediction-request.model';
 import { HttpClient } from '@angular/common/http';
@@ -9,17 +10,20 @@ import { SharedModule } from '../../.shared/shared.module';
 @Component({
   selector: 'app-ai-prediction',
   templateUrl: './ai-prediction.component.html',
-  styleUrl: './ai-prediction.component.css',
+  styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
-  imports: [
-    SharedModule
-  ]
+  imports: [SharedModule],
 })
 export class AiPredictionComponent {
   predictionRequest: PredictionRequest = new PredictionRequest();
+  predictionMessage: string = '';
+  loading: boolean = false; 
 
-  constructor(private httpClient: HttpClient, public aiPredictionService: AiPredictionService, private toastr: ToastrService) {
-  }
+  constructor(
+    private httpClient: HttpClient,
+    public aiPredictionService: AiPredictionService,
+    private toastr: ToastrService
+  ) {}
 
   updateExangValue(event: any): void {
     this.predictionRequest.exang = event.target.checked ? 1 : 0;
@@ -27,34 +31,69 @@ export class AiPredictionComponent {
 
   clearPredictionForm(): void {
     this.predictionRequest = new PredictionRequest();
-    this.toastr.info("Prediction form has been cleared!");
+    this.toastr.info('Prediction form has been cleared!');
+    this.predictionMessage = '';
   }
 
   predict(): void {
     if (this.validateFields()) {
-      this.httpClient.post(Config.serverAddress + this.aiPredictionService.api.predict, this.predictionRequest, Config.httpOptions()).subscribe((response: any) => {
-        alert("The likelihood percentage of the patient suffering from cardiovascular disease is: " + response + "%");
-      });
+      this.loading = true; 
+      this.httpClient
+        .post(
+          Config.serverAddress + this.aiPredictionService.api.predict,
+          this.predictionRequest,
+          Config.httpOptions()
+        )
+        .subscribe(
+          (response: any) => {
+            this.predictionMessage =
+              'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
+              response +
+              '%';
+          },
+          (error) => {
+            this.predictionMessage = 'An error occurred while predicting.';
+          }
+        )
+        .add(() => (this.loading = false)); 
     }
   }
 
   predictWithOpenAI(): void {
     if (this.validateFields()) {
-      this.httpClient.post(Config.serverAddress + this.aiPredictionService.api.openAiPredict, this.predictionRequest, Config.httpOptions()).subscribe((response: any) => {
-        alert(response.choices[0].text);
-      });
+      this.loading = true; 
+      this.httpClient
+        .post(
+          Config.serverAddress + this.aiPredictionService.api.openAiPredict,
+          this.predictionRequest,
+          Config.httpOptions()
+        )
+        .subscribe(
+          (response: any) => {
+            this.predictionMessage = response.choices[0].text;
+          },
+          (error) => {
+            this.predictionMessage = 'An error occurred while predicting with Open AI.';
+          }
+        )
+        .add(() => (this.loading = false)); 
     }
   }
 
   validateFields(): any {
-    if (this.predictionRequest.trestBps < 1 ||
+    if (
+      this.predictionRequest.trestBps < 1 ||
       this.predictionRequest.chol < 1 ||
       this.predictionRequest.fbs < 1 ||
       this.predictionRequest.oldPeak < 1 ||
       this.predictionRequest.slope < 1 ||
       this.predictionRequest.ca < 1 ||
-      this.predictionRequest.thal < 1) {
-      this.toastr.error("Please ensure that numeric values are greater than or equal to 1!");
+      this.predictionRequest.thal < 1
+    ) {
+      this.toastr.error(
+        'Please ensure that numeric values are greater than or equal to 1!'
+      );
+      this.predictionMessage = '';
       return false;
     }
     return true;

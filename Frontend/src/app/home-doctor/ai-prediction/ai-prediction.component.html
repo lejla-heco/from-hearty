@@ -1,88 +1,97 @@
 <div class="container-fluid">
   <div class="row page-titles">
-      <div class="col-md-5 align-self-center">
+      <div class="col-12 col-sm-3 col-md-5 align-self-center">
           <h4 class="text-themecolor">AI Prediction</h4>
       </div>
-      <div class="col-md-7 align-self-center text-end">
-          <div class="d-flex justify-content-end align-items-center">
+      <div class="col-12 col-sm-9 col-md-7 align-self-center text-end"> 
+          <div class="d-flex display-flex justify-content-end align-items-center">
               <ol class="breadcrumb justify-content-end">
                   <li class="breadcrumb-item">Pages</li>
                   <li class="breadcrumb-item active">AI Prediction</li>
               </ol>
-              <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white" (click)="clearPredictionForm()"><i class="fas fa-eraser"></i> Clear prediction form</button>
+              <button type="button" class="btn btn-info d-lg-block m-l-15 text-white" (click)="clearPredictionForm()"><i class="fas fa-eraser"></i> Clear prediction form</button>
           </div>
       </div>
   </div>
 </div>
 
 <form (ngSubmit)="predict()" #predictionForm="ngForm" class="m-4">
-    <div class="form-group">
-        <label for="cp">Chest Pain Type (Cp)</label>
-        <select class="form-control" id="cp" name="cp" [(ngModel)]="predictionRequest.cp" required>
-          <option *ngFor="let option of this.aiPredictionService.cpOptions" [value]="option.value">{{ option.label }}</option>
-        </select>
+  <div class="col-12 d-flex display-flex flex-wrap justify-content-between">
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="cp">*Chest Pain Type (Cp)</label>
+      <select class="form-control" id="cp" name="cp" [(ngModel)]="predictionRequest.cp" required>
+        <option *ngFor="let option of this.aiPredictionService.cpOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
     </div>
-  
-    <div class="form-group">
-      <label for="trestBps">Resting Blood Pressure (Trest Bps)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="trestBps">*Resting Blood Pressure (Trest Bps)</label>
       <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="predictionRequest.trestBps" required>
     </div>
-  
-    <div class="form-group">
-      <label for="chol">Serum Cholesterol (Chol)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="chol">*Serum Cholesterol (Chol)</label>
       <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="predictionRequest.chol" required>
     </div>
   
-    <div class="form-group">
-      <label for="fbs">Fasting Blood Sugar (Fbs)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="fbs">*Fasting Blood Sugar (Fbs)</label>
       <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="predictionRequest.fbs" required>
     </div>
   
-    <div class="form-group">
-        <label for="restEcg">Resting Electrocardiographic Results (Rest ECG)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="restEcg">*Resting Electrocardiographic Results (Rest ECG)</label>
         <select class="form-control" id="restEcg" name="restEcg" [(ngModel)]="predictionRequest.restEcg" required>
           <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value">{{ option.label }}</option>
         </select>
     </div>
-  
-    <div class="form-group">
-        <label for="thalach">Maximum Heart Rate Achieved (Thalach)</label>
-        <select class="form-control" id="thalach" name="thalach" [(ngModel)]="predictionRequest.thalach" required>
-          <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value">{{ option.label }}</option>
-        </select>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="thalach">*Maximum Heart Rate Achieved (Thalach)</label>
+      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="predictionRequest.thalach" required>
+        <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
     </div>
-  
-    <div class="form-group">
-        <label for="exang">Exercise Induced Angina (Exang)</label>
+
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="exang">Exercise Induced Angina (Exang)</label>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="exang" name="exang" [checked]="predictionRequest.exang" (change)="updateExangValue($event)" required>
         <label class="form-check-label" for="exang">Exang</label>
       </div>
     </div>
-  
-    <div class="form-group">
-      <label for="oldPeak">ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
+
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
       <input type="number" class="form-control" id="oldPeak" name="oldPeak" [(ngModel)]="predictionRequest.oldPeak" required>
     </div>
-  
-    <div class="form-group">
-      <label for="slope">Slope of the Peak Exercise ST Segment (Slope)</label>
+
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="slope">*Slope of the Peak Exercise ST Segment (Slope)</label>
       <input type="number" class="form-control" id="slope" name="slope" [(ngModel)]="predictionRequest.slope" required>
     </div>
   
-    <div class="form-group">
-      <label for="ca">Number of Major Vessels Colored by Fluoroscopy (Ca)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="ca">*Number of Major Vessels Colored by Fluoroscopy (Ca)</label>
       <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="predictionRequest.ca" required>
     </div>
   
-    <div class="form-group">
-      <label for="thal">Thalassemia (Thal)</label>
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <label for="thal">*Thalassemia (Thal)</label>
       <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required>
     </div>
+  </div>
 
     <div class="d-flex flex-row gap-1">
       <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
       <button type="button" class="btn btn-secondary ml-2" [disabled]="!predictionForm.form.valid" (click)="predictWithOpenAI()">Predict with Open AI</button>
+    </div>
+
+    <div class="loader-container" [class.show-loader]="loading">
+      <div class="loader"></div>
+    </div>
+
+    <div class="custom-message-block mt-3" [class.show-message]="predictionMessage">
+      <div class="custom-message">
+        {{ predictionMessage }}
+      </div>
     </div>
     
 </form>

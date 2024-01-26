@@ -1,0 +1,58 @@
+.left-sidebar {
+    width: 220px;
+    height: 100%;
+    top: 67px;
+    overflow-y: auto;
+    transition: all 0.3s;
+    left: 0;
+    z-index: 1000;
+    padding-top: 20px !important;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    cursor: pointer;
+}
+
+.close-button i {
+    font-size: 16px;
+    color: #ffffff; 
+    padding: 8px; 
+    background-color: #343a40;
+    border-radius: 50%; 
+}
+
+.custom-hamburger-display {
+    display: none;
+}
+
+.navbar-header {
+    width: 100%;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+@media (max-width: 1024px) {
+
+    .left-sidebar {
+        position: fixed;
+        left: -250px;
+        z-index: 1000;
+    }
+  
+    .left-sidebar.open {
+        left:0;
+    }
+  
+    .page-wrapper, .footer {
+        margin-left: 0;
+    }
+
+    .custom-hamburger-display {
+        display: block;
+    }
+}

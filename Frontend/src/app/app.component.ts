@@ -27,6 +27,7 @@ import { SharedModule } from './.shared/shared.module';
 export class AppComponent implements DoCheck{
   title = 'FromHearty';
   isLoggedIn: boolean = false;
+  isSidebarOpen: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -42,5 +43,9 @@ export class AppComponent implements DoCheck{
     AuthentificationHelper.clearLocalStorage();
     this.checkLoginStatus();
     this.router.navigate(['']);
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }
