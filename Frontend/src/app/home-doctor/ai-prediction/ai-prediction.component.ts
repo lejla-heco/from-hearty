@@ -41,8 +41,7 @@ export class AiPredictionComponent {
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.predict,
-          this.predictionRequest,
-          Config.httpOptions()
+          this.predictionRequest
         )
         .subscribe(
           (response: any) => {
@@ -65,8 +64,7 @@ export class AiPredictionComponent {
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.openAiPredict,
-          this.predictionRequest,
-          Config.httpOptions()
+          this.predictionRequest
         )
         .subscribe(
           (response: any) => {

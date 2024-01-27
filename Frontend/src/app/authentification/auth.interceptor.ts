@@ -7,19 +7,21 @@ import { AuthentificationHelper } from '../authentification/authentification-hel
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log('interceptor called');
         if (req.url.endsWith('/login')) {
             return next.handle(req);
         }
-        if (!AuthentificationHelper.getLoginToken().isExpired) {
-            return next.handle(req);
-        } else {
-            console.log("Token expired, redirecting to login page");
-            this.router.navigate(['']);
-            AuthentificationHelper.clearLocalStorage();
-            return new Observable();
+        const loginToken = AuthentificationHelper.getLoginToken();
+        if (!loginToken.isExpired) {
+            const authReq = req.clone({ headers: req.headers.set('Authorization', loginToken.id) });
+            return next.handle(authReq);
         }
+        console.log("Token expired, redirecting to login page");
+        this.router.navigate(['']);
+        AuthentificationHelper.clearLocalStorage();
+        return new Observable();
     }
 }

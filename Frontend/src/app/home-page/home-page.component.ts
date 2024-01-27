@@ -20,7 +20,7 @@ export class HomePageComponent {
 
   getData() {
     // Test call for authentication and authorization
-    this.httpClient.get(Config.serverAddress + this.homePageService.api.patients, Config.httpOptions()).subscribe((response: any) => {
+    this.httpClient.get(Config.serverAddress + this.homePageService.api.patients).subscribe((response: any) => {
       console.log(response);
     });
   }

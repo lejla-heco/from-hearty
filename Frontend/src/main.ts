@@ -6,7 +6,8 @@ import { useHashLocationStrategy } from './.shared/use-hash-location-strategy.he
 import { provideRouter } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptor } from './app/authentification/auth.interceptor';
 
 const config: ApplicationConfig = { providers: [] };
 
@@ -14,9 +15,16 @@ useHashLocationStrategy(config);
 config.providers.push(provideRouter(routes));
 config.providers.push(importProvidersFrom(
     ToastrModule.forRoot(),
-    
 ));
+
 config.providers.push(provideAnimations());
-config.providers.push(provideHttpClient());
+config.providers.push(provideHttpClient(
+    withInterceptorsFromDi(),
+));
+config.providers.push({
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+});
 
 bootstrapApplication(AppComponent, config);
