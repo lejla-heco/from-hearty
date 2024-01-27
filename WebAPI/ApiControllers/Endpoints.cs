@@ -13,6 +13,13 @@ namespace WebAPI.ApiControllers
                 loginService.TryLogin(loginRequest)
             );
 
+            app.MapGet(ServiceDependencyInjection.LOGOUT_PATH, (LoginService loginService, HttpContext context) => {
+                var token = context.Request.Headers["Authorization"].FirstOrDefault();
+                if(token is null)
+                    return false;
+                return loginService.TryLogout(Guid.Parse(token));
+            });
+
             app.MapGet("/patients", (MyContext context) =>
                 context.Patients.Where(x => !x.IsRemoved).ToArray());
 

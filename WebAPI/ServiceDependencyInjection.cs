@@ -10,6 +10,7 @@ namespace WebAPI
     public static class ServiceDependencyInjection
     {
         public static string LOGIN_PATH = "/login";
+        public static string LOGOUT_PATH = "/logout";
 
         public static IServiceCollection RegisterWebApi(this IServiceCollection services)
         {
@@ -109,8 +110,9 @@ namespace WebAPI
         {
             app.Use(async (context, next) =>
             {
-                var isLoginPath = context.Request.Path.Value?.Contains(LOGIN_PATH);
-                if (isLoginPath == false)
+                var isLoginOrLogoutPath = (context.Request.Path.Value?.Contains(LOGIN_PATH) ?? false) || 
+                    (context.Request.Path.Value?.Contains(LOGOUT_PATH) ?? false);
+                if (isLoginOrLogoutPath == false)
                 {
                     var loginService = app.Services.GetService<LoginService>()!;
                     var token = context.Request.Headers["Authorization"].FirstOrDefault();

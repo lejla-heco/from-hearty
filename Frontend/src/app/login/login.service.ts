@@ -6,5 +6,6 @@ import { Injectable } from "@angular/core";
 export class LoginService {
     api = {
         login: '/login',
+        logout: '/logout'
     }
 }

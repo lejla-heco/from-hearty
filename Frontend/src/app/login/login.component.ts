@@ -18,20 +18,23 @@ import { LoginToken, RoleType } from './models/login-token.model';
     SharedModule
   ]
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   loginRequest: LoginRequest = new LoginRequest();
   loginToken!: LoginToken;
 
-  constructor(private httpClient: HttpClient, private router: Router, public loginService: LoginService,
-    private toastr: ToastrService) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    public loginService: LoginService,
+    private toastr: ToastrService
+  ) {
   }
 
-  navigateToDefaultRoute(loginToken: LoginToken)
-  {
+  navigateToDefaultRoute(loginToken: LoginToken) {
     if (loginToken.id) {
-      if(RoleType.Doctor == loginToken.roleType)
+      if (RoleType.Doctor == loginToken.roleType)
         this.router.navigateByUrl('ai-prediction');
-      else if(RoleType.Cardiolog == loginToken.roleType)
+      else if (RoleType.Cardiolog == loginToken.roleType)
         this.router.navigateByUrl('cardiolog-example');
       else
         this.router.navigateByUrl('patient-example');
@@ -48,7 +51,7 @@ export class LoginComponent implements OnInit{
       if (response) {
         this.loginToken = response;
         AuthentificationHelper.setLoginToken(response);
-        AuthentificationHelper.isLoggedIn(); 
+        AuthentificationHelper.isLoggedIn();
         this.navigateToDefaultRoute(this.loginToken);
       } else {
         this.toastr.error("Invalid credentials. Please check your login information.");

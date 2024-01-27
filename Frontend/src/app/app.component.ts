@@ -1,10 +1,11 @@
 import { Component, DoCheck } from '@angular/core';
 import { AuthentificationHelper } from './authentification/authentification-helper';
 import { Router, RouterOutlet } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './authentification/auth.interceptor';
+import { HttpClient } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from './.shared/shared.module';
+import { LoginService } from './login/login.service';
+import { Config } from './configuration/config';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +16,18 @@ import { SharedModule } from './.shared/shared.module';
     SharedModule,
     RouterOutlet,
     LoginComponent
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    }
   ]
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements DoCheck {
   title = 'FromHearty';
   isLoggedIn: boolean = false;
   isSidebarOpen: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient,
+    private loginService: LoginService,
+  ) { }
 
   ngDoCheck() {
     this.checkLoginStatus();
@@ -40,9 +38,14 @@ export class AppComponent implements DoCheck{
   }
 
   logout(): void {
-    AuthentificationHelper.clearLocalStorage();
-    this.checkLoginStatus();
-    this.router.navigate(['']);
+    this.httpClient
+      .get<boolean>(Config.serverAddress + this.loginService.api.logout)
+      .subscribe(response => {
+        console.log('Logout API was successful? ', response);
+        AuthentificationHelper.clearLocalStorage();
+        this.checkLoginStatus();
+        this.router.navigate(['']);
+      })
   }
 
   toggleSidebar() {

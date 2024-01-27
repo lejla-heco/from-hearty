@@ -2,52 +2,66 @@
 public record LoginRequest(string Username, string Password);
 public enum RoleType { Doctor, Cardiolog, Patient };
 public record LoginToken(Guid Id, DateTime ValidUntil, RoleType RoleType);
+public class LoginWrapper {
+    public LoginWrapper(LoginToken? loginToken, RoleType roleType)
+    {
+        this.LoginToken = loginToken;
+        this.RoleType = roleType;
+    }
+    
+    public LoginToken? LoginToken { get; set; }
+    public RoleType RoleType { get; set; }
+}
 
 public class LoginService
 {
-    private readonly Dictionary<string, RoleType> roleTypeByUsername = new()
+    private readonly Dictionary<string, LoginWrapper> loginWrapperByLoginRequest = new()
     {
-        { "from.hearty.doctor@edu.fit.ba", RoleType.Doctor },
-        { "from.hearty.cardiolog@edu.fit.ba", RoleType.Cardiolog },
-        { "from.hearty.patient@edu.fit.ba", RoleType.Patient },
+        { new LoginRequest("from.hearty.doctor@edu.fit.ba", "1234").ToString(), new LoginWrapper(null, RoleType.Doctor) },
+        { new LoginRequest("from.hearty.cardiolog@edu.fit.ba", "1234").ToString(), new LoginWrapper(null, RoleType.Cardiolog) },
+        { new LoginRequest("from.hearty.patient@edu.fit.ba", "1234").ToString(), new LoginWrapper(null, RoleType.Patient) }
     };
 
-    private readonly Dictionary<LoginRequest, LoginToken?> users = new()
-    {
-        { new LoginRequest("from.hearty.doctor@edu.fit.ba", "1234"), null },
-        { new LoginRequest("from.hearty.cardiolog@edu.fit.ba", "1234"), null },
-        { new LoginRequest("from.hearty.patient@edu.fit.ba", "1234"), null }
-    };
-
-    private readonly Dictionary<Guid, LoginToken> tokens = [];
+    private readonly Dictionary<Guid, LoginWrapper> loginWrapperByLoginId = [];
 
     public LoginToken? TryLogin(LoginRequest loginRequest)
     {
-        if (!this.users.TryGetValue(loginRequest, out var loginToken))
+        if (!this.loginWrapperByLoginRequest.TryGetValue(loginRequest.ToString(), out var loginWrapper))
             return null;
 
-        if (loginToken?.ValidUntil < DateTime.Now)
-            this.tokens.Remove(loginToken.Id);
+        if (loginWrapper.LoginToken?.ValidUntil < DateTime.Now)
+            this.loginWrapperByLoginId.Remove(loginWrapper.LoginToken.Id);
 
-        if (loginToken == null || loginToken.ValidUntil < DateTime.Now)
+        if (loginWrapper.LoginToken == null || loginWrapper.LoginToken.ValidUntil < DateTime.Now)
         {
-            loginToken = new LoginToken(
+            loginWrapper.LoginToken = new LoginToken(
                 Guid.NewGuid(),
                 DateTime.Now.AddHours(12),
-                roleTypeByUsername[loginRequest.Username]
+                loginWrapper.RoleType
             );
-            this.users[loginRequest] = loginToken;
-            this.tokens.Add(loginToken.Id, loginToken);
+
+            this.loginWrapperByLoginRequest[loginRequest.ToString()] = loginWrapper;
+            this.loginWrapperByLoginId.Add(loginWrapper.LoginToken.Id, loginWrapper);
         }
 
-        return loginToken;
+        return loginWrapper.LoginToken;
+    }
+
+    public bool TryLogout(Guid loginId)
+    {
+        if(this.loginWrapperByLoginId.TryGetValue(loginId, out var loginWrapper))
+        {
+            loginWrapper.LoginToken = null;
+            return true;
+        }
+        return false;
     }
 
     public bool isTokenValid(Guid loginId)
     {
-        if (!this.tokens.TryGetValue(loginId, out var loginToken))
+        if (!this.loginWrapperByLoginId.TryGetValue(loginId, out var loginWrapper))
             return false;
-        if (loginToken.ValidUntil < DateTime.Now)
+        if (loginWrapper.LoginToken?.ValidUntil < DateTime.Now)
             return false;
         return true;
     }
