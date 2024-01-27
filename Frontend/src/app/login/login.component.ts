@@ -7,6 +7,7 @@ import { AuthentificationHelper } from '../authentification/authentification-hel
 import { LoginService } from './login.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../.shared/shared.module';
+import { LoginToken, RoleType } from './models/login-token.model';
 
 @Component({
   selector: 'app-login',
@@ -19,23 +20,36 @@ import { SharedModule } from '../.shared/shared.module';
 })
 export class LoginComponent implements OnInit{
   loginRequest: LoginRequest = new LoginRequest();
+  loginToken!: LoginToken;
 
   constructor(private httpClient: HttpClient, private router: Router, public loginService: LoginService,
     private toastr: ToastrService) {
   }
 
-  ngOnInit(): void {
-    if (AuthentificationHelper.getLoginToken().id) {
-      this.router.navigateByUrl('ai-prediction');
+  navigateToDefaultRoute(loginToken: LoginToken)
+  {
+    if (loginToken.id) {
+      if(RoleType.Doctor == loginToken.roleType)
+        this.router.navigateByUrl('ai-prediction');
+      else if(RoleType.Cardiolog == loginToken.roleType)
+        this.router.navigateByUrl('cardiolog-example');
+      else
+        this.router.navigateByUrl('patient-example');
     };
   }
 
+  ngOnInit(): void {
+    this.loginToken = AuthentificationHelper.getLoginToken();
+    this.navigateToDefaultRoute(this.loginToken);
+  }
+
   login(): void {
-    this.httpClient.post(Config.serverAddress + this.loginService.api.login, this.loginRequest).subscribe((response: any) => {
+    this.httpClient.post<LoginToken | null>(Config.serverAddress + this.loginService.api.login, this.loginRequest).subscribe(response => {
       if (response) {
+        this.loginToken = response;
         AuthentificationHelper.setLoginToken(response);
         AuthentificationHelper.isLoggedIn(); 
-        this.router.navigateByUrl("ai-prediction");
+        this.navigateToDefaultRoute(this.loginToken);
       } else {
         this.toastr.error("Invalid credentials. Please check your login information.");
       }

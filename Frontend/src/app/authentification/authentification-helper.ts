@@ -7,7 +7,6 @@ export class AuthentificationHelper {
     return loginTokenFromLS !== null;
   }
 
-
   static setLoginToken(loginToken: LoginToken): void {
     if (loginToken == null)
       loginToken = new LoginToken();
@@ -31,6 +30,4 @@ export class AuthentificationHelper {
   static clearLocalStorage() {
     localStorage.removeItem("Authorization");
   }
-
-  
 }
