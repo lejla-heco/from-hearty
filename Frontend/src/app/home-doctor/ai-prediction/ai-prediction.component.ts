@@ -1,18 +1,19 @@
 // ai-prediction.component.ts
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { PredictionRequest } from './models/prediction-request.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../configuration/config';
 import { AiPredictionService } from './ai-prediction.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../../.shared/shared.module';
+import { SliderComponent } from '../../.shared/slider/slider.component';
 
 @Component({
   selector: 'app-ai-prediction',
   templateUrl: './ai-prediction.component.html',
   styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, SliderComponent],
 })
 export class AiPredictionComponent {
   predictionRequest: PredictionRequest = new PredictionRequest();
@@ -23,7 +24,8 @@ export class AiPredictionComponent {
     private httpClient: HttpClient,
     public aiPredictionService: AiPredictionService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   updateExangValue(event: any): void {
     this.predictionRequest.exang = event.target.checked ? 1 : 0;

@@ -25,16 +25,21 @@
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="trestBps">*Resting Blood Pressure (Trest Bps)</label>
-      <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="predictionRequest.trestBps" required>
+      <slider [(value)]="predictionRequest.trestBps"></slider>
+
+      <!-- <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="predictionRequest.trestBps" required> -->
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="chol">*Serum Cholesterol (Chol)</label>
-      <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="predictionRequest.chol" required>
+      <!-- <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="predictionRequest.chol" required> -->
+      <slider [(value)]="predictionRequest.chol"></slider>
+
     </div>
   
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="fbs">*Fasting Blood Sugar (Fbs)</label>
-      <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="predictionRequest.fbs" required>
+      <!-- <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="predictionRequest.fbs" required> -->
+      <slider [(value)]="predictionRequest.fbs"></slider>
     </div>
   
     <div class="form-group col-12 col-md-6 custom-form-padding">
@@ -60,22 +65,28 @@
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
-      <input type="number" class="form-control" id="oldPeak" name="oldPeak" [(ngModel)]="predictionRequest.oldPeak" required>
+      <!-- <input type="number" class="form-control" id="oldPeak" name="oldPeak" [(ngModel)]="predictionRequest.oldPeak" required> -->
+      <slider [(value)]="predictionRequest.oldPeak"></slider>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="slope">*Slope of the Peak Exercise ST Segment (Slope)</label>
-      <input type="number" class="form-control" id="slope" name="slope" [(ngModel)]="predictionRequest.slope" required>
+      <!-- <input type="number" class="form-control" id="slope" name="slope" [(ngModel)]="predictionRequest.slope" required> -->
+      <slider [(value)]="predictionRequest.slope"></slider>
+
     </div>
   
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="ca">*Number of Major Vessels Colored by Fluoroscopy (Ca)</label>
-      <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="predictionRequest.ca" required>
+      <!-- <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="predictionRequest.ca" required> -->
+      <slider [(value)]="predictionRequest.ca"></slider>
+
     </div>
   
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="thal">*Thalassemia (Thal)</label>
-      <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required>
+      <!-- <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required> -->
+      <slider [(value)]="predictionRequest.thal"></slider>
     </div>
   </div>
 
