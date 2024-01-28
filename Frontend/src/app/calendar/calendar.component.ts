@@ -14,7 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PatientService } from '../patient/patient.service';
 import { AuthentificationHelper } from '../authentification/authentification-helper';
 import { RoleType } from '../login/models/login-token.model';
-import { Cardiologist } from '../appointment/models/cardiologist.model';
+import { AiPredictionService } from '../home-doctor/ai-prediction/ai-prediction.service';
+import { PredictionResult } from './models/prediction-result.model';
 
 @Component({
   selector: 'app-calendar',
@@ -32,7 +33,7 @@ export class CalendarComponent implements OnChanges {
   roleType = AuthentificationHelper.getLoginToken().roleType;
 
   constructor(private changeDetector: ChangeDetectorRef, private calendarService: CalendarService, private httpClient: HttpClient,
-    private toastr: ToastrService, public patientService: PatientService) {
+    private toastr: ToastrService, public patientService: PatientService, private aiPredictionService: AiPredictionService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -81,8 +82,23 @@ export class CalendarComponent implements OnChanges {
       this.httpClient.put(Config.serverAddress + this.calendarService.api.appointments, newAppointment).subscribe((response: any) => {
         this.displayRoleMessage();
         this.getAppointments();
+        if (this.roleType == RoleType.Doctor) {
+          this.createPredictionResult();
+        }
       });
     }
+  }
+
+  createPredictionResult(): void {
+    let predictionResult: PredictionResult = new PredictionResult(this.aiPredictionService.predictionRequest);
+    predictionResult.patientId = this.patientService.selectedPatient!.id;
+    predictionResult.houseDoctorId = AuthentificationHelper.getLoginToken().userId;
+    predictionResult.cardiologistId = this.id;
+    predictionResult.label = Math.round(this.aiPredictionService.prediction!);
+
+    this.httpClient.put(Config.serverAddress + this.aiPredictionService.api.predictionResult, predictionResult).subscribe((response: any) => {
+      this.toastr.success("The created prediction has been stored in the Archive!");
+    });
   }
 
   validateCreate(): boolean {

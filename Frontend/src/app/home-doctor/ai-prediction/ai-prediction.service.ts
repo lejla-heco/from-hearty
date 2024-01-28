@@ -1,9 +1,13 @@
 import { Injectable } from "@angular/core";
+import { PredictionRequest } from "./models/prediction-request.model";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AiPredictionService {
+    predictionRequest: PredictionRequest = new PredictionRequest();
+    prediction?: number;
+
     cpOptions = [
         { value: 1, label: 'typical angina' }, { value: 2, label: 'atypical angina' }, { value: 3, label: 'non-anginal pain' }, { value: 4, label: 'asymptomatic' },
     ];
@@ -20,6 +24,7 @@ export class AiPredictionService {
 
     api = {
         predict: '/predict',
-        openAiPredict: '/open-ai-predict'
+        openAiPredict: '/open-ai-predict',
+        predictionResult: '/prediction-result'
     }
 }

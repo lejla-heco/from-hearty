@@ -20,10 +20,10 @@ import { RoleType } from '../../login/models/login-token.model';
 export class PatientOverviewComponent {
   themeClass = "ag-theme-quartz";
   patients: Patient[] = [];
-  defaultColDef: ColDef = { filter: true }
+  defaultColDef: ColDef = { filter: true, floatingFilter: true }
   colDefs: ColDef<any>[] = [
     { field: "id", hide: true },
-    { field: '', checkboxSelection: true, width: 50 },
+    { field: '', checkboxSelection: true, width: 50, floatingFilter: false, filter: false },
     { field: 'firstName' },
     { field: 'lastName' },
     { field: 'birthDate', valueFormatter: this.dateFormatter },

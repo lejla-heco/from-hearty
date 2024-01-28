@@ -21,40 +21,40 @@
   <div class="col-12 d-flex display-flex flex-wrap justify-content-between">
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="cp">*Chest Pain Type (Cp)</label>
-      <select class="form-control" id="cp" name="cp" [(ngModel)]="predictionRequest.cp" required>
+      <select class="form-control" id="cp" name="cp" [(ngModel)]="aiPredictionService.predictionRequest.cp" required>
         <option *ngFor="let option of this.aiPredictionService.cpOptions" [value]="option.value">{{ option.label }}
         </option>
       </select>
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="trestBps">*Resting Blood Pressure (Trest Bps)</label>
-      <slider [(value)]="predictionRequest.trestBps"></slider>
+      <slider [(value)]="aiPredictionService.predictionRequest.trestBps"></slider>
 
-      <!-- <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="predictionRequest.trestBps" required> -->
+      <!-- <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="aiPredictionService.predictionRequest.trestBps" required> -->
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="chol">*Serum Cholesterol (Chol)</label>
-      <!-- <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="predictionRequest.chol" required> -->
-      <slider [(value)]="predictionRequest.chol"></slider>
+      <!-- <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="aiPredictionService.predictionRequest.chol" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.chol"></slider>
 
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="fbs">*Fasting Blood Sugar (Fbs)</label>
-      <!-- <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="predictionRequest.fbs" required> -->
-      <slider [(value)]="predictionRequest.fbs"></slider>
+      <!-- <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="aiPredictionService.predictionRequest.fbs" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.fbs"></slider>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="restEcg">*Resting Electrocardiographic Results (Rest ECG)</label>
-      <select class="form-control" id="restEcg" name="restEcg" [(ngModel)]="predictionRequest.restEcg" required>
+      <select class="form-control" id="restEcg" name="restEcg" [(ngModel)]="aiPredictionService.predictionRequest.restEcg" required>
         <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value">{{ option.label }}
         </option>
       </select>
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="thalach">*Maximum Heart Rate Achieved (Thalach)</label>
-      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="predictionRequest.thalach" required>
+      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thalach" required>
         <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value">{{ option.label }}
         </option>
       </select>
@@ -63,7 +63,7 @@
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="exang">Exercise Induced Angina (Exang)</label>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="exang" name="exang" [checked]="predictionRequest.exang"
+        <input class="form-check-input" type="checkbox" id="exang" name="exang" [checked]="aiPredictionService.predictionRequest.exang"
           (change)="updateExangValue($event)" required>
         <label class="form-check-label" for="exang">Exang</label>
       </div>
@@ -71,28 +71,28 @@
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
-      <!-- <input type="number" class="form-control" id="oldPeak" name="oldPeak" [(ngModel)]="predictionRequest.oldPeak" required> -->
-      <slider [(value)]="predictionRequest.oldPeak"></slider>
+      <!-- <input type="number" class="form-control" id="oldPeak" name="oldPeak" [(ngModel)]="aiPredictionService.predictionRequest.oldPeak" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.oldPeak"></slider>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="slope">*Slope of the Peak Exercise ST Segment (Slope)</label>
-      <!-- <input type="number" class="form-control" id="slope" name="slope" [(ngModel)]="predictionRequest.slope" required> -->
-      <slider [(value)]="predictionRequest.slope"></slider>
+      <!-- <input type="number" class="form-control" id="slope" name="slope" [(ngModel)]="aiPredictionService.predictionRequest.slope" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.slope"></slider>
 
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="ca">*Number of Major Vessels Colored by Fluoroscopy (Ca)</label>
-      <!-- <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="predictionRequest.ca" required> -->
-      <slider [(value)]="predictionRequest.ca"></slider>
+      <!-- <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="aiPredictionService.predictionRequest.ca" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.ca"></slider>
 
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="thal">*Thalassemia (Thal)</label>
-      <!-- <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="predictionRequest.thal" required> -->
-      <slider [(value)]="predictionRequest.thal"></slider>
+      <!-- <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="aiPredictionService.predictionRequest.thal" required> -->
+      <slider [(value)]="aiPredictionService.predictionRequest.thal"></slider>
     </div>
   </div>
 

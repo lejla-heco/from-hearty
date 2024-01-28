@@ -18,7 +18,6 @@ import { PatientService } from '../../patient/patient.service';
   imports: [SharedModule, SliderComponent, AppointmentComponent],
 })
 export class AiPredictionComponent {
-  predictionRequest: PredictionRequest = new PredictionRequest();
   predictionMessage: string = '';
   appointment: boolean = false;
   loading: boolean = false;
@@ -28,11 +27,11 @@ export class AiPredictionComponent {
   }
 
   updateExangValue(event: any): void {
-    this.predictionRequest.exang = event.target.checked ? 1 : 0;
+    this.aiPredictionService.predictionRequest.exang = event.target.checked ? 1 : 0;
   }
 
   clearPredictionForm(): void {
-    this.predictionRequest = new PredictionRequest();
+    this.aiPredictionService.predictionRequest = new PredictionRequest();
     this.toastr.info('Prediction form has been cleared!');
     this.predictionMessage = '';
     this.appointment = false;
@@ -44,7 +43,7 @@ export class AiPredictionComponent {
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.predict,
-          this.predictionRequest
+          this.aiPredictionService.predictionRequest
         )
         .subscribe(
           (response: any) => {
@@ -52,6 +51,7 @@ export class AiPredictionComponent {
               'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
               response +
               '%';
+            this.aiPredictionService.prediction = response;
             this.appointment = true;
           },
           (error) => {
@@ -68,7 +68,7 @@ export class AiPredictionComponent {
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.openAiPredict,
-          this.predictionRequest
+          this.aiPredictionService.predictionRequest
         )
         .subscribe(
           (response: any) => {
@@ -84,13 +84,13 @@ export class AiPredictionComponent {
 
   validateFields(): any {
     if (
-      this.predictionRequest.trestBps < 1 ||
-      this.predictionRequest.chol < 1 ||
-      this.predictionRequest.fbs < 1 ||
-      this.predictionRequest.oldPeak < 1 ||
-      this.predictionRequest.slope < 1 ||
-      this.predictionRequest.ca < 1 ||
-      this.predictionRequest.thal < 1
+      this.aiPredictionService.predictionRequest.trestBps < 1 ||
+      this.aiPredictionService.predictionRequest.chol < 1 ||
+      this.aiPredictionService.predictionRequest.fbs < 1 ||
+      this.aiPredictionService.predictionRequest.oldPeak < 1 ||
+      this.aiPredictionService.predictionRequest.slope < 1 ||
+      this.aiPredictionService.predictionRequest.ca < 1 ||
+      this.aiPredictionService.predictionRequest.thal < 1
     ) {
       this.toastr.error(
         'Please ensure that numeric values are greater than or equal to 1!'

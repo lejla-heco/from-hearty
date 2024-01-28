@@ -6,34 +6,35 @@ import { PatientOverviewComponent } from '../../patient/patient-overview/patient
 import { PatientService } from '../../patient/patient.service';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
 import { RoleType } from '../../login/models/login-token.model';
+import { ArchiveComponent } from '../../archive/archive.component';
 
 @Component({
   selector: 'app-prediction-tab',
   templateUrl: './prediction-tab.component.html',
   styleUrl: './prediction-tab.component.css',
   standalone: true,
-  imports: [SharedModule, AiPredictionComponent, PatientOverviewComponent]
+  imports: [SharedModule, AiPredictionComponent, PatientOverviewComponent, ArchiveComponent]
 })
 export class PredictionTabComponent {
   patientsTab: boolean = true;
   aiPredictionTab: boolean = false;
-  archivesTab: boolean = false;  
+  archivesTab: boolean = false;
   roleType: RoleType = AuthentificationHelper.getLoginToken().roleType;
 
-  constructor(public patientService: PatientService){
+  constructor(public patientService: PatientService) {
 
   }
 
-  setTab(tab: string) : void{
-    if (tab == TabType.Patients){
+  setTab(tab: string): void {
+    if (tab == TabType.Patients) {
       this.patientsTab = true;
       this.aiPredictionTab = this.archivesTab = this.patientService.isPatientSelected = false;
     }
-    if (tab == TabType.AiPrediction){
+    if (tab == TabType.AiPrediction) {
       this.aiPredictionTab = true;
       this.patientsTab = this.archivesTab = false;
     }
-    if (tab == TabType.Archives){
+    if (tab == TabType.Archives) {
       this.archivesTab = true;
       this.patientsTab = this.aiPredictionTab = false;
     }
