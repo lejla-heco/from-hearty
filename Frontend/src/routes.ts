@@ -7,13 +7,13 @@ import { CardiologExampleComponent } from './app/home-doctor/cardiolog-example/c
 import { PatientExampleComponent } from './app/home-doctor/patient-example/patient-example.component';
 import { AppointmentComponent } from './app/appointment/appointment.component';
 import { CalendarComponent } from './app/calendar/calendar.component';
+import { PredictionTabComponent } from './app/home-doctor/prediction-tab/prediction-tab.component';
 
 export const routes: Route[] = [
     { path: '', component: LoginComponent },
     { path: 'home-page', component: HomePageComponent },
-    { path: 'ai-prediction', component: AiPredictionComponent },
     { path: 'cardiolog-example', component: CardiologExampleComponent },
     { path: 'patient-example', component: PatientExampleComponent },
     { path: 'appointment', component: AppointmentComponent },
-    { path: 'calendar', component: CalendarComponent }
+    { path: 'prediction-tab', component: PredictionTabComponent }
 ];

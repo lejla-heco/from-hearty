@@ -7,6 +7,7 @@ import { SharedModule } from '../.shared/shared.module';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { PatientService } from '../patient/patient.service';
 
 @Component({
   selector: 'app-appointment',
@@ -20,7 +21,7 @@ export class AppointmentComponent implements OnInit{
   cardiologists: Cardiologist[] = [];
   selected: any;
 
-  constructor(private httpClient: HttpClient, public appointmentService: AppointmentService) {
+  constructor(private httpClient: HttpClient, public appointmentService: AppointmentService, public patientService: PatientService) {
   }
 
   ngOnInit(): void {

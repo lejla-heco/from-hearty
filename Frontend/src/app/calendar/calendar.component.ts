@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, signal } from '@angular/core';
 import { SharedModule } from '../.shared/shared.module';
-import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { Calendar, CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -11,6 +11,8 @@ import { Config } from '../configuration/config';
 import { HttpClient } from '@angular/common/http';
 import { Appointment } from '../appointment/models/appointment.model';
 import { ToastrService } from 'ngx-toastr';
+import { PatientService } from '../patient/patient.service';
+import { AuthentificationHelper } from '../authentification/authentification-helper';
 
 @Component({
   selector: 'app-calendar',
@@ -27,7 +29,7 @@ export class CalendarComponent implements OnChanges {
   currentEvents = signal<EventApi[]>([]);
 
   constructor(private changeDetector: ChangeDetectorRef, private calendarService: CalendarService, private httpClient: HttpClient,
-    private toastr: ToastrService) {
+    private toastr: ToastrService, public patientService: PatientService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,12 +51,13 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateSelect(selectInfo: DateSelectArg): void {
-    const title = prompt('Please enter a new title for your event');
+    const title = `${this.patientService.selectedPatient?.firstName} ${this.patientService.selectedPatient?.lastName}`;
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect();
 
     let newAppointment = {
+      patientId: this.patientService.selectedPatient?.id,
       title: title,
       start: selectInfo.startStr,
       end: selectInfo.endStr,
@@ -72,9 +75,19 @@ export class CalendarComponent implements OnChanges {
   createAppointment(newAppointment: any): void {
     if (this.id) {
       this.httpClient.put(Config.serverAddress + this.calendarService.api.appointments, newAppointment).subscribe((response: any) => {
+        this.displayRoleMessage();
         this.getAppointments();
-        this.toastr.success("Successfully booked an appointment");
       });
+    }
+  }
+
+  displayRoleMessage(): void {
+    if (AuthentificationHelper.getLoginToken().roleType == 0) {
+      this.toastr.info("You do not have permission to edit the calendar.");
+      this.toastr.success("Upon selecting the preferred time slot, an appointment request was successfully submitted.");
+    }
+    if (AuthentificationHelper.getLoginToken().roleType == 1) {
+      this.toastr.success("Successfully booked an appointment!");
     }
   }
 

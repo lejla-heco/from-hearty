@@ -1,0 +1,4 @@
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+  --ag-selected-row-background-color: rgb(251, 150, 120, 0.3);
+}

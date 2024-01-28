@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   navigateToDefaultRoute(loginToken: LoginToken) {
     if (loginToken.id) {
       if (RoleType.Doctor == loginToken.roleType)
-        this.router.navigateByUrl('ai-prediction');
+        this.router.navigateByUrl('prediction-tab');
       else if (RoleType.Cardiolog == loginToken.roleType)
         this.router.navigateByUrl('cardiolog-example');
       else

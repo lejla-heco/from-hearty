@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row page-titles">
+      <div class="col-12 col-sm-3 col-md-5 align-self-center">
+        <h4 class="text-themecolor">Patients</h4>
+      </div>
+      <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
+        <div class="d-flex display-flex justify-content-end align-items-center">
+          <ol class="breadcrumb justify-content-end">
+            <li class="breadcrumb-item">Pages</li>
+            <li class="breadcrumb-item active">Patients</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="content">
+    <ag-grid-angular
+      [class]="themeClass"
+      [rowData]="patients"
+      [columnDefs]="colDefs"
+      domLayout='autoHeight'
+      [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      (selectionChanged)="onSelectionChanged($event)"
+      [columnHoverHighlight]="true"
+      [autoSizeStrategy]="autoSizeStrategy"
+    >
+    </ag-grid-angular>
+  </div>

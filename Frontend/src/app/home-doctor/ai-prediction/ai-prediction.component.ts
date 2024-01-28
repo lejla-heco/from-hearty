@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../../.shared/shared.module';
 import { SliderComponent } from '../../.shared/slider/slider.component';
 import { AppointmentComponent } from '../../appointment/appointment.component';
+import { PatientService } from '../../patient/patient.service';
 
 @Component({
   selector: 'app-ai-prediction',
@@ -22,11 +23,8 @@ export class AiPredictionComponent {
   appointment: boolean = false;
   loading: boolean = false;
 
-  constructor(
-    private httpClient: HttpClient,
-    public aiPredictionService: AiPredictionService,
-    private toastr: ToastrService
-  ) {
+  constructor(private httpClient: HttpClient, public aiPredictionService: AiPredictionService, private toastr: ToastrService,
+    public patientService: PatientService) {
   }
 
   updateExangValue(event: any): void {
@@ -54,7 +52,7 @@ export class AiPredictionComponent {
               'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
               response +
               '%';
-              this.appointment = true;
+            this.appointment = true;
           },
           (error) => {
             this.predictionMessage = 'An error occurred while predicting.';
