@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 const importsAndExportsInternal: NgModule['exports'] = [
     CommonModule,
     FormsModule,
-    RouterModule,
+    RouterModule
 ];
 
 @NgModule({

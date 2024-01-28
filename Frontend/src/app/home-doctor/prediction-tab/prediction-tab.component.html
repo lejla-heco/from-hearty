@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs customtab2" role="tablist">
+    <li class="nav-item"> 
+        <a class="nav-link active" data-bs-toggle="tab" (click)="setTab('Patients')" role="tab">
+            <span class="hidden-sm-up"><i class="fas fa-user-injured"></i></span> 
+            <span class="hidden-xs-down"> Patients</span>
+        </a> 
+    </li>
+    <li *ngIf="roleType==0" class="nav-item"> 
+        <a class="nav-link" data-bs-toggle="tab" (click)="setTab('AiPrediction')" [class.disabled]="!patientService.isPatientSelected" role="tab">
+            <span class="hidden-sm-up"><i class="fas fa-medkit"></i></span> 
+            <span class="hidden-xs-down"> AI Prediction</span>
+        </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link" data-bs-toggle="tab" (click)="setTab('Archives')" [class.disabled]="!patientService.isPatientSelected" role="tab">
+            <span class="hidden-sm-up"><i class="fas fa-archive"></i></span> 
+            <span class="hidden-xs-down"> Archives</span>
+        </a> 
+    </li>
+</ul>
+<app-patient-overview *ngIf="patientsTab"></app-patient-overview>
+<app-ai-prediction *ngIf="aiPredictionTab"></app-ai-prediction>

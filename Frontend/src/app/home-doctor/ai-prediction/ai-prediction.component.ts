@@ -7,24 +7,24 @@ import { AiPredictionService } from './ai-prediction.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModule } from '../../.shared/shared.module';
 import { SliderComponent } from '../../.shared/slider/slider.component';
+import { AppointmentComponent } from '../../appointment/appointment.component';
+import { PatientService } from '../../patient/patient.service';
 
 @Component({
   selector: 'app-ai-prediction',
   templateUrl: './ai-prediction.component.html',
   styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
-  imports: [SharedModule, SliderComponent],
+  imports: [SharedModule, SliderComponent, AppointmentComponent],
 })
 export class AiPredictionComponent {
   predictionRequest: PredictionRequest = new PredictionRequest();
   predictionMessage: string = '';
-  loading: boolean = false; 
+  appointment: boolean = false;
+  loading: boolean = false;
 
-  constructor(
-    private httpClient: HttpClient,
-    public aiPredictionService: AiPredictionService,
-    private toastr: ToastrService
-  ) {
+  constructor(private httpClient: HttpClient, public aiPredictionService: AiPredictionService, private toastr: ToastrService,
+    public patientService: PatientService) {
   }
 
   updateExangValue(event: any): void {
@@ -35,11 +35,12 @@ export class AiPredictionComponent {
     this.predictionRequest = new PredictionRequest();
     this.toastr.info('Prediction form has been cleared!');
     this.predictionMessage = '';
+    this.appointment = false;
   }
 
   predict(): void {
     if (this.validateFields()) {
-      this.loading = true; 
+      this.loading = true;
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.predict,
@@ -51,18 +52,19 @@ export class AiPredictionComponent {
               'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
               response +
               '%';
+            this.appointment = true;
           },
           (error) => {
             this.predictionMessage = 'An error occurred while predicting.';
           }
         )
-        .add(() => (this.loading = false)); 
+        .add(() => (this.loading = false));
     }
   }
 
   predictWithOpenAI(): void {
     if (this.validateFields()) {
-      this.loading = true; 
+      this.loading = true;
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.openAiPredict,
@@ -76,7 +78,7 @@ export class AiPredictionComponent {
             this.predictionMessage = 'An error occurred while predicting with Open AI.';
           }
         )
-        .add(() => (this.loading = false)); 
+        .add(() => (this.loading = false));
     }
   }
 
