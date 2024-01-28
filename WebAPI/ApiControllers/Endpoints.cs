@@ -23,6 +23,15 @@ namespace WebAPI.ApiControllers
             app.MapGet("/patients", (MyContext context) =>
                 context.Patients.Where(x => !x.IsRemoved).ToArray());
 
+            app.MapGet("/patients/{patientId}", (string patientId, MyContext context) =>
+            {
+                Guid.TryParse(patientId, out Guid guidPatientId);
+                var patient = context.Patients
+                    .Where(patient => patient.Id == guidPatientId).FirstOrDefault();
+
+                return patient;
+            });
+
             app.MapPut("/patient", (Patient patient, MyContext context) =>
             {
                 context.Patients.AddOrUpdate(patient);
@@ -99,6 +108,17 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
                 var appointments = context.Appointments
                     .Where(appointment => appointment.CardiologistId == guidCardiologistId)
+                    .ToList();
+
+                return appointments;
+            });
+
+            app.MapGet("/appointments/{cardiologistId}/{patientId}", (string cardiologistId, string patientId, MyContext context) =>
+            {
+                Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
+                Guid.TryParse(patientId, out Guid guidPatientId);
+                var appointments = context.Appointments
+                    .Where(appointment => appointment.CardiologistId == guidCardiologistId && appointment.PatientId == guidPatientId)
                     .ToList();
 
                 return appointments;
