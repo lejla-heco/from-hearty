@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+
 public record LoginRequest(string Username, string Password);
 public enum RoleType { Doctor, Cardiolog, Patient };
 public record LoginToken(Guid Id, DateTime ValidUntil, String RoleType, Guid UserId);
@@ -28,10 +30,35 @@ public class LoginService
             var roleType = context.UserRoles.Where(x => x.Id == loggedInUser.UserRoleId).SingleOrDefault();
             if (roleType != null) {
 
+                var userId = loggedInUser.Id;
+                var userQuery = context.Users
+                    .Where(user => user.Id == loggedInUser.Id)
+                    .Include(user => user.HouseDoctor)
+                    .Include(user => user.Cardiologist)
+                    .Include(user => user.Patient);
+
+                var user = userQuery.FirstOrDefault();
+
+                if (user != null)
+                {
+                    if (roleType.Role == "Doctor")
+                    {
+                        userId = user.HouseDoctor[0].Id;
+                    }
+                    else if (roleType.Role == "Cardiolog")
+                    {
+                        userId = user.Cardiologist[0].Id;
+                    }
+                    else if (roleType.Role == "Patient")
+                    {
+                        userId = user.Patient[0].Id;
+                    }
+                }
+
                 if (!this.loginWrapperByLoginRequest.TryGetValue(loginRequest.ToString(), out var loginWrapper))
                 {
-                    loginWrapperByLoginRequest.Add(loginRequest.ToString(), new LoginWrapper(null, roleType.Role, loggedInUser.Id));
-                    loginWrapper = new LoginWrapper(null, roleType.Role, loggedInUser.Id);
+                    loginWrapperByLoginRequest.Add(loginRequest.ToString(), new LoginWrapper(null, roleType.Role, userId));
+                    loginWrapper = new LoginWrapper(null, roleType.Role, userId);
                 }
 
                 if (loginWrapper.LoginToken?.ValidUntil < DateTime.Now)
@@ -43,7 +70,7 @@ public class LoginService
                         Guid.NewGuid(),
                         DateTime.Now.AddHours(12),
                         roleType.Role,
-                        loggedInUser.Id
+                        userId
                     );
 
                     this.loginWrapperByLoginRequest[loginRequest.ToString()] = loginWrapper;

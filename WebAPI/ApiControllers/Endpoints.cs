@@ -104,6 +104,21 @@ namespace WebAPI.ApiControllers
                 return appointments;
             });
 
+            app.MapDelete("/appointments/{appointmentId}", (string appointmentId, MyContext context) =>
+            {
+                Guid.TryParse(appointmentId, out Guid guidAppointmentId);
+
+                var appointmentsToDelete = context.Appointments
+                    .Where(appointment => appointment.Id == guidAppointmentId)
+                    .ToList();
+
+                if (appointmentsToDelete.Any())
+                {
+                    context.Appointments.RemoveRange(appointmentsToDelete);
+                    context.SaveChanges();
+                }
+            });
+
 
         }
     }
