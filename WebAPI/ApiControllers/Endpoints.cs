@@ -9,8 +9,8 @@ namespace WebAPI.ApiControllers
     {
         public static void MapEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapPost(ServiceDependencyInjection.LOGIN_PATH, (LoginRequest loginRequest, LoginService loginService) =>
-                loginService.TryLogin(loginRequest)
+            app.MapPost(ServiceDependencyInjection.LOGIN_PATH, (LoginRequest loginRequest, LoginService loginService, MyContext context) =>
+                loginService.TryLogin(loginRequest, context)
             );
 
             app.MapGet(ServiceDependencyInjection.LOGOUT_PATH, (LoginService loginService, HttpContext context) => {
