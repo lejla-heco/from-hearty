@@ -168,10 +168,38 @@ public static class ModelExtensions
             },
         };
 
+        var appointments = new List<Appointment>() {
+            new () {
+                Id = Generator.NewGuid(),
+                Title = "Appointment 1",
+                Start = new DateTime(),
+                End = new DateTime(),
+                PatientId = patients[0].Id,
+                CardiologistId = cardiologists[0].Id,
+            },
+            new () {
+                Id = Generator.NewGuid(),
+                Title = "Appointment 2",
+                Start = new DateTime().AddDays(1),
+                End = new DateTime().AddDays(1),
+                PatientId = patients[1].Id,
+                CardiologistId = cardiologists[0].Id,
+            },
+             new () {
+                Id = Generator.NewGuid(),
+                Title = "Appointment 3",
+                Start = new DateTime().AddDays(2),
+                End = new DateTime().AddDays(2),
+                PatientId = patients[2].Id,
+                CardiologistId = cardiologists[1].Id,
+            }
+        };
+
         context.HouseDoctors.AddOrUpdateRange(houseDoctors);
         context.Cardiologists.AddOrUpdateRange(cardiologists);
         context.Patients.AddOrUpdateRange(patients);
         context.Findings.AddOrUpdateRange(findings);
+        context.Appointments.AddOrUpdateRange(appointments);
         context.SaveChanges();
     }
 }
