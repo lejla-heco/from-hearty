@@ -139,6 +139,25 @@ namespace WebAPI.ApiControllers
                 }
             });
 
+            app.MapGet("/prediction-result", (MyContext context) =>
+            context.PredictionResults.Where(x => !x.IsRemoved).ToArray());
+
+            app.MapPut("/prediction-result", (PredictionResult predictionResult, MyContext context) =>
+            {
+                context.PredictionResults.AddOrUpdate(predictionResult);
+                context.SaveChanges();
+                return predictionResult;
+            });
+
+            app.MapGet("/prediction-result/{patientId}", (string patientId, MyContext context) =>
+            {
+                Guid.TryParse(patientId, out Guid guidPatientId);
+                var predictionResults = context.PredictionResults
+                    .Where(predictionResult => predictionResult.PatientId == guidPatientId)
+                    .ToList();
+
+                return predictionResults;
+            });
 
         }
     }

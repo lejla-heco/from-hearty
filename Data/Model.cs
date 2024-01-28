@@ -10,6 +10,7 @@ public class MyContext : DbContext
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<PredictionResult> PredictionResults { get; set; }
 
     public string DbPath { get; }
 
@@ -67,6 +68,7 @@ public class Patient : IModel
     public HouseDoctor HouseDoctor { get; set; } = default!;
     public List<Finding> Findings { get; } = [];
     public List<Appointment> Appointment { get; } = [];
+    public List<PredictionResult> PredictionResult { get; } = [];
 }
 
 public class Cardiologist : IModel
@@ -79,6 +81,7 @@ public class Cardiologist : IModel
     public required string LastName { get; set; }
     public List<Finding> Findings { get; } = [];
     public List<Appointment> Appointment { get; } = [];
+    public List<PredictionResult> PredictionResult { get; } = [];
 }
 
 public class HouseDoctor : IModel
@@ -91,6 +94,7 @@ public class HouseDoctor : IModel
     public required string LastName { get; set; }
     public List<Patient> Patient { get; } = [];
     public List<Finding> Findings { get; } = [];
+    public List<PredictionResult> PredictionResult { get; } = [];
 }
 
 public class Finding : IModel
@@ -154,6 +158,30 @@ public class Appointment : IModel
     public bool AllDay { get; set; } = false;
     public Guid CardiologistId { get; set; }
     public Cardiologist Cardiologist { get; set; } = default!;
+    public Guid PatientId { get; set; }
+    public Patient Patient { get; set; } = default!;
+}
+
+public class PredictionResult : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public float Cp { get; set; }
+    public float TrestBps { get; set; }
+    public float Chol { get; set; }
+    public float Fbs { get; set; }
+    public float RestEcg { get; set; }
+    public float Thalach { get; set; }
+    public float Exang { get; set; }
+    public float OldPeak { get; set; }
+    public float Slope { get; set; }
+    public float Ca { get; set; }
+    public float Thal { get; set; }
+    public float Label { get; set; }
+    public Guid? CardiologistId { get; set; }
+    public Cardiologist? Cardiologist { get; set; }
+    public Guid? HouseDoctorId { get; set; }
+    public HouseDoctor? HouseDoctor { get; set; }
     public Guid PatientId { get; set; }
     public Patient Patient { get; set; } = default!;
 }
