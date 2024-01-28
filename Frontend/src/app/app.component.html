@@ -1,22 +1,22 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <body class="skin-megna fixed-layout">
-<div *ngIf="isLoggedIn" id="main-wrapper">
-    <header class="topbar">
-        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-            <button class="navbar-toggler custom-hamburger-display" type="button" (click)="toggleSidebar()">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            <div class="navbar-header">
-                <a class="navbar-brand"><b>
-                        <img src="./assets/images/logo.png" alt="logo" class="light-logo" />
-                    </b>
-                    <span class="hidden-xs"> FromHearty</span>
-                </a>
-            </div>
-            <div class="navbar-collapse">
-                <ul class="navbar-nav me-auto">
-                    <!--
+    <div *ngIf="isLoggedIn" id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <button class="navbar-toggler custom-hamburger-display" type="button" (click)="toggleSidebar()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-header">
+                    <a class="navbar-brand"><b>
+                            <img src="./assets/images/logo.png" alt="logo" class="light-logo" />
+                        </b>
+                        <span class="hidden-xs"> FromHearty</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        <!--
                         <li class="nav-item"> <a class="nav-link nav-toggler d-block d-md-none waves-effect waves-dark"
                                 href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                         <li class="nav-item"> <a
@@ -28,10 +28,10 @@
                             </form>
                         </li>
                         -->
-                </ul>
-                <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item dropdown">
-                        <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-bs-toggle="dropdown"
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                         </a>
@@ -42,9 +42,9 @@
                                 </li>
                             </ul>
                         </div> -->
-                    </li>
-                    <li class="nav-item dropdown">
-                        <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
+                        </li>
+                        <li class="nav-item dropdown">
+                            <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
                                 class="icon-note"></i>
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
@@ -56,51 +56,53 @@
                                 </li>
                             </ul>
                         </div> -->
-                    </li>
-                    <li class="nav-item dropdown u-pro">
-                        <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
+                        </li>
+                        <li class="nav-item dropdown u-pro">
+                            <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="" alt="user"
                                 class=""></a> -->
-                        <div class="dropdown-menu dropdown-menu-end animated flipInY">
-                            <a class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"><i class="ti-settings"></i> Account Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <aside class="left-sidebar" [class.open]="isSidebarOpen">
-        <div class="scroll-sidebar">
-            <div class="close-button custom-hamburger-display" (click)="toggleSidebar()">
-                <i class="material-icons">close</i>
-              </div>
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav">
-                    <li class="nav-small-cap">--- PAGES</li>
-                    <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
-                                class="fas fa-home"></i><span class="hide-menu">Home
-                                Page</span></a></li>
-                    <li> <a class="waves-effect waves-dark" href="#" routerLink="prediction-tab"><i
-                                class="fas fa-heartbeat"></i><span class="hide-menu">Patient Record</span></a></li>
-                    <li class="nav-small-cap">--- SUPPORT</li>
-                    <li><a class="waves-effect waves-dark" aria-expanded="false" (click)="logout()"><i
-                                class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a></li>
-                </ul>
+                            <div class="dropdown-menu dropdown-menu-end animated flipInY">
+                                <a class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item"><i class="ti-settings"></i> Account Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </nav>
+        </header>
+        <aside class="left-sidebar" [class.open]="isSidebarOpen">
+            <div class="scroll-sidebar">
+                <div class="close-button custom-hamburger-display" (click)="toggleSidebar()">
+                    <i class="material-icons">close</i>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">--- PAGES</li>
+                        <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
+                                    class="fas fa-home"></i><span class="hide-menu">Home
+                                    Page</span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="#" routerLink="calendar"><i
+                                    class="fas fa-calendar"></i><span class="hide-menu">Calendar</span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="#" routerLink="prediction-tab"><i
+                                    class="fas fa-heartbeat"></i><span class="hide-menu">Patient Record</span></a></li>
+                        <li class="nav-small-cap">--- SUPPORT</li>
+                        <li><a class="waves-effect waves-dark" aria-expanded="false" (click)="logout()"><i
+                                    class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-wrapper">
+            <router-outlet></router-outlet>
         </div>
-    </aside>
-    <div class="page-wrapper">
-        <router-outlet></router-outlet>
+        <footer class="footer">
+            © 2024 FromHearty
+        </footer>
     </div>
-    <footer class="footer">
-        © 2024 FromHearty
-    </footer>
-</div>
 
 
-<app-login *ngIf="!isLoggedIn"></app-login>
+    <app-login *ngIf="!isLoggedIn"></app-login>
 </body>

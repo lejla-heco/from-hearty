@@ -5,6 +5,7 @@ import { TabType } from './models/tab.enum';
 import { PatientOverviewComponent } from '../../patient/patient-overview/patient-overview.component';
 import { PatientService } from '../../patient/patient.service';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
+import { RoleType } from '../../login/models/login-token.model';
 
 @Component({
   selector: 'app-prediction-tab',
@@ -17,7 +18,7 @@ export class PredictionTabComponent {
   patientsTab: boolean = true;
   aiPredictionTab: boolean = false;
   archivesTab: boolean = false;  
-  roleType: number = AuthentificationHelper.getLoginToken().roleType;
+  roleType: RoleType = AuthentificationHelper.getLoginToken().roleType;
 
   constructor(public patientService: PatientService){
 

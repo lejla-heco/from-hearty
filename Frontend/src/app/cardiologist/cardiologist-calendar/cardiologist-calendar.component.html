@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="row page-titles">
+        <div class="col-12 col-sm-3 col-md-5 align-self-center">
+            <h4 class="text-themecolor">Calendar</h4>
+        </div>
+        <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
+            <div class="d-flex display-flex justify-content-end align-items-center">
+                <ol class="breadcrumb justify-content-end">
+                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item active">Calendar</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group form-element">
+    <label for="cp">Select a patient:</label>
+    <select class="form-control" id="patient" name="patient" (change)="onPatientSelectionChange($event)" required>
+        <option *ngFor="let option of this.patients" [value]="option.id">{{ option.firstName + ' '
+            + option.lastName }}
+        </option>
+    </select>
+</div>
+
+<app-calendar [id]="userId" class="calendar-element"></app-calendar>

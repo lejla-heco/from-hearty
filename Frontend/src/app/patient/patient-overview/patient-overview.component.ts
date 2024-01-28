@@ -8,6 +8,7 @@ import { Patient } from '../models/patient.model';
 import { Config } from '../../configuration/config';
 import { ToastrService } from 'ngx-toastr';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
+import { RoleType } from '../../login/models/login-token.model';
 
 @Component({
   selector: 'app-patient-overview',
@@ -51,10 +52,10 @@ export class PatientOverviewComponent {
   }
 
   displayRoleMessage(): void {
-    if (AuthentificationHelper.getLoginToken().roleType == 0) {
+    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor) {
       this.toastr.info("To create an AI Prediction or review the Archive, you must first select a patient!");
     }
-    if (AuthentificationHelper.getLoginToken().roleType == 1) {
+    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog) {
       this.toastr.info("To review the Archive, you must first select a patient!");
     }
   }
