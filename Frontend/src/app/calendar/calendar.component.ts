@@ -13,6 +13,8 @@ import { Appointment } from '../appointment/models/appointment.model';
 import { ToastrService } from 'ngx-toastr';
 import { PatientService } from '../patient/patient.service';
 import { AuthentificationHelper } from '../authentification/authentification-helper';
+import { RoleType } from '../login/models/login-token.model';
+import { Cardiologist } from '../appointment/models/cardiologist.model';
 
 @Component({
   selector: 'app-calendar',
@@ -27,6 +29,7 @@ export class CalendarComponent implements OnChanges {
   calendarVisible = false;
   calendarOptions = this.initCalendar();
   currentEvents = signal<EventApi[]>([]);
+  roleType = AuthentificationHelper.getLoginToken().roleType;
 
   constructor(private changeDetector: ChangeDetectorRef, private calendarService: CalendarService, private httpClient: HttpClient,
     private toastr: ToastrService, public patientService: PatientService) {
@@ -51,6 +54,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateSelect(selectInfo: DateSelectArg): void {
+    console.log(this.patientService.selectedPatient)
     const title = `${this.patientService.selectedPatient?.firstName} ${this.patientService.selectedPatient?.lastName}`;
     const calendarApi = selectInfo.view.calendar;
 
@@ -73,7 +77,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   createAppointment(newAppointment: any): void {
-    if (this.id) {
+    if (this.id && this.validateCreate()) {
       this.httpClient.put(Config.serverAddress + this.calendarService.api.appointments, newAppointment).subscribe((response: any) => {
         this.displayRoleMessage();
         this.getAppointments();
@@ -81,20 +85,38 @@ export class CalendarComponent implements OnChanges {
     }
   }
 
+  validateCreate(): boolean {
+    if (!this.patientService.selectedPatient && this.roleType == RoleType.Cardiolog) {
+      this.toastr.error("To create an appointment, the patient must be selected!")
+      return false;
+    }
+    return true;
+  }
+
+  deleteAppointment(id: any): void {
+    if (this.id) {
+      this.httpClient.delete(Config.serverAddress + this.calendarService.api.appointments + '/' + id).subscribe((response: any) => {
+        this.toastr.success("Successfully deleted an appointment!");
+        this.getAppointments();
+      });
+    }
+  }
+
   displayRoleMessage(): void {
-    if (AuthentificationHelper.getLoginToken().roleType == 0) {
+    if (this.roleType == RoleType.Doctor) {
       this.toastr.info("You do not have permission to edit the calendar.");
       this.toastr.success("Upon selecting the preferred time slot, an appointment request was successfully submitted.");
     }
-    if (AuthentificationHelper.getLoginToken().roleType == 1) {
+    if (this.roleType == RoleType.Cardiolog) {
       this.toastr.success("Successfully booked an appointment!");
     }
   }
 
   handleEventClick(clickInfo: EventClickArg): void {
-    /*if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
-    }*/
+      this.deleteAppointment(clickInfo.event.id);
+    }
   }
 
   handleEvents(events: EventApi[]): void {
@@ -123,7 +145,7 @@ export class CalendarComponent implements OnChanges {
       selectMirror: true,
       dayMaxEvents: true,
       select: this.handleDateSelect.bind(this),
-      eventClick: this.handleEventClick.bind(this),
+      eventClick: this.roleType == RoleType.Cardiolog ? this.handleEventClick.bind(this) : undefined,
       eventsSet: this.handleEvents.bind(this),
       height: "auto"
     });

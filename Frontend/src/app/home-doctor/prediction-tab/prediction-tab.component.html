@@ -5,7 +5,7 @@
             <span class="hidden-xs-down"> Patients</span>
         </a> 
     </li>
-    <li *ngIf="roleType==0" class="nav-item"> 
+    <li *ngIf="roleType=='Doctor'" class="nav-item"> 
         <a class="nav-link" data-bs-toggle="tab" (click)="setTab('AiPrediction')" [class.disabled]="!patientService.isPatientSelected" role="tab">
             <span class="hidden-sm-up"><i class="fas fa-medkit"></i></span> 
             <span class="hidden-xs-down"> AI Prediction</span>

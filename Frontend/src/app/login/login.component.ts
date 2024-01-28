@@ -35,9 +35,9 @@ export class LoginComponent implements OnInit {
       if (RoleType.Doctor == loginToken.roleType)
         this.router.navigateByUrl('prediction-tab');
       else if (RoleType.Cardiolog == loginToken.roleType)
-        this.router.navigateByUrl('cardiolog-example');
+        this.router.navigateByUrl('calendar');
       else
-        this.router.navigateByUrl('patient-example');
+        this.router.navigateByUrl('home-page');
     };
   }
 

@@ -8,6 +8,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { PatientService } from '../patient/patient.service';
+import { AuthentificationHelper } from '../authentification/authentification-helper';
 
 @Component({
   selector: 'app-appointment',
