@@ -54,7 +54,7 @@ export class PatientOverviewComponent {
     if (AuthentificationHelper.getLoginToken().roleType == 0) {
       this.toastr.info("To create an AI Prediction or review the Archive, you must first select a patient!");
     }
-    if (AuthentificationHelper.getLoginToken().roleType == 0) {
+    if (AuthentificationHelper.getLoginToken().roleType == 1) {
       this.toastr.info("To review the Archive, you must first select a patient!");
     }
   }
