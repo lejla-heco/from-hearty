@@ -84,6 +84,27 @@ namespace WebAPI.ApiControllers
                 return await _predictionService.GetOpenAiDescriptivePrediction(predictionRequest);
             });
 
+            app.MapGet("/appointments", (MyContext context) =>
+            context.Appointments.Where(x => !x.IsRemoved).ToArray());
+
+            app.MapPut("/appointments", (Appointment appointment, MyContext context) =>
+            {
+                context.Appointments.AddOrUpdate(appointment);
+                context.SaveChanges();
+                return appointment;
+            });
+
+            app.MapGet("/appointments/{cardiologistId}", (string cardiologistId, MyContext context) =>
+            {
+                Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
+                var appointments = context.Appointments
+                    .Where(appointment => appointment.CardiologistId == guidCardiologistId)
+                    .ToList();
+
+                return appointments;
+            });
+
+
         }
     }
 }

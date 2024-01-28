@@ -7,6 +7,7 @@ public class MyContext : DbContext
     public DbSet<HouseDoctor> HouseDoctors { get; set; }
     public DbSet<Finding> Findings { get; set; }
     public DbSet<FindingBase> FindingsBase { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
 
     public string DbPath { get; }
 
@@ -43,6 +44,7 @@ public class Patient : IModel
     public HouseDoctor HouseDoctor { get; set; } = default!;
 
     public List<Finding> Findings { get; } = [];
+    public List<Appointment> Appointments { get; } = [];
 }
 
 public class Cardiologist : IModel
@@ -54,6 +56,7 @@ public class Cardiologist : IModel
     public required string LastName { get; set; }
 
     public List<Finding> Findings { get; } = [];
+    public List<Appointment> Appointments { get; } = [];
 }
 
 public class HouseDoctor : IModel
@@ -129,4 +132,18 @@ public class FindingBase : IModel
 
     public string? HouseDoctorNote { get; set; }
     public string? CardiologistNote { get; set; }
+}
+
+public class Appointment : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public required string Title { get; set; }
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+    public bool AllDay { get; set; } = false;
+    public Guid CardiologistId { get; set; }
+    public Cardiologist Cardiologist { get; set; } = default!;
+    public Guid? PatientId { get; set; }
+    public Patient? Patient { get; set; }
 }
