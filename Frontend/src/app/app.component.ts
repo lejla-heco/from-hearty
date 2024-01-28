@@ -16,7 +16,7 @@ import { Config } from './configuration/config';
     SharedModule,
     RouterOutlet,
     LoginComponent
-  ]
+  ],
 })
 export class AppComponent implements DoCheck {
   title = 'FromHearty';

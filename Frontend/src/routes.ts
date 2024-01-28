@@ -5,6 +5,8 @@ import { HomePageComponent } from './app/home-page/home-page.component';
 import { AiPredictionComponent } from './app/home-doctor/ai-prediction/ai-prediction.component';
 import { CardiologExampleComponent } from './app/home-doctor/cardiolog-example/cardiolog-example.component';
 import { PatientExampleComponent } from './app/home-doctor/patient-example/patient-example.component';
+import { AppointmentComponent } from './app/appointment/appointment.component';
+import { CalendarComponent } from './app/calendar/calendar.component';
 
 export const routes: Route[] = [
     { path: '', component: LoginComponent },
@@ -12,4 +14,6 @@ export const routes: Route[] = [
     { path: 'ai-prediction', component: AiPredictionComponent },
     { path: 'cardiolog-example', component: CardiologExampleComponent },
     { path: 'patient-example', component: PatientExampleComponent },
+    { path: 'appointment', component: AppointmentComponent },
+    { path: 'calendar', component: CalendarComponent }
 ];
