@@ -84,7 +84,7 @@
                         <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
                                     class="fas fa-home"></i><span class="hide-menu">Home
                                     Page</span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="#" routerLink="calendar"><i
+                        <li *ngIf="roleType=='Cardiolog'"> <a class="waves-effect waves-dark" href="#" routerLink="calendar"><i
                                     class="fas fa-calendar"></i><span class="hide-menu">Calendar</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" routerLink="prediction-tab"><i
                                     class="fas fa-heartbeat"></i><span class="hide-menu">Patient Record</span></a></li>

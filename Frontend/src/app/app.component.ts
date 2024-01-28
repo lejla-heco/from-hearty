@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { SharedModule } from './.shared/shared.module';
 import { LoginService } from './login/login.service';
 import { Config } from './configuration/config';
+import { RoleType } from './login/models/login-token.model';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements DoCheck {
   title = 'FromHearty';
   isLoggedIn: boolean = false;
   isSidebarOpen: boolean = false;
+  roleType: RoleType = AuthentificationHelper.getLoginToken().roleType;
 
   constructor(
     private router: Router,
