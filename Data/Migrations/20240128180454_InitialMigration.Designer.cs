@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240128100530_AddAppointments")]
-    partial class AddAppointments
+    [Migration("20240128180454_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace Data.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("PatientId")
+                    b.Property<Guid>("PatientId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Start")
@@ -73,7 +73,12 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cardiologists");
                 });
@@ -239,7 +244,12 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("HouseDoctors");
                 });
@@ -273,28 +283,91 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HouseDoctorId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserRoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserRoleId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UserRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Appointment", b =>
                 {
                     b.HasOne("Cardiologist", "Cardiologist")
-                        .WithMany("Appointments")
+                        .WithMany("Appointment")
                         .HasForeignKey("CardiologistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Patient", "Patient")
-                        .WithMany("Appointments")
-                        .HasForeignKey("PatientId");
+                        .WithMany("Appointment")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cardiologist");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Cardiologist", b =>
+                {
+                    b.HasOne("User", "User")
+                        .WithMany("Cardiologist")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Finding", b =>
@@ -343,6 +416,17 @@ namespace Data.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("HouseDoctor", b =>
+                {
+                    b.HasOne("User", "User")
+                        .WithMany("HouseDoctor")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Patient", b =>
                 {
                     b.HasOne("HouseDoctor", "HouseDoctor")
@@ -351,12 +435,31 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("User", "User")
+                        .WithMany("Patient")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("HouseDoctor");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.HasOne("UserRole", "UserRole")
+                        .WithMany("User")
+                        .HasForeignKey("UserRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserRole");
                 });
 
             modelBuilder.Entity("Cardiologist", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("Appointment");
 
                     b.Navigation("Findings");
                 });
@@ -370,9 +473,23 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Patient", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("Appointment");
 
                     b.Navigation("Findings");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("Cardiologist");
+
+                    b.Navigation("HouseDoctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("UserRole", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,23 +6,64 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Role = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    UserRoleId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_UserRoles_UserRoleId",
+                        column: x => x.UserRoleId,
+                        principalTable: "UserRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Cardiologists",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cardiologists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cardiologists_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,12 +72,19 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HouseDoctors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HouseDoctors_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,6 +93,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     DateRegistered = table.Column<DateTime>(type: "TEXT", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
@@ -59,6 +108,42 @@ namespace Data.Migrations
                         name: "FK_Patients_HouseDoctors_HouseDoctorId",
                         column: x => x.HouseDoctorId,
                         principalTable: "HouseDoctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    End = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AllDay = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CardiologistId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Cardiologists_CardiologistId",
+                        column: x => x.CardiologistId,
+                        principalTable: "Cardiologists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -153,6 +238,21 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_CardiologistId",
+                table: "Appointments",
+                column: "CardiologistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_PatientId",
+                table: "Appointments",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cardiologists_UserId",
+                table: "Cardiologists",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Findings_CardiologistId",
                 table: "Findings",
                 column: "CardiologistId");
@@ -183,14 +283,32 @@ namespace Data.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HouseDoctors_UserId",
+                table: "HouseDoctors",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_HouseDoctorId",
                 table: "Patients",
                 column: "HouseDoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_UserId",
+                table: "Patients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserRoleId",
+                table: "Users",
+                column: "UserRoleId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Appointments");
+
             migrationBuilder.DropTable(
                 name: "Findings");
 
@@ -205,6 +323,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "HouseDoctors");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
         }
     }
 }

@@ -8,6 +8,8 @@ public class MyContext : DbContext
     public DbSet<Finding> Findings { get; set; }
     public DbSet<FindingBase> FindingsBase { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<User> Users { get; set; }
 
     public string DbPath { get; }
 
@@ -29,44 +31,64 @@ public interface IModel
     bool IsRemoved { get; set; }
 }
 
+public class UserRole : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public required string Role { get; set; }
+    public List<User> User { get; } = [];
+}
+
+public class User : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+    public required Guid UserRoleId { get; set; }
+    public UserRole UserRole { get; set; } = default!;
+    public List<Patient> Patient { get; } = [];
+    public List<HouseDoctor> HouseDoctor { get; } = [];
+    public List<Cardiologist> Cardiologist { get; } = [];
+}
+
 public class Patient : IModel
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
     public DateTime DateRegistered { get; set; } = new DateTime();
-
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public required bool? Gender { get; set; }
     public required DateTime BirthDate { get; set; }
-
     public required Guid HouseDoctorId { get; set; }
     public HouseDoctor HouseDoctor { get; set; } = default!;
-
     public List<Finding> Findings { get; } = [];
-    public List<Appointment> Appointments { get; } = [];
+    public List<Appointment> Appointment { get; } = [];
 }
 
 public class Cardiologist : IModel
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
-    
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-
     public List<Finding> Findings { get; } = [];
-    public List<Appointment> Appointments { get; } = [];
+    public List<Appointment> Appointment { get; } = [];
 }
 
 public class HouseDoctor : IModel
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
-
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-
     public List<Patient> Patient { get; } = [];
     public List<Finding> Findings { get; } = [];
 }
@@ -76,21 +98,15 @@ public class Finding : IModel
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
     public required DateTime CreatedOn { get; set; } = DateTime.Now;
-
     public required string FeatureA { get; set; } // <--- Here we need to add features for HearyPro.
-    
     public required bool? IsSickPrediction { get; set; } // <--- AI
     public required bool? IsSick { get; set; } 
-
     public required Guid PatientId { get; set; }
     public Patient Patient { get; set; } = default!;
-
     public Guid? CardiologistId { get; set; }
     public Cardiologist? Cardiologist { get; set; }
-
     public Guid? HouseDoctorId { get; set; }
     public HouseDoctor? HouseDoctor { get; set; }
-
     public string? HouseDoctorNote { get; set; }
     public string? CardiologistNote { get; set; }
 }
@@ -100,7 +116,6 @@ public class FindingBase : IModel
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
     public required DateTime CreatedOn { get; set; } = DateTime.Now;
-    
     public required float BMI { get; set; }
     public required bool Smoking { get; set; }
     public required string AlcoholDrinking { get; set; }
@@ -117,19 +132,14 @@ public class FindingBase : IModel
     public required bool Asthma { get; set; }
     public required bool KidneyDisease { get; set; }
     public required bool SkinCancer { get; set; }
-
     public required bool? IsSickPrediction { get; set; } // <--- AI
     public required bool? IsSick { get; set; } 
-
     public required Guid PatientId { get; set; }
     public Patient Patient { get; set; } = default!;
-
     public Guid? CardiologistId { get; set; }
     public Cardiologist? Cardiologist { get; set; }
-
     public Guid? HouseDoctorId { get; set; }
     public HouseDoctor? HouseDoctor { get; set; }
-
     public string? HouseDoctorNote { get; set; }
     public string? CardiologistNote { get; set; }
 }
@@ -144,6 +154,6 @@ public class Appointment : IModel
     public bool AllDay { get; set; } = false;
     public Guid CardiologistId { get; set; }
     public Cardiologist Cardiologist { get; set; } = default!;
-    public Guid? PatientId { get; set; }
-    public Patient? Patient { get; set; }
+    public Guid PatientId { get; set; }
+    public Patient Patient { get; set; } = default!;
 }
