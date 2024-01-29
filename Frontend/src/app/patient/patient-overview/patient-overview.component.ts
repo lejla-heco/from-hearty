@@ -9,6 +9,8 @@ import { Config } from '../../configuration/config';
 import { ToastrService } from 'ngx-toastr';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
 import { RoleType } from '../../login/models/login-token.model';
+import { AiPredictionService } from '../../home-doctor/ai-prediction/ai-prediction.service';
+import { PredictionRequest } from '../../home-doctor/ai-prediction/models/prediction-request.model';
 
 @Component({
   selector: 'app-patient-overview',
@@ -46,9 +48,11 @@ export class PatientOverviewComponent {
     });
   }
 
-  constructor(private patientService: PatientService, private httpClient: HttpClient, private toastr: ToastrService) {
-    this.displayRoleMessage();
-    this.getPatients();
+  constructor(private patientService: PatientService, private httpClient: HttpClient, private toastr: ToastrService,
+    private aiPredictionService: AiPredictionService) {
+      this.aiPredictionService.predictionRequest = new PredictionRequest();
+      this.displayRoleMessage();
+      this.getPatients();
   }
 
   displayRoleMessage(): void {
