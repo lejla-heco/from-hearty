@@ -1,0 +1,6 @@
+.fc-event-main {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    height: 21px !important;
+  }

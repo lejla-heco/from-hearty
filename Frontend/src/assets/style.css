@@ -4879,7 +4879,7 @@ fieldset:disabled .btn {
 }
 
 .nav-tabs .nav-link.disabled {
-  color: #6c757d;
+  color: #6c757d !important;
   background-color: transparent;
   border-color: transparent;
 }
@@ -6386,6 +6386,10 @@ fieldset:disabled .btn {
   width: max-content;
   max-width: 100%;
   pointer-events: none;
+}
+
+.toast-container div, .toast-container span{
+  color: #fff !important;
 }
 
 .toast-container> :not(:last-child) {
@@ -29939,6 +29943,13 @@ File: scss
   .d-flex.no-block {
     display: flex !important;
   }
+}
+
+.fc-event-main {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  height: 21px !important;
 }
 
 /*-- ============================================================== 

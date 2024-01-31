@@ -7,6 +7,9 @@ import { SharedModule } from './.shared/shared.module';
 import { LoginService } from './login/login.service';
 import { Config } from './configuration/config';
 import { RoleType } from './login/models/login-token.model';
+import { AccessibilityService } from './app.accessibilityservice';
+import { AccessibilityServiceInit } from './app.accessibilityserviceinit';
+
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,7 @@ import { RoleType } from './login/models/login-token.model';
 export class AppComponent implements DoCheck {
   title = 'FromHearty';
   isLoggedIn: boolean = false;
+  isAccessibilityOn = false;
   isSidebarOpen: boolean = false;
   roleType: RoleType = AuthentificationHelper.getLoginToken().roleType;
 
@@ -29,9 +33,14 @@ export class AppComponent implements DoCheck {
     private router: Router,
     private httpClient: HttpClient,
     private loginService: LoginService,
+    private accessibilityService: AccessibilityService, 
+    private accessibilityServiceInit: AccessibilityServiceInit, 
   ) { }
 
   ngDoCheck() {
+    if(this.isAccessibilityOn == true) {
+      this.accessibilityServiceInit.applySettings();
+    }
     this.checkLoginStatus();
   }
 
@@ -52,5 +61,13 @@ export class AppComponent implements DoCheck {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+
+  toggleAccessibilitySettings() {
+    // Implement logic to toggle contrast, text color, and font size
+    // Update the settings in the AccessibilityService
+    this.isAccessibilityOn = !this.isAccessibilityOn;
+    this.accessibilityService.applySettings();
   }
 }

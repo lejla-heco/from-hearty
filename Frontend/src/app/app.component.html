@@ -7,12 +7,19 @@
                 <button class="navbar-toggler custom-hamburger-display" type="button" (click)="toggleSidebar()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-header">
+                <div class="navbar-header d-flex justify-content-between align-items-center">
                     <a class="navbar-brand"><b>
                             <img src="./assets/images/logo.png" alt="logo" class="light-logo" />
                         </b>
                         <span class="hidden-xs"> FromHearty</span>
                     </a>
+
+                    <div (click)="toggleAccessibilitySettings()" style="display:flex; align-items: center; cursor: pointer; margin-right: 20px;">
+                        <i *ngIf="isAccessibilityOn" class="fas fa-eye-slash" style="font-size: 18px; color: white"></i>
+                        <i *ngIf="!isAccessibilityOn" class="fas fa-eye" style="font-size: 18px; color:white"></i>
+                      </div>
+  
+
                 </div>
                 <div class="navbar-collapse">
                     <ul class="navbar-nav me-auto">
