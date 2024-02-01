@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 using Service.DTO;
+using System.Reflection;
+using System.Text;
 
 namespace Service.Services
 {
@@ -27,11 +29,24 @@ namespace Service.Services
 
             var request = new RestRequest();
             request.Method = Method.Post;
+
+            var parameters = new StringBuilder();
+            Type inputTypes = typeof(FromHeartyData);
+            PropertyInfo[] properties = inputTypes.GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                object? value = property.GetValue(input);
+                if (value != null)
+                {
+                    parameters.Append($"{property.Name}: {value}");
+                }
+            }
+
             request.AddHeader("Content-Type", "application/json");
             var body = $$"""
             {
             "model": "gpt-3.5-turbo-instruct",
-            "prompt": "Can you give me a detailed explanation on why this person might have a heart disease problem based on these parameters in this JSON object \n {{input}}",
+            "prompt": "Can you give me a detailed explanation and percentage of probability on why this person might have a heart disease problem based on these parameters: {{parameters}}",
             "temperature": 0,
             "max_tokens": 600
             }
