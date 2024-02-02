@@ -8,6 +8,6 @@ export class PredictionRequest {
     exang!: number;
     oldPeak: number = 1;
     slope: number = 1;
-    ca: number = 1;
-    thal: number = 1;
+    ca: number = 0;
+    thal: number = 0;
 }

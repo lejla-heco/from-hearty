@@ -26,36 +26,44 @@
         </option>
       </select>
     </div>
-    <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="trestBps">*Resting Blood Pressure (Trest Bps)</label>
-      <slider [(value)]="aiPredictionService.predictionRequest.trestBps"></slider>
 
-      <!-- <input type="number" class="form-control" id="trestBps" name="trestBps" [(ngModel)]="aiPredictionService.predictionRequest.trestBps" required> -->
-    </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="chol">*Serum Cholesterol (Chol)</label>
-      <!-- <input type="number" class="form-control" id="chol" name="chol" [(ngModel)]="aiPredictionService.predictionRequest.chol" required> -->
-      <slider [(value)]="aiPredictionService.predictionRequest.chol"></slider>
-
+      <div class="d-flex justify-content-between">
+        <label for="trestBps">*Resting Electrocardiographic Results (Rest ECG) </label> <span class="normal-label-text"> (Normal: 120/80 mmHg)</span>
+      </div>
+      <select class="form-control" id="trestBps" name="trestBps" [(ngModel)]="aiPredictionService.predictionRequest.trestBps" required>
+        <option *ngFor="let option of this.aiPredictionService.trestBps" [value]="option.value" [ngClass]="getSelectOptionClassPressure(option.value)">{{ option.label }}
+        </option>
+      </select>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="fbs">*Fasting Blood Sugar (Fbs)</label>
-      <!-- <input type="number" class="form-control" id="fbs" name="fbs" [(ngModel)]="aiPredictionService.predictionRequest.fbs" required> -->
-      <slider [(value)]="aiPredictionService.predictionRequest.fbs"></slider>
+      <div class="d-flex justify-content-between">
+        <label for="chol">*Serum Cholesterol (Chol) </label> <span class="normal-label-text"> (Normal: < 5 mmol / L)</span>
+      </div>
+      <slider [(value)]="aiPredictionService.predictionRequest.chol" [style.color]="getTextColor()"></slider>
+    </div>
+
+    <div class="form-group col-12 col-md-6 custom-form-padding">
+      <div class="d-flex justify-content-between">
+        <label>*Fasting Blood Sugar (Fbs) </label> <span class="normal-label-text"> (Normal: 3 - 6 mmol / L)</span>
+      </div>
+      <slider [maxValue]=23 [(value)]="aiPredictionService.predictionRequest.fbs" [style.color]="getTextColorSugar()"></slider>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="restEcg">*Resting Electrocardiographic Results (Rest ECG)</label>
       <select class="form-control" id="restEcg" name="restEcg" [(ngModel)]="aiPredictionService.predictionRequest.restEcg" required>
-        <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value">{{ option.label }}
+        <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value" [ngClass]="getSelectOptionClass(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="thalach">*Maximum Heart Rate Achieved (Thalach)</label>
+      <div class="d-flex justify-content-between">
+        <label for="thalach">*Maximum Heart Rate Achieved (Thalach) </label> <span class="normal-label-text"> (Normal: 60-100 beats per minute)</span>
+      </div>
       <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thalach" required>
-        <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value">{{ option.label }}
+        <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value" [ngClass]="getSelectOptionClassHeartRate(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
@@ -83,17 +91,24 @@
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="ca">*Number of Major Vessels Colored by Fluoroscopy (Ca)</label>
+      <div class="d-flex justify-content-between">
+        <label>*Number of Major Vessels Colored by Fluoroscopy (Ca) </label> <span class="normal-label-text"> (Normal: 0)</span>
+      </div>
       <!-- <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="aiPredictionService.predictionRequest.ca" required> -->
-      <slider [(value)]="aiPredictionService.predictionRequest.ca"></slider>
+      <slider [maxValue]=3 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.ca" [style.color]="getTextColorCa()"></slider>
 
     </div>
-
+    
     <div class="form-group col-12 col-md-6 custom-form-padding">
-      <label for="thal">*Thalassemia (Thal)</label>
-      <!-- <input type="number" class="form-control" id="thal" name="thal" [(ngModel)]="aiPredictionService.predictionRequest.thal" required> -->
-      <slider [(value)]="aiPredictionService.predictionRequest.thal"></slider>
+      <div class="d-flex justify-content-between">
+        <label for="thalach">*Thalassemia (Thal) </label> <span class="normal-label-text"> (Normal: No)</span>
+      </div>
+      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal" required>
+        <option *ngFor="let option of this.aiPredictionService.thal" [value]="option.value" [ngClass]="getSelectOptionThal(option.value)">{{ option.label }}
+        </option>
+      </select>
     </div>
+    
   </div>
 
   <div class="d-flex flex-row gap-1">

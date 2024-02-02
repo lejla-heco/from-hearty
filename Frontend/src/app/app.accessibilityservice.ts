@@ -45,6 +45,14 @@ export class AccessibilityService {
         });
     }
 
+    const labelTag = document.querySelectorAll('label');
+    if (labelTag) {
+        labelTag.forEach((divElement: HTMLElement) => {
+            this.renderer.setStyle(divElement, 'color', 'black');
+            this.renderer.setStyle(divElement, 'font-weight', 'bold');
+        });
+    }
+
     const toastTag = document.querySelectorAll('#toast-container');
     if (toastTag) {
         toastTag.forEach((headerElement: Element) => {
@@ -76,6 +84,13 @@ export class AccessibilityService {
         elementsWithAriaSelectedFalse.forEach((headerElement: Element) => {
             const el = headerElement as HTMLElement;
             this.renderer.setStyle(el, 'color', '#f5582a');
+        });
+
+        const activeTab = customTab2Element.querySelectorAll('.nav-link.active');
+
+        activeTab.forEach((headerElement: Element) => {
+            const el = headerElement as HTMLElement;
+            this.renderer.setStyle(el, 'color', '#4f5467');
         });
 
     }
@@ -205,6 +220,13 @@ export class AccessibilityService {
             const el = headerElement as HTMLElement;
             this.renderer.removeStyle(el, 'color');
         });
+
+        const activeTab = customTab2Element.querySelectorAll('.nav-link.active');
+
+        activeTab.forEach((headerElement: Element) => {
+            const el = headerElement as HTMLElement;
+            this.renderer.removeStyle(el, 'color');
+        });
     }
 
     const headerTag = document.querySelectorAll('header');
@@ -217,6 +239,14 @@ export class AccessibilityService {
     const divTag = document.querySelectorAll('div');
     if (divTag) {
         divTag.forEach((spanElement: HTMLElement) => {
+            this.renderer.removeStyle(spanElement, 'color');
+            this.renderer.removeStyle(spanElement, 'font-weight');
+        });
+    }
+
+    const labelTag = document.querySelectorAll('label');
+    if (labelTag) {
+        labelTag.forEach((spanElement: HTMLElement) => {
             this.renderer.removeStyle(spanElement, 'color');
             this.renderer.removeStyle(spanElement, 'font-weight');
         });

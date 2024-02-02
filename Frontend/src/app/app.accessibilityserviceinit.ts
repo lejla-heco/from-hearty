@@ -36,6 +36,14 @@ export class AccessibilityServiceInit {
         });
     }
 
+    const labelTag = document.querySelectorAll('label');
+    if (labelTag) {
+        labelTag.forEach((divElement: HTMLElement) => {
+            this.renderer.setStyle(divElement, 'color', 'black');
+            this.renderer.setStyle(divElement, 'font-weight', 'bold');
+        });
+    }
+
     const customTab2Element = document.querySelector('.customtab2');
     if(customTab2Element) {
         const elementsWithAriaSelectedFalse = customTab2Element.querySelectorAll('[aria-selected="false"]');
@@ -43,6 +51,13 @@ export class AccessibilityServiceInit {
         elementsWithAriaSelectedFalse.forEach((headerElement: Element) => {
             const el = headerElement as HTMLElement;
             this.renderer.setStyle(el, 'color', '#f5582a');
+        });
+
+        const activeTab = customTab2Element.querySelectorAll('.nav-link.active');
+
+        activeTab.forEach((headerElement: Element) => {
+            const el = headerElement as HTMLElement;
+            this.renderer.setStyle(el, 'color', '#4f5467');
         });
 
     }

@@ -6388,6 +6388,22 @@ fieldset:disabled .btn {
   pointer-events: none;
 }
 
+.normal-label-text {
+  color: green;
+  font-size: 12px
+}
+.normal-option {
+  color: green;
+}
+
+.bad-option {
+  color: orange
+}
+
+.worst-option {
+  color: red
+}
+
 .toast-container div, .toast-container span{
   color: #fff !important;
 }
