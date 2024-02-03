@@ -8,8 +8,8 @@
         <ol class="breadcrumb justify-content-end">
           <li class="breadcrumb-item">Pages</li>
           <li class="breadcrumb-item active">AI Prediction</li>
-          <li class="breadcrumb-item">{{patientService.selectedPatient?.firstName + ' ' +
-            patientService.selectedPatient?.lastName}}</li>
+          <li class="breadcrumb-item">{{patient?.firstName + ' ' +
+            patient?.lastName}}</li>
         </ol>
         <button type="button" class="btn btn-info d-lg-block m-l-15 text-white" (click)="clearPredictionForm()"><i
             class="fas fa-eraser"></i> Clear prediction form</button>

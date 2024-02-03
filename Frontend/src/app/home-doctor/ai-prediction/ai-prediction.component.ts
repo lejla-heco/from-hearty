@@ -1,4 +1,3 @@
-// ai-prediction.component.ts
 import { Component, OnInit } from '@angular/core';
 import { PredictionRequest } from './models/prediction-request.model';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +9,8 @@ import { SliderComponent } from '../../.shared/slider/slider.component';
 import { AppointmentComponent } from '../../appointment/appointment.component';
 import { PatientService } from '../../patient/patient.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { ActivatedRoute } from '@angular/router';
+import { Patient } from '../../patient/models/patient.model';
 
 @Component({
   selector: 'app-ai-prediction',
@@ -24,19 +25,36 @@ export class AiPredictionComponent implements OnInit {
   appointment: boolean = false;
   loading: boolean = false;
   modalRef: MdbModalRef<AppointmentComponent> | null = null;
+  patient?: Patient;
 
   constructor(
     private httpClient: HttpClient,
     public aiPredictionService: AiPredictionService,
     private toastr: ToastrService,
     public patientService: PatientService,
-    private modalService: MdbModalService
+    private modalService: MdbModalService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.handleQueryParams();
     // Set the default value for the slider
     this.aiPredictionService.predictionRequest.chol = 3;
     this.aiPredictionService.predictionRequest.fbs = 3;
+  }
+
+  private handleQueryParams(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['patientId']) {
+        this.getPatient(params['patientId']);
+      }
+    });
+  }
+
+  getPatient(id: any): void {
+    this.httpClient.get(Config.serverAddress + this.patientService.api.patients + '/' + id).subscribe((response: any) => {
+      this.patient = response;
+    });
   }
 
   updateExangValue(event: any): void {

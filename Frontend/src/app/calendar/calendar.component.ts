@@ -55,7 +55,6 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateSelect(selectInfo: DateSelectArg): void {
-    console.log(this.patientService.selectedPatient)
     const title = `${this.patientService.selectedPatient?.firstName} ${this.patientService.selectedPatient?.lastName}`;
     const calendarApi = selectInfo.view.calendar;
 

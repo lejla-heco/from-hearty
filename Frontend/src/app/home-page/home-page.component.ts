@@ -15,13 +15,5 @@ import { SharedModule } from '../.shared/shared.module';
 })
 export class HomePageComponent {
   constructor(private httpClient: HttpClient, public homePageService: HomePageService) {
-    this.getData();
-  }
-
-  getData() {
-    // Test call for authentication and authorization
-    this.httpClient.get(Config.serverAddress + this.homePageService.api.patients).subscribe((response: any) => {
-      console.log(response);
-    });
   }
 }

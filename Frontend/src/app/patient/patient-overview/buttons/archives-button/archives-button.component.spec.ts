@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PredictionTabComponent } from './prediction-tab.component';
+import { ArchivesButtonComponent } from './archives-button.component';
 
-describe('PredictionTabComponent', () => {
-  let component: PredictionTabComponent;
-  let fixture: ComponentFixture<PredictionTabComponent>;
+describe('ArchivesButtonComponent', () => {
+  let component: ArchivesButtonComponent;
+  let fixture: ComponentFixture<ArchivesButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PredictionTabComponent]
+      declarations: [ArchivesButtonComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PredictionTabComponent);
+    fixture = TestBed.createComponent(ArchivesButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
