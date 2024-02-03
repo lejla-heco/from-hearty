@@ -1,24 +1,22 @@
-<div class="modal fade bs-example-modal-lg" id="book-an-appointment">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><strong>Book an Appointment for patient {{patientService.selectedPatient?.firstName + ' ' + patientService.selectedPatient?.lastName}}</strong></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="cp">Select a cardiologist:</label>
-                    <select class="form-control" id="cardiologist" name="cardiologist" [(ngModel)]="selected" required>
-                        <option *ngFor="let option of this.cardiologists" [value]="option.id">{{ option.firstName + ' '
-                            + option.lastName }}
-                        </option>
-                    </select>
-                </div>       
-                <app-calendar [id]="selected"></app-calendar>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white waves-effect" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+<div class="modal-header">
+    <h4 class="modal-title"><strong>Book an Appointment for patient
+            {{patientService.selectedPatient?.firstName + ' ' +
+            patientService.selectedPatient?.lastName}}</strong></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="cp">Select a cardiologist:</label>
+        <select class="form-control" id="cardiologist" name="cardiologist" [(ngModel)]="selected" required>
+            <option *ngFor="let option of this.cardiologists" [value]="option.id">{{ option.firstName + ' '
+                + option.lastName }}
+            </option>
+        </select>
     </div>
+    <app-calendar [id]="selected"></app-calendar>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+        Close
+    </button>
 </div>

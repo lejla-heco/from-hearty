@@ -9,6 +9,7 @@ import { SharedModule } from '../../.shared/shared.module';
 import { SliderComponent } from '../../.shared/slider/slider.component';
 import { AppointmentComponent } from '../../appointment/appointment.component';
 import { PatientService } from '../../patient/patient.service';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-ai-prediction',
@@ -16,18 +17,21 @@ import { PatientService } from '../../patient/patient.service';
   styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
   imports: [SharedModule, SliderComponent, AppointmentComponent],
+  providers: [MdbModalService]
 })
 export class AiPredictionComponent implements OnInit {
   predictionMessage: string = '';
   appointment: boolean = false;
   loading: boolean = false;
+  modalRef: MdbModalRef<AppointmentComponent> | null = null;
 
   constructor(
     private httpClient: HttpClient,
     public aiPredictionService: AiPredictionService,
     private toastr: ToastrService,
-    public patientService: PatientService
-  ) {}
+    public patientService: PatientService,
+    private modalService: MdbModalService
+  ) { }
 
   ngOnInit(): void {
     // Set the default value for the slider
@@ -114,7 +118,7 @@ export class AiPredictionComponent implements OnInit {
     // Implement your logic to determine the color based on the slider value
     const cholValue = this.aiPredictionService.predictionRequest.chol;
     let cholColor = ""
-    if(cholValue < 5) {
+    if (cholValue < 5) {
       cholColor = 'green'
     } else if (cholValue == 5) {
       cholColor = 'orange'
@@ -128,7 +132,7 @@ export class AiPredictionComponent implements OnInit {
     // Implement your logic to determine the color based on the slider value
     const sugarValue = this.aiPredictionService.predictionRequest.fbs;
     let sugarColor = ""
-    if(sugarValue >= 3 && sugarValue <= 6 ) {
+    if (sugarValue >= 3 && sugarValue <= 6) {
       sugarColor = 'green'
     } else if (sugarValue < 3) {
       sugarColor = 'red'
@@ -144,9 +148,9 @@ export class AiPredictionComponent implements OnInit {
     // Implement your logic to determine the color based on the slider value
     const caValue = this.aiPredictionService.predictionRequest.ca;
     let caColor = ""
-    if(caValue == 0 ) {
+    if (caValue == 0) {
       caColor = 'green'
-    }  else if (caValue == 1) {
+    } else if (caValue == 1) {
       caColor = 'orange'
     } else if (caValue > 1) {
       caColor = 'red'
@@ -172,7 +176,7 @@ export class AiPredictionComponent implements OnInit {
       optionClass = 'normal-option'
     } else if (optionValue == 1) {
       optionClass = 'worst-option'
-    } 
+    }
     return optionClass
   }
 
@@ -182,7 +186,7 @@ export class AiPredictionComponent implements OnInit {
       optionClass = 'normal-option'
     } else if (optionValue == 6 || optionValue == 7) {
       optionClass = 'worst-option'
-    } 
+    }
     return optionClass
   }
 
@@ -195,8 +199,14 @@ export class AiPredictionComponent implements OnInit {
       optionClass = 'bad-option'
     } else {
       optionClass = 'worst-option'
-    } 
+    }
     return optionClass
+  }
+
+  openModal(): void {
+    this.modalRef = this.modalService.open(AppointmentComponent, {
+      modalClass: 'modal-xl modal-dialog-scrollable'
+    });
   }
 
 }

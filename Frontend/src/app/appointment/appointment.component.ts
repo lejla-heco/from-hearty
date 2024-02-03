@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppointmentService } from './appointment.service';
 import { Config } from '../configuration/config';
 import { Cardiologist } from './models/cardiologist.model';
 import { SharedModule } from '../.shared/shared.module';
 import { CalendarComponent } from '../calendar/calendar.component';
-import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { PatientService } from '../patient/patient.service';
-import { AuthentificationHelper } from '../authentification/authentification-helper';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-appointment',
@@ -22,7 +20,8 @@ export class AppointmentComponent implements OnInit{
   cardiologists: Cardiologist[] = [];
   selected: any;
 
-  constructor(private httpClient: HttpClient, public appointmentService: AppointmentService, public patientService: PatientService) {
+  constructor(private httpClient: HttpClient, public appointmentService: AppointmentService, public patientService: PatientService,
+    public modalRef: MdbModalRef<AppointmentComponent>) {
   }
 
   ngOnInit(): void {
