@@ -11,12 +11,12 @@ namespace Service.Services
 {
     public interface IPredictionService
     {
-        Task<OpenAiPredictionResponse> GetOpenAiDescriptivePrediction(FromHeartyData input);
+        Task<OpenAiPredictionResponse> GetOpenAiDescriptivePrediction(FromHeartyOpenAiData input);
     }
     public class PredictionService : IPredictionService
     {
         // Not yet done
-        public async Task<OpenAiPredictionResponse> GetOpenAiDescriptivePrediction(FromHeartyData input)
+        public async Task<OpenAiPredictionResponse> GetOpenAiDescriptivePrediction(FromHeartyOpenAiData input)
         {
             var options = new RestClientOptions("https://api.openai.com/v1/completions")
             {
@@ -46,7 +46,7 @@ namespace Service.Services
             var body = $$"""
             {
             "model": "gpt-3.5-turbo-instruct",
-            "prompt": "Can you give me a detailed explanation and percentage of probability on why this person might have a heart disease problem based on these parameters: {{parameters}}",
+            "prompt": "Can you give me a detailed explanation on why this person has a {{input.Percentage}}% chance of heart problem based on these parameters: {{parameters}}",
             "temperature": 0,
             "max_tokens": 600
             }

@@ -22,10 +22,14 @@ import { RoleType } from '../../login/models/login-token.model';
   imports: [SharedModule, SliderComponent, AppointmentComponent]
 })
 export class AiPredictionComponent implements OnInit {
+
+  formStep: number = 1;
+
   predictionMessage: string = '';
   appointment: boolean = false;
   loading: boolean = false;
   patient?: Patient;
+  detailedExplanationGiven: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -96,6 +100,8 @@ export class AiPredictionComponent implements OnInit {
   predictWithOpenAI(): void {
     if (this.validateFields()) {
       this.loading = true;
+      let request: any = this.aiPredictionService.predictionRequest;
+      request.percentage = this.aiPredictionService.prediction;
       this.httpClient
         .post(
           Config.serverAddress + this.aiPredictionService.api.openAiPredict,
@@ -104,6 +110,7 @@ export class AiPredictionComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.predictionMessage = response.choices[0].text;
+            this.detailedExplanationGiven = true;
           },
           (error) => {
             this.predictionMessage = 'An error occurred while predicting with Open AI.';
@@ -113,7 +120,7 @@ export class AiPredictionComponent implements OnInit {
     }
   }
 
-  validateFields(): any {
+  validateFields(showMessage: boolean = true): any {
     if (
       /* this.aiPredictionService.predictionRequest.trestBps < 1 || */
       this.aiPredictionService.predictionRequest.chol < 1 ||
@@ -123,9 +130,11 @@ export class AiPredictionComponent implements OnInit {
       this.aiPredictionService.predictionRequest.ca < 1 */ /* ||
       this.aiPredictionService.predictionRequest.thal < 1 */
     ) {
-      this.toastr.error(
-        'Please ensure that numeric values are greater than or equal to 1!'
-      );
+      if (showMessage){
+        this.toastr.error(
+          'Please ensure that numeric values are greater than or equal to 1!'
+        );
+      }
       this.predictionMessage = '';
       return false;
     }

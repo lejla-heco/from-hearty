@@ -29,4 +29,9 @@ namespace FromHeartyAI.DataStructures
         [LoadColumn(11)]
         public bool Label { get; set; }
     }
+
+    public class FromHeartyOpenAiData : FromHeartyData
+    {
+        public decimal Percentage { get; set; }
+    }
 }

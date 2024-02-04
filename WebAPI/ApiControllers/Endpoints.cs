@@ -89,7 +89,7 @@ namespace WebAPI.ApiControllers
                 return (float)Math.Round(mlModel.Predict(predictionRequest).Probability * 100, 2);
             });
 
-            app.MapPost("/open-ai-predict", async (FromHeartyData predictionRequest, IPredictionService _predictionService) =>
+            app.MapPost("/open-ai-predict", async (FromHeartyOpenAiData predictionRequest, IPredictionService _predictionService) =>
             {
                 return await _predictionService.GetOpenAiDescriptivePrediction(predictionRequest);
             });
