@@ -68,7 +68,6 @@ export class NewAppointmentComponent implements OnInit {
     if (this.validateDates() && this.validateAppointments()) {
       this.appointmentInfo.start.setHours(this.appointmentInfo.start.getHours() + 1);
       this.appointmentInfo.end.setHours(this.appointmentInfo.end.getHours() + 1);
-      this.appointmentInfo.approved = false;
       this.modalRef.close(this.appointmentInfo);
     }
   }
@@ -114,4 +113,15 @@ export class NewAppointmentComponent implements OnInit {
   isVisible(): boolean {
     return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog;
   }
+
+  approve(): void {
+    this.appointmentInfo.approved = true;
+    this.save();
+  }
+
+  cancel(): void {
+    this.appointmentInfo.delete = true;
+    this.modalRef.close(this.appointmentInfo);
+  }
+
 }

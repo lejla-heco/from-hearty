@@ -47,10 +47,10 @@
     <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
         Close
     </button>
-    <button *ngIf="isVisible()" type="button" class="btn btn-danger" (click)="modalRef.close()">
+    <button *ngIf="isVisible()" type="button" class="btn btn-danger" (click)="cancel()">
         Cancel the Appointment
     </button>
-    <button *ngIf="isVisible()" type="button" class="btn btn-success" (click)="modalRef.close()">
+    <button *ngIf="isVisible()" type="button" class="btn btn-success" (click)="approve()">
         Approve the Appointment
     </button>
     <button type="button" class="btn btn-primary" (click)="save()">Save</button>

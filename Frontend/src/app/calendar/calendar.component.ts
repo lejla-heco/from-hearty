@@ -110,8 +110,12 @@ export class CalendarComponent implements OnChanges {
       data: { appointmentInfo: appointment, appointments: this.appointments, isEdit: isEdit },
     });
     this.modalRef.onClose.subscribe((appointmentInfo: any) => {
-      if (!isEdit) this.createOrUpdateAppointment(appointmentInfo);
-      if (isEdit) this.createOrUpdateAppointment(appointmentInfo, true);
+      if (appointmentInfo.delete && isEdit) {
+        this.deleteAppointment(appointmentInfo.id);
+      } else {
+        if (!isEdit) this.createOrUpdateAppointment(appointmentInfo);
+        if (isEdit) this.createOrUpdateAppointment(appointmentInfo, true);
+      }
     });
   }
 
@@ -125,7 +129,8 @@ export class CalendarComponent implements OnChanges {
       allDay: newAppointment.allDay,
       cardiologistId: newAppointment.cardiologistId,
       patientId: newAppointment.patientId,
-      description: newAppointment.description
+      description: newAppointment.description,
+      approved: newAppointment.approved
     };
     let path = !isEdit ? this.calendarService.api.appointments : this.calendarService.api.appointment;
     this.httpClient.put(Config.serverAddress + path, request).subscribe((response: any) => {
