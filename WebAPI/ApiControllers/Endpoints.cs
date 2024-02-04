@@ -139,6 +139,22 @@ namespace WebAPI.ApiControllers
                 }
             });
 
+            app.MapGet("/appointment/{appointmentId}", (string appointmentId, MyContext context) =>
+            {
+                Guid.TryParse(appointmentId, out Guid guidAppointmentId);
+                var appointment = context.Appointments
+                    .Where(appointment => appointment.Id == guidAppointmentId).FirstOrDefault();
+
+                return appointment;
+            });
+
+            app.MapPut("/appointment", (Appointment appointment, MyContext context) =>
+            {
+                context.Appointments.Update(appointment);
+                context.SaveChanges();
+                return appointment;
+            });
+
             app.MapGet("/prediction-result", (MyContext context) =>
             context.PredictionResults.Where(x => !x.IsRemoved).ToArray());
 
