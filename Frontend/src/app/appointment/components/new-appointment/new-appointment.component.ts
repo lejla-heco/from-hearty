@@ -71,8 +71,11 @@ export class NewAppointmentComponent implements OnInit {
   saveClicked(): void {
     if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor)
       this.save();
-    else if (AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog) {
+    else if (AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog && !this.appointmentInfo.id) {
       this.openApprove('Would you like to approve the newly created appointment?');
+    }
+    else if (AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog && this.appointmentInfo.id) {
+      this.save();
     }
   }
 
@@ -173,6 +176,7 @@ export class NewAppointmentComponent implements OnInit {
     });
     this.modalRefConfirmation.onClose.subscribe((confirmationInfo: any) => {
       if (confirmationInfo && confirmationInfo.realise && confirmationInfo.action === 'Approve') this.approve();
+      else if (confirmationInfo && !confirmationInfo.realise && confirmationInfo.action === 'Approve') this.save();
       else if (confirmationInfo && confirmationInfo.realise && confirmationInfo.action === 'Cancel') this.cancel();
     });
   }

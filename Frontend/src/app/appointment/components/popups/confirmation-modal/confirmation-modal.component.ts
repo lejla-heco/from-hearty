@@ -12,11 +12,16 @@ import { SharedModule } from '../../../../.shared/shared.module';
 export class ConfirmationModalComponent {
   public confirmationInfo: any;
 
-  constructor(public modalRefConfirmationModal: MdbModalRef<ConfirmationModalComponent>){    
+  constructor(public modalRefConfirmationModal: MdbModalRef<ConfirmationModalComponent>) {
   }
 
   onYesButtonClick(): void {
     this.confirmationInfo.realise = true;
+    this.modalRefConfirmationModal.close(this.confirmationInfo);
+  }
+
+  onNoButtonClick(): void {
+    this.confirmationInfo.realise = false;
     this.modalRefConfirmationModal.close(this.confirmationInfo);
   }
 }

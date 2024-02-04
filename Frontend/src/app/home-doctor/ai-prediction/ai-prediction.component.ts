@@ -13,13 +13,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Patient } from '../../patient/models/patient.model';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
 import { RoleType } from '../../login/models/login-token.model';
+import { ResultsPopupComponent } from './popups/results-popup/results-popup.component';
 
 @Component({
   selector: 'app-ai-prediction',
   templateUrl: './ai-prediction.component.html',
   styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
-  imports: [SharedModule, SliderComponent, AppointmentComponent]
+  imports: [SharedModule, SliderComponent, AppointmentComponent],
+  providers: [MdbModalService]
 })
 export class AiPredictionComponent implements OnInit {
 
@@ -29,7 +31,7 @@ export class AiPredictionComponent implements OnInit {
   appointment: boolean = false;
   loading: boolean = false;
   patient?: Patient;
-  detailedExplanationGiven: boolean = false;
+  modalRefResultsPopup: MdbModalRef<ResultsPopupComponent> | null = null;
 
   constructor(
     private httpClient: HttpClient,
@@ -37,7 +39,8 @@ export class AiPredictionComponent implements OnInit {
     private toastr: ToastrService,
     public patientService: PatientService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: MdbModalService
   ) { }
 
   ngOnInit(): void {
@@ -86,34 +89,12 @@ export class AiPredictionComponent implements OnInit {
               'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
               response +
               '%';
+            this.openPredictModal(this.predictionMessage);
             this.aiPredictionService.prediction = response;
             this.appointment = true;
           },
           (error) => {
             this.predictionMessage = 'An error occurred while predicting.';
-          }
-        )
-        .add(() => (this.loading = false));
-    }
-  }
-
-  predictWithOpenAI(): void {
-    if (this.validateFields()) {
-      this.loading = true;
-      let request: any = this.aiPredictionService.predictionRequest;
-      request.percentage = this.aiPredictionService.prediction;
-      this.httpClient
-        .post(
-          Config.serverAddress + this.aiPredictionService.api.openAiPredict,
-          this.aiPredictionService.predictionRequest
-        )
-        .subscribe(
-          (response: any) => {
-            this.predictionMessage = response.choices[0].text;
-            this.detailedExplanationGiven = true;
-          },
-          (error) => {
-            this.predictionMessage = 'An error occurred while predicting with Open AI.';
           }
         )
         .add(() => (this.loading = false));
@@ -130,7 +111,7 @@ export class AiPredictionComponent implements OnInit {
       this.aiPredictionService.predictionRequest.ca < 1 */ /* ||
       this.aiPredictionService.predictionRequest.thal < 1 */
     ) {
-      if (showMessage){
+      if (showMessage) {
         this.toastr.error(
           'Please ensure that numeric values are greater than or equal to 1!'
         );
@@ -217,7 +198,6 @@ export class AiPredictionComponent implements OnInit {
     return optionClass
   }
 
-
   getSelectOptionClassPressure(optionValue: number): string {
     let optionClass = ''
     if (optionValue == 1 || optionValue == 2) {
@@ -235,8 +215,11 @@ export class AiPredictionComponent implements OnInit {
     else this.router.navigate(['/calendar']);
   }
 
-  bookAnAppointment(): void {
-    this.router.navigate(['/appointment'], { queryParams: { patientId: this.patient?.id } });
+  openPredictModal(predictionMessage: any): any {
+    this.modalRefResultsPopup = this.modalService.open(ResultsPopupComponent, {
+      modalClass: 'modal-lg modal-dialog-scrollable',
+      data: { predictionMessage: predictionMessage, patient: this.patient }
+    });
   }
 
 }

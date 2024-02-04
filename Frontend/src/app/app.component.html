@@ -14,11 +14,12 @@
                         <span class="hidden-xs"> FromHearty</span>
                     </a>
 
-                    <div (click)="toggleAccessibilitySettings()" style="display:flex; align-items: center; cursor: pointer; margin-right: 20px;">
+                    <div (click)="toggleAccessibilitySettings()"
+                        style="display:flex; align-items: center; cursor: pointer; margin-right: 20px;">
                         <i *ngIf="isAccessibilityOn" class="fas fa-eye-slash" style="font-size: 18px; color: white"></i>
                         <i *ngIf="!isAccessibilityOn" class="fas fa-eye" style="font-size: 18px; color:white"></i>
-                      </div>
-  
+                    </div>
+
 
                 </div>
                 <div class="navbar-collapse">
@@ -105,9 +106,6 @@
         <div class="page-wrapper">
             <router-outlet></router-outlet>
         </div>
-        <footer class="footer">
-            © 2024 FromHearty
-        </footer>
     </div>
 
 
