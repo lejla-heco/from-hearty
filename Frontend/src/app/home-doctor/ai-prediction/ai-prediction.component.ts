@@ -9,7 +9,7 @@ import { SliderComponent } from '../../.shared/slider/slider.component';
 import { AppointmentComponent } from '../../appointment/appointment.component';
 import { PatientService } from '../../patient/patient.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Patient } from '../../patient/models/patient.model';
 
 @Component({
@@ -33,7 +33,8 @@ export class AiPredictionComponent implements OnInit {
     private toastr: ToastrService,
     public patientService: PatientService,
     private modalService: MdbModalService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -225,6 +226,10 @@ export class AiPredictionComponent implements OnInit {
     this.modalRef = this.modalService.open(AppointmentComponent, {
       modalClass: 'modal-xl modal-dialog-scrollable'
     });
+  }
+
+  goBack(): void {
+    this.router.navigate(['../']);
   }
 
 }

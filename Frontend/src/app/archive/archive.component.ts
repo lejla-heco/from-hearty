@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { AiPredictionService } from '../home-doctor/ai-prediction/ai-prediction.service';
 import { Config } from '../configuration/config';
 import { PatientService } from '../patient/patient.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Patient } from '../patient/models/patient.model';
 
 @Component({
@@ -39,7 +39,7 @@ export class ArchiveComponent implements OnInit {
   patient?: Patient;
 
   constructor(private aiPredictionService: AiPredictionService, private httpClient: HttpClient, private patientService: PatientService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -66,4 +66,9 @@ export class ArchiveComponent implements OnInit {
       this.predictionResults = response;
     });
   }
+
+  goBack(): void {
+    this.router.navigate(['../']);
+  }
+
 }
