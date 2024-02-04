@@ -46,7 +46,7 @@ namespace Service.Services
             var body = $$"""
             {
             "model": "gpt-3.5-turbo-instruct",
-            "prompt": "Can you give me a detailed explanation and percentage of probability on why this person might have a heart disease problem based on these parameters: {{parameters}}",
+            "prompt": "Please provide a short explanation regarding potential heart disease based on the given parameters: {{parameters}}",
             "temperature": 0,
             "max_tokens": 600
             }
