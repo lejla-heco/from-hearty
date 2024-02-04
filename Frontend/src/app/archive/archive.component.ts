@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../.shared/shared.module';
 import { AgGridAngular } from 'ag-grid-angular';
 import { PredictionResult } from '../calendar/models/prediction-result.model';
@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { AiPredictionService } from '../home-doctor/ai-prediction/ai-prediction.service';
 import { Config } from '../configuration/config';
 import { PatientService } from '../patient/patient.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Patient } from '../patient/models/patient.model';
 
 @Component({
   selector: 'app-archive',
@@ -15,7 +17,7 @@ import { PatientService } from '../patient/patient.service';
   standalone: true,
   imports: [SharedModule, AgGridAngular]
 })
-export class ArchiveComponent {
+export class ArchiveComponent implements OnInit {
   themeClass = "ag-theme-quartz";
   predictionResults: PredictionResult[] = [];
   defaultColDef: ColDef = { filter: true, floatingFilter: true }
@@ -34,14 +36,39 @@ export class ArchiveComponent {
     { field: 'thal', headerName: 'Thalassemia' },
     { field: 'label', headerName: 'Result' }
   ];
+  patient?: Patient;
 
-  constructor(private aiPredictionService: AiPredictionService, private httpClient: HttpClient, public patientService: PatientService) {
-    this.getArchives();
+  constructor(private aiPredictionService: AiPredictionService, private httpClient: HttpClient, private patientService: PatientService,
+    private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.handleQueryParams();
+  }
+
+  private handleQueryParams(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['patientId']) {
+        this.getPatient(params['patientId']);
+      }
+    });
+  }
+
+  getPatient(id: any): void {
+    this.httpClient.get(Config.serverAddress + this.patientService.api.patients + '/' + id).subscribe((response: any) => {
+      this.patient = response;
+      this.getArchives();
+    });
   }
 
   getArchives(): void {
-    this.httpClient.get(Config.serverAddress + this.aiPredictionService.api.predictionResult + '/' + this.patientService.selectedPatient?.id).subscribe((response: any) => {
+    this.httpClient.get(Config.serverAddress + this.aiPredictionService.api.predictionResult + '/' + this.patient!.id).subscribe((response: any) => {
       this.predictionResults = response;
     });
   }
+
+  goBack(): void {
+    this.router.navigate(['../']);
+  }
+
 }

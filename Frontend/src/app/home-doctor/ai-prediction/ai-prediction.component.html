@@ -1,14 +1,19 @@
 <div class="container-fluid">
   <div class="row page-titles">
     <div class="col-12 col-sm-3 col-md-5 align-self-center">
-      <h4 class="text-themecolor">AI Prediction</h4>
+      <div class="d-flex display-flex align-items-center">
+        <button type="button" class="btn btn-info d-lg-block m-r-15 text-white" (click)="goBack()"><i
+            class="fas fa-angle-left"></i> </button>
+        <h4 class="text-themecolor">AI Prediction</h4>
+      </div>
     </div>
     <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
       <div class="d-flex display-flex justify-content-end align-items-center">
         <ol class="breadcrumb justify-content-end">
           <li class="breadcrumb-item">Pages</li>
           <li class="breadcrumb-item active">AI Prediction</li>
-          <li class="breadcrumb-item">{{patientService.selectedPatient?.firstName + ' ' + patientService.selectedPatient?.lastName}}</li>
+          <li class="breadcrumb-item">{{patient?.firstName + ' ' +
+            patient?.lastName}}</li>
         </ol>
         <button type="button" class="btn btn-info d-lg-block m-l-15 text-white" (click)="clearPredictionForm()"><i
             class="fas fa-eraser"></i> Clear prediction form</button>
@@ -29,17 +34,21 @@
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <div class="d-flex justify-content-between">
-        <label for="trestBps">*Resting Electrocardiographic Results (Rest ECG) </label> <span class="normal-label-text"> (Normal: 120/80 mmHg)</span>
+        <label for="trestBps">*Resting Electrocardiographic Results (Rest ECG) </label> <span class="normal-label-text">
+          (Normal: 120/80 mmHg)</span>
       </div>
-      <select class="form-control" id="trestBps" name="trestBps" [(ngModel)]="aiPredictionService.predictionRequest.trestBps" required>
-        <option *ngFor="let option of this.aiPredictionService.trestBps" [value]="option.value" [ngClass]="getSelectOptionClassPressure(option.value)">{{ option.label }}
+      <select class="form-control" id="trestBps" name="trestBps"
+        [(ngModel)]="aiPredictionService.predictionRequest.trestBps" required>
+        <option *ngFor="let option of this.aiPredictionService.trestBps" [value]="option.value"
+          [ngClass]="getSelectOptionClassPressure(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <div class="d-flex justify-content-between">
-        <label for="chol">*Serum Cholesterol (Chol) </label> <span class="normal-label-text"> (Normal: < 5 mmol / L)</span>
+        <label for="chol">*Serum Cholesterol (Chol) </label> <span class="normal-label-text"> (Normal: < 5 mmol /
+            L)</span>
       </div>
       <slider [(value)]="aiPredictionService.predictionRequest.chol" [style.color]="getTextColor()"></slider>
     </div>
@@ -48,22 +57,28 @@
       <div class="d-flex justify-content-between">
         <label>*Fasting Blood Sugar (Fbs) </label> <span class="normal-label-text"> (Normal: 3 - 6 mmol / L)</span>
       </div>
-      <slider [maxValue]=23 [(value)]="aiPredictionService.predictionRequest.fbs" [style.color]="getTextColorSugar()"></slider>
+      <slider [maxValue]=23 [(value)]="aiPredictionService.predictionRequest.fbs" [style.color]="getTextColorSugar()">
+      </slider>
     </div>
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="restEcg">*Resting Electrocardiographic Results (Rest ECG)</label>
-      <select class="form-control" id="restEcg" name="restEcg" [(ngModel)]="aiPredictionService.predictionRequest.restEcg" required>
-        <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value" [ngClass]="getSelectOptionClass(option.value)">{{ option.label }}
+      <select class="form-control" id="restEcg" name="restEcg"
+        [(ngModel)]="aiPredictionService.predictionRequest.restEcg" required>
+        <option *ngFor="let option of this.aiPredictionService.restEcgOptions" [value]="option.value"
+          [ngClass]="getSelectOptionClass(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <div class="d-flex justify-content-between">
-        <label for="thalach">*Maximum Heart Rate Achieved (Thalach) </label> <span class="normal-label-text"> (Normal: 60-100 beats per minute)</span>
+        <label for="thalach">*Maximum Heart Rate Achieved (Thalach) </label> <span class="normal-label-text"> (Normal:
+          60-100 beats per minute)</span>
       </div>
-      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thalach" required>
-        <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value" [ngClass]="getSelectOptionClassHeartRate(option.value)">{{ option.label }}
+      <select class="form-control" id="thalach" name="thalach"
+        [(ngModel)]="aiPredictionService.predictionRequest.thalach" required>
+        <option *ngFor="let option of this.aiPredictionService.thalachOptions" [value]="option.value"
+          [ngClass]="getSelectOptionClassHeartRate(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
@@ -71,8 +86,8 @@
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <label for="exang">Exercise Induced Angina (Exang)</label>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="exang" name="exang" [checked]="aiPredictionService.predictionRequest.exang"
-          (change)="updateExangValue($event)" required>
+        <input class="form-check-input" type="checkbox" id="exang" name="exang"
+          [checked]="aiPredictionService.predictionRequest.exang" (change)="updateExangValue($event)" required>
         <label class="form-check-label" for="exang">Exang</label>
       </div>
     </div>
@@ -92,30 +107,35 @@
 
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <div class="d-flex justify-content-between">
-        <label>*Number of Major Vessels Colored by Fluoroscopy (Ca) </label> <span class="normal-label-text"> (Normal: 0)</span>
+        <label>*Number of Major Vessels Colored by Fluoroscopy (Ca) </label> <span class="normal-label-text"> (Normal:
+          0)</span>
       </div>
       <!-- <input type="number" class="form-control" id="ca" name="ca" [(ngModel)]="aiPredictionService.predictionRequest.ca" required> -->
-      <slider [maxValue]=3 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.ca" [style.color]="getTextColorCa()"></slider>
+      <slider [maxValue]=3 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.ca"
+        [style.color]="getTextColorCa()"></slider>
 
     </div>
-    
+
     <div class="form-group col-12 col-md-6 custom-form-padding">
       <div class="d-flex justify-content-between">
         <label for="thalach">*Thalassemia (Thal) </label> <span class="normal-label-text"> (Normal: No)</span>
       </div>
-      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal" required>
-        <option *ngFor="let option of this.aiPredictionService.thal" [value]="option.value" [ngClass]="getSelectOptionThal(option.value)">{{ option.label }}
+      <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal"
+        required>
+        <option *ngFor="let option of this.aiPredictionService.thal" [value]="option.value"
+          [ngClass]="getSelectOptionThal(option.value)">{{ option.label }}
         </option>
       </select>
     </div>
-    
+
   </div>
 
   <div class="d-flex flex-row gap-1">
     <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
     <button type="button" class="btn btn-secondary ml-2" [disabled]="!predictionForm.form.valid"
       (click)="predictWithOpenAI()">Predict with Open AI</button>
-    <button data-bs-toggle="modal" data-bs-target="#book-an-appointment" [disabled]="!appointment" type="button" class="btn btn-primary ml-2">Book an Appointment</button>
+    <button [disabled]="!appointment" type="button" class="btn btn-primary ml-2" (click)="bookAnAppointment()">Book an
+      Appointment</button>
   </div>
 
   <div class="loader-container" [class.show-loader]="loading">
@@ -129,5 +149,3 @@
   </div>
 
 </form>
-
-<app-appointment></app-appointment>

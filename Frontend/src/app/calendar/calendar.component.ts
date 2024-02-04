@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
 import { SharedModule } from '../.shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
@@ -16,84 +16,146 @@ import { AuthentificationHelper } from '../authentification/authentification-hel
 import { RoleType } from '../login/models/login-token.model';
 import { AiPredictionService } from '../home-doctor/ai-prediction/ai-prediction.service';
 import { PredictionResult } from './models/prediction-result.model';
+import { Patient } from '../patient/models/patient.model';
+import { NewAppointmentComponent } from '../appointment/components/new-appointment/new-appointment.component';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
   standalone: true,
-  imports: [SharedModule, FullCalendarModule]
+  imports: [SharedModule, FullCalendarModule],
+  providers: [MdbModalService]
 })
 export class CalendarComponent implements OnChanges {
-  @Input() id: any;
+  @Input() cardiologistId: any;
+  @Input() patient?: Patient;
   appointments: Appointment[] = [];
+  appointment!: Appointment;
+  editPatient!: Patient;
   calendarVisible = false;
   calendarOptions = this.initCalendar();
   currentEvents = signal<EventApi[]>([]);
   roleType = AuthentificationHelper.getLoginToken().roleType;
+  modalRef: MdbModalRef<NewAppointmentComponent> | null = null;
+  currentEventsArray: EventApi[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef, private calendarService: CalendarService, private httpClient: HttpClient,
-    private toastr: ToastrService, public patientService: PatientService, private aiPredictionService: AiPredictionService) {
+    private toastr: ToastrService, public patientService: PatientService, private aiPredictionService: AiPredictionService,
+    private modalService: MdbModalService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] && changes['id'].currentValue) {
-      this.getAppointments();
-      this.calendarVisible = true;
-    } else {
-      this.calendarVisible = false;
-    }
+    this.getAppointments();
+    this.calendarVisible = true;
   }
 
   getAppointments(): void {
-    if (this.id) {
-      this.httpClient.get(Config.serverAddress + this.calendarService.api.appointments + `\\${this.id}`).subscribe((response: any) => {
+    if (this.cardiologistId) {
+      this.httpClient.get(Config.serverAddress + this.calendarService.api.appointments + `\\${this.cardiologistId}`).subscribe((response: any) => {
         this.appointments = response;
         this.calendarOptions = this.initCalendar();
       });
     }
   }
 
-  handleDateSelect(selectInfo: DateSelectArg): void {
-    console.log(this.patientService.selectedPatient)
-    const title = `${this.patientService.selectedPatient?.firstName} ${this.patientService.selectedPatient?.lastName}`;
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect();
-
-    let newAppointment = {
-      patientId: this.patientService.selectedPatient?.id,
-      title: title,
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
-      allDay: selectInfo.allDay,
-      cardiologistId: this.id
-    }
-
-    if (title) {
-      calendarApi.addEvent({ newAppointment });
-      this.createAppointment(newAppointment);
-    }
-
-  }
-
-  createAppointment(newAppointment: any): void {
-    if (this.id && this.validateCreate()) {
-      this.httpClient.put(Config.serverAddress + this.calendarService.api.appointments, newAppointment).subscribe((response: any) => {
-        this.displayRoleMessage();
-        this.getAppointments();
-        if (this.roleType == RoleType.Doctor) {
-          this.createPredictionResult();
+  getAppointmentById(id: any): void {
+    if (this.cardiologistId) {
+      this.httpClient.get(Config.serverAddress + this.calendarService.api.appointment + `\\${id}`).subscribe((response: any) => {
+        if (response.approved && this.roleType == RoleType.Doctor) {
+          this.toastr.warning("You cannot edit an appointment that has been approved by the cardiologist!");
+        } else {
+          this.appointment = response;
+          this.getPatient(this.appointment.patientId, id);
         }
       });
     }
   }
 
+  getPatient(id: any, appointmentId: any): void {
+    this.httpClient.get(Config.serverAddress + this.patientService.api.patients + '/' + id).subscribe((response: any) => {
+      this.editPatient = response;
+      let appointment = {
+        id: appointmentId,
+        title: `${this.editPatient?.firstName} ${this.editPatient?.lastName}`,
+        patientName: `${this.editPatient?.firstName} ${this.editPatient?.lastName}`,
+        patientId: this.editPatient?.id,
+        start: this.appointment.start,
+        end: this.appointment.end,
+        allDay: this.appointment.allDay,
+        cardiologistId: this.cardiologistId,
+        description: this.appointment.description,
+        approve: false,
+        delete: false,
+        approved: this.appointment.approved
+      }
+      this.openModal(appointment, true);
+    });
+  }
+
+  handleDateSelect(selectInfo: DateSelectArg): void {
+    let appointment = {
+      title: `${this.patient?.firstName} ${this.patient?.lastName}`,
+      patientName: `${this.patient?.firstName} ${this.patient?.lastName}`,
+      patientId: this.patient?.id,
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
+      allDay: selectInfo.allDay,
+      cardiologistId: this.cardiologistId,
+      approve: false,
+      delete: false,
+      approved: false,
+    }
+    this.openModal(appointment);
+  }
+
+  openModal(appointment: any, isEdit = false): any {
+    this.modalRef = this.modalService.open(NewAppointmentComponent, {
+      modalClass: 'modal-xl',
+      data: { appointmentInfo: appointment, appointments: this.appointments, isEdit: isEdit },
+    });
+    this.modalRef.onClose.subscribe((appointmentInfo: any) => {
+      if (appointmentInfo) {
+        if (appointmentInfo.delete && isEdit) {
+          this.deleteAppointment(appointmentInfo.id);
+        } else {
+          if (!isEdit) this.createOrUpdateAppointment(appointmentInfo);
+          if (isEdit) this.createOrUpdateAppointment(appointmentInfo, true);
+        }
+      }
+    });
+  }
+
+  createOrUpdateAppointment(newAppointment: any, isEdit = false): void {
+    if (!newAppointment) return;
+    let request: Appointment = {
+      id: newAppointment.id,
+      title: newAppointment.title,
+      start: new Date(newAppointment.start),
+      end: new Date(newAppointment.end),
+      allDay: newAppointment.allDay,
+      cardiologistId: newAppointment.cardiologistId,
+      patientId: newAppointment.patientId,
+      description: newAppointment.description,
+      approved: newAppointment.approved
+    };
+    let path = !isEdit ? this.calendarService.api.appointments : this.calendarService.api.appointment;
+    this.httpClient.put(Config.serverAddress + path, request).subscribe((response: any) => {
+      if (!isEdit) this.toastr.success("Successfully booked an appointment!");
+      else this.toastr.success("Successfully updated the appointment!");
+      this.getAppointments();
+      if (this.roleType == RoleType.Doctor && !isEdit) {
+        this.createPredictionResult();
+      }
+    });
+  }
+
   createPredictionResult(): void {
     let predictionResult: PredictionResult = new PredictionResult(this.aiPredictionService.predictionRequest);
-    predictionResult.patientId = this.patientService.selectedPatient!.id;
+    predictionResult.patientId = this.patient!.id;
     predictionResult.houseDoctorId = AuthentificationHelper.getLoginToken().userId;
-    predictionResult.cardiologistId = this.id;
+    predictionResult.cardiologistId = this.cardiologistId;
     predictionResult.label = Math.round(this.aiPredictionService.prediction!);
 
     this.httpClient.put(Config.serverAddress + this.aiPredictionService.api.predictionResult, predictionResult).subscribe((response: any) => {
@@ -101,16 +163,8 @@ export class CalendarComponent implements OnChanges {
     });
   }
 
-  validateCreate(): boolean {
-    if (!this.patientService.selectedPatient && this.roleType == RoleType.Cardiolog) {
-      this.toastr.error("To create an appointment, the patient must be selected!")
-      return false;
-    }
-    return true;
-  }
-
   deleteAppointment(id: any): void {
-    if (this.id) {
+    if (this.cardiologistId) {
       this.httpClient.delete(Config.serverAddress + this.calendarService.api.appointments + '/' + id).subscribe((response: any) => {
         this.toastr.success("Successfully deleted an appointment!");
         this.getAppointments();
@@ -118,21 +172,8 @@ export class CalendarComponent implements OnChanges {
     }
   }
 
-  displayRoleMessage(): void {
-    if (this.roleType == RoleType.Doctor) {
-      this.toastr.info("You do not have permission to edit the calendar.");
-      this.toastr.success("Upon selecting the preferred time slot, an appointment request was successfully submitted.");
-    }
-    if (this.roleType == RoleType.Cardiolog) {
-      this.toastr.success("Successfully booked an appointment!");
-    }
-  }
-
   handleEventClick(clickInfo: EventClickArg): void {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-      this.deleteAppointment(clickInfo.event.id);
-    }
+    this.getAppointmentById(clickInfo.event.id);
   }
 
   handleEvents(events: EventApi[]): void {
@@ -155,16 +196,46 @@ export class CalendarComponent implements OnChanges {
       },
       initialView: 'timeGridWeek',
       events: this.appointments,
-      weekends: true,
       editable: false,
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true,
       select: this.handleDateSelect.bind(this),
-      eventClick: this.roleType == RoleType.Cardiolog ? this.handleEventClick.bind(this) : undefined,
+      eventClick: this.handleEventClick.bind(this),
       eventsSet: this.handleEvents.bind(this),
-      height: "auto"
+      height: "auto",
+      //eventContent: this.handleEventContent.bind(this),
+      //eventDidMount: this.handleEventDidMount.bind(this),
     });
+  }
+
+  findAppointmentById(id: string): any {
+    return this.appointments.find(appointment => appointment.id === id);
+  }
+
+  getEventColorById(eventId: string): string {
+    const foundAppointment = this.findAppointmentById(eventId);
+    return foundAppointment.approved ? 'green' : 'orange';
+  }
+
+  handleEventContent(arg: { event: EventApi; }) {
+    if (this.findAppointmentById(arg.event.id)) {
+      const foundAppointment = this.findAppointmentById(arg.event.id);
+      const title = foundAppointment && foundAppointment.title ? foundAppointment.title : 'Unknown Title';
+      const approvedColor = this.getEventColorById(arg.event.id);
+      return { html: `<div style="background-color: ${approvedColor};">${title}</div>` };
+    }
+    else return { html: '<div style="background-color: blue;"></div>' };
+  }
+
+  handleEventDidMount(arg: { event: EventApi; }) {
+    if (this.findAppointmentById(arg.event.id)) {
+      const foundAppointment = this.findAppointmentById(arg.event.id);
+      const title = foundAppointment && foundAppointment.title ? foundAppointment.title : 'Unknown Title';
+      const approvedColor = this.getEventColorById(arg.event.id);
+      arg.event.setProp('backgroundColor', approvedColor);
+      arg.event.setProp('title', title);
+    }
   }
 
 }

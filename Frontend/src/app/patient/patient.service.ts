@@ -5,9 +5,8 @@ import { Patient } from "./models/patient.model";
     providedIn: 'root'
 })
 export class PatientService {
-    isPatientSelected: boolean = false;
     selectedPatient?: Patient;
-
+    
     api = {
         patients: '/patients',
     }
