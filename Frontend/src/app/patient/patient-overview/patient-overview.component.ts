@@ -11,6 +11,8 @@ import { AiPredictionService } from '../../home-doctor/ai-prediction/ai-predicti
 import { PredictionRequest } from '../../home-doctor/ai-prediction/models/prediction-request.model';
 import { AiPredictionButtonComponent } from './buttons/ai-prediction-button/ai-prediction-button.component';
 import { ArchivesButtonComponent } from './buttons/archives-button/archives-button.component';
+import { AuthentificationHelper } from '../../authentification/authentification-helper';
+import { RoleType } from '../../login/models/login-token.model';
 
 @Component({
   selector: 'app-patient-overview',
@@ -47,6 +49,8 @@ export class PatientOverviewComponent {
       filter: false,
       minWidth: 250,
       cellRenderer: AiPredictionButtonComponent,
+      hide: this.hideAIPredictionButton(),
+      suppressColumnsToolPanel: this.hideAIPredictionButton(),
     },
     {
       headerName: 'Archives',
@@ -82,5 +86,9 @@ export class PatientOverviewComponent {
     this.httpClient.get(Config.serverAddress + this.patientService.api.patients).subscribe((response: any) => {
       this.patients = response;
     });
+  }
+
+  hideAIPredictionButton(): boolean {
+    return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog;
   }
 }

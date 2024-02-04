@@ -3,7 +3,7 @@
     <div class="col-12 col-sm-3 col-md-5 align-self-center">
       <div class="d-flex display-flex align-items-center">
         <button type="button" class="btn btn-info d-lg-block m-r-15 text-white" (click)="goBack()"><i
-            class="fas fa-angle-left"></i>  </button>
+            class="fas fa-angle-left"></i> </button>
         <h4 class="text-themecolor">AI Prediction</h4>
       </div>
     </div>
@@ -134,7 +134,7 @@
     <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
     <button type="button" class="btn btn-secondary ml-2" [disabled]="!predictionForm.form.valid"
       (click)="predictWithOpenAI()">Predict with Open AI</button>
-    <button [disabled]="!appointment" type="button" class="btn btn-primary ml-2" (click)="openModal()">Book an
+    <button [disabled]="!appointment" type="button" class="btn btn-primary ml-2" (click)="bookAnAppointment()">Book an
       Appointment</button>
   </div>
 

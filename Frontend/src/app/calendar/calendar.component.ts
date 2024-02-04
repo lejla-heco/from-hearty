@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, signal } from '@angular/core';
 import { SharedModule } from '../.shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
@@ -16,6 +16,7 @@ import { AuthentificationHelper } from '../authentification/authentification-hel
 import { RoleType } from '../login/models/login-token.model';
 import { AiPredictionService } from '../home-doctor/ai-prediction/ai-prediction.service';
 import { PredictionResult } from './models/prediction-result.model';
+import { Patient } from '../patient/models/patient.model';
 
 @Component({
   selector: 'app-calendar',
@@ -25,7 +26,8 @@ import { PredictionResult } from './models/prediction-result.model';
   imports: [SharedModule, FullCalendarModule]
 })
 export class CalendarComponent implements OnChanges {
-  @Input() id: any;
+  @Input() cardiologistId: any;
+  @Input() patient?: Patient;
   appointments: Appointment[] = [];
   calendarVisible = false;
   calendarOptions = this.initCalendar();
@@ -37,7 +39,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] && changes['id'].currentValue) {
+    if (changes['cardiologistId'] && changes['cardiologistId'].currentValue) {
       this.getAppointments();
       this.calendarVisible = true;
     } else {
@@ -46,8 +48,8 @@ export class CalendarComponent implements OnChanges {
   }
 
   getAppointments(): void {
-    if (this.id) {
-      this.httpClient.get(Config.serverAddress + this.calendarService.api.appointments + `\\${this.id}`).subscribe((response: any) => {
+    if (this.cardiologistId) {
+      this.httpClient.get(Config.serverAddress + this.calendarService.api.appointments + `\\${this.cardiologistId}`).subscribe((response: any) => {
         this.appointments = response;
         this.calendarOptions = this.initCalendar();
       });
@@ -55,18 +57,18 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateSelect(selectInfo: DateSelectArg): void {
-    const title = `${this.patientService.selectedPatient?.firstName} ${this.patientService.selectedPatient?.lastName}`;
+    const title = `${this.patient?.firstName} ${this.patient?.lastName}`;
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect();
 
     let newAppointment = {
-      patientId: this.patientService.selectedPatient?.id,
+      patientId: this.patient?.id,
       title: title,
       start: selectInfo.startStr,
       end: selectInfo.endStr,
       allDay: selectInfo.allDay,
-      cardiologistId: this.id
+      cardiologistId: this.cardiologistId
     }
 
     if (title) {
@@ -77,7 +79,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   createAppointment(newAppointment: any): void {
-    if (this.id && this.validateCreate()) {
+    if (this.cardiologistId && this.validateCreate()) {
       this.httpClient.put(Config.serverAddress + this.calendarService.api.appointments, newAppointment).subscribe((response: any) => {
         this.displayRoleMessage();
         this.getAppointments();
@@ -90,9 +92,9 @@ export class CalendarComponent implements OnChanges {
 
   createPredictionResult(): void {
     let predictionResult: PredictionResult = new PredictionResult(this.aiPredictionService.predictionRequest);
-    predictionResult.patientId = this.patientService.selectedPatient!.id;
+    predictionResult.patientId = this.patient!.id;
     predictionResult.houseDoctorId = AuthentificationHelper.getLoginToken().userId;
-    predictionResult.cardiologistId = this.id;
+    predictionResult.cardiologistId = this.cardiologistId;
     predictionResult.label = Math.round(this.aiPredictionService.prediction!);
 
     this.httpClient.put(Config.serverAddress + this.aiPredictionService.api.predictionResult, predictionResult).subscribe((response: any) => {
@@ -101,7 +103,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   validateCreate(): boolean {
-    if (!this.patientService.selectedPatient && this.roleType == RoleType.Cardiolog) {
+    if (!this.patient && this.roleType == RoleType.Cardiolog) {
       this.toastr.error("To create an appointment, the patient must be selected!")
       return false;
     }
@@ -109,7 +111,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   deleteAppointment(id: any): void {
-    if (this.id) {
+    if (this.cardiologistId) {
       this.httpClient.delete(Config.serverAddress + this.calendarService.api.appointments + '/' + id).subscribe((response: any) => {
         this.toastr.success("Successfully deleted an appointment!");
         this.getAppointments();

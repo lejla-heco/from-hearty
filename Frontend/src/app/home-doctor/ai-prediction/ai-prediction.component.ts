@@ -17,14 +17,12 @@ import { Patient } from '../../patient/models/patient.model';
   templateUrl: './ai-prediction.component.html',
   styleUrls: ['./ai-prediction.component.css'],
   standalone: true,
-  imports: [SharedModule, SliderComponent, AppointmentComponent],
-  providers: [MdbModalService]
+  imports: [SharedModule, SliderComponent, AppointmentComponent]
 })
 export class AiPredictionComponent implements OnInit {
   predictionMessage: string = '';
   appointment: boolean = false;
   loading: boolean = false;
-  modalRef: MdbModalRef<AppointmentComponent> | null = null;
   patient?: Patient;
 
   constructor(
@@ -32,7 +30,6 @@ export class AiPredictionComponent implements OnInit {
     public aiPredictionService: AiPredictionService,
     private toastr: ToastrService,
     public patientService: PatientService,
-    private modalService: MdbModalService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -222,14 +219,12 @@ export class AiPredictionComponent implements OnInit {
     return optionClass
   }
 
-  openModal(): void {
-    this.modalRef = this.modalService.open(AppointmentComponent, {
-      modalClass: 'modal-xl modal-dialog-scrollable'
-    });
-  }
-
   goBack(): void {
     this.router.navigate(['../']);
+  }
+
+  bookAnAppointment(): void {
+    this.router.navigate(['/appointment'], { queryParams: { patientId: this.patient?.id } });
   }
 
 }
