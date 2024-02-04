@@ -204,38 +204,10 @@ export class CalendarComponent implements OnChanges {
       eventClick: this.handleEventClick.bind(this),
       eventsSet: this.handleEvents.bind(this),
       height: "auto",
-      //eventContent: this.handleEventContent.bind(this),
-      //eventDidMount: this.handleEventDidMount.bind(this),
     });
   }
 
   findAppointmentById(id: string): any {
     return this.appointments.find(appointment => appointment.id === id);
   }
-
-  getEventColorById(eventId: string): string {
-    const foundAppointment = this.findAppointmentById(eventId);
-    return foundAppointment.approved ? 'green' : 'orange';
-  }
-
-  handleEventContent(arg: { event: EventApi; }) {
-    if (this.findAppointmentById(arg.event.id)) {
-      const foundAppointment = this.findAppointmentById(arg.event.id);
-      const title = foundAppointment && foundAppointment.title ? foundAppointment.title : 'Unknown Title';
-      const approvedColor = this.getEventColorById(arg.event.id);
-      return { html: `<div style="background-color: ${approvedColor};">${title}</div>` };
-    }
-    else return { html: '<div style="background-color: blue;"></div>' };
-  }
-
-  handleEventDidMount(arg: { event: EventApi; }) {
-    if (this.findAppointmentById(arg.event.id)) {
-      const foundAppointment = this.findAppointmentById(arg.event.id);
-      const title = foundAppointment && foundAppointment.title ? foundAppointment.title : 'Unknown Title';
-      const approvedColor = this.getEventColorById(arg.event.id);
-      arg.event.setProp('backgroundColor', approvedColor);
-      arg.event.setProp('title', title);
-    }
-  }
-
 }
