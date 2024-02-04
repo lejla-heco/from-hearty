@@ -1,6 +1,7 @@
 using FromHeartyAI.DataStructures;
 using FromHeartyAI.ML_Model;
 using Service.Services;
+using Service.Mappers;
 using WebAPI.AIPredictEngine;
 
 namespace WebAPI.ApiControllers
@@ -108,6 +109,7 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
                 var appointments = context.Appointments
                     .Where(appointment => appointment.CardiologistId == guidCardiologistId)
+                    .Select(AppointmentMapper.MapAppointmentForCalendar)
                     .ToList();
 
                 return appointments;
