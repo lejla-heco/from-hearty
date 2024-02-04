@@ -1,1 +1,57 @@
-<p>new-appointment works!</p>
+<div class="modal-header">
+    <h5 *ngIf="!isEdit" class="modal-title" id="exampleModalLabel">Book an Appointment</h5>
+    <h5 *ngIf="isEdit" class="modal-title" id="exampleModalLabel">Edit Appointment</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <form class="form-material form-horizontal">
+        <div class="form-group col-md-12 d-flex">
+            <i class="far fa-edit m-r-10 align-self-center"></i>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Add title"
+                [(ngModel)]="appointmentInfo.title" required>
+
+            <label class="col-md-1 align-self-center">Patient:</label>
+            <div class="col-md-2">
+                <input type="text" id="patientName" name="patientName" class="form-control "
+                    [(ngModel)]="appointmentInfo.patientName" disabled>
+            </div>
+        </div>
+        <div class="form-group col-md-12 d-flex">
+
+            <i class="far fa-clock m-r-10 align-self-center"></i>
+
+            <input class="form-control align-self-center" name="startDateModel" placeholder="Start date"
+                [(ngModel)]="startDateModel" ngbDatepicker #dpstart="ngbDatepicker" />
+            <button class="btn btn-outline-secondary align-self-center" (click)="dpstart.toggle()" type="button"><i
+                    class="far fa-calendar"></i></button>
+            <ngb-timepicker [(ngModel)]="startTime" name="startTime" [meridian]="true"></ngb-timepicker>
+
+            <input class="form-control align-self-center" name="endDateModel" placeholder="End date"
+                [(ngModel)]="endDateModel" ngbDatepicker #dpend="ngbDatepicker" style="margin-left: 10px" />
+            <button class="btn btn-outline-secondary align-self-center" (click)="dpend.toggle()" type="button"><i
+                    class="far fa-calendar"></i></button>
+            <ngb-timepicker [(ngModel)]="endTime" name="endTime" [meridian]="true"></ngb-timepicker>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12">Description</label>
+            <div class="col-md-12">
+                <textarea class="form-control" name="description" rows="3"
+                    [(ngModel)]="appointmentInfo.description"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+        Close
+    </button>
+    <button *ngIf="isVisible()" type="button" class="btn btn-danger" (click)="modalRef.close()">
+        Cancel the Appointment
+    </button>
+    <button *ngIf="isVisible()" type="button" class="btn btn-success" (click)="modalRef.close()">
+        Approve the Appointment
+    </button>
+    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+</div>

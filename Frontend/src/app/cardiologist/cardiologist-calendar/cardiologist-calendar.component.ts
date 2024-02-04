@@ -27,13 +27,13 @@ export class CardiologistCalendarComponent {
   getPatients(): void {
     this.httpClient.get(Config.serverAddress + this.patientService.api.patients).subscribe((response: any) => {
       this.patients = response;
-      this.patientService.selectedPatient = this.patients[0];
+      this.selected = this.patients[0];
     });
   }
 
   getPatient(id: any): void {
     this.httpClient.get(Config.serverAddress + this.patientService.api.patients + '/' + id).subscribe((response: any) => {
-      this.patientService.selectedPatient = response;
+      this.selected = response;
     });
   }
 

@@ -50,7 +50,7 @@ export class AppointmentComponent implements OnInit {
     this.httpClient.get(Config.serverAddress + this.appointmentService.api.cardiologists).subscribe((response: any) => {
       this.cardiologists = response;
       if (this.cardiologists.length > 0){
-        this.selected = this.cardiologists[0];
+        this.selected = this.cardiologists[0].id;
       }
     });
   }

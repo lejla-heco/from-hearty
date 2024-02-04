@@ -6,5 +6,6 @@ import { Injectable } from "@angular/core";
 export class CalendarService {
     api = {
         appointments: '/appointments',
+        appointment: '/appointment'
     }
 }

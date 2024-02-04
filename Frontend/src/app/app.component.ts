@@ -33,12 +33,12 @@ export class AppComponent implements DoCheck {
     private router: Router,
     private httpClient: HttpClient,
     private loginService: LoginService,
-    private accessibilityService: AccessibilityService, 
-    private accessibilityServiceInit: AccessibilityServiceInit, 
+    private accessibilityService: AccessibilityService,
+    private accessibilityServiceInit: AccessibilityServiceInit,
   ) { }
 
   ngDoCheck() {
-    if(this.isAccessibilityOn == true) {
+    if (this.isAccessibilityOn == true) {
       this.accessibilityServiceInit.applySettings();
     }
     this.checkLoginStatus();
@@ -69,5 +69,9 @@ export class AppComponent implements DoCheck {
     // Update the settings in the AccessibilityService
     this.isAccessibilityOn = !this.isAccessibilityOn;
     this.accessibilityService.applySettings();
+  }
+
+  isCardiolog() {
+    return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog;
   }
 }
