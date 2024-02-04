@@ -20,7 +20,7 @@ namespace Service.Mappers
                 Cardiologist = appointment.Cardiologist,
                 PatientId = appointment.PatientId,
                 Patient = appointment.Patient,
-                BackgroundColor = appointment.Approved ? "#50C878" : "#CC5500"
+                BackgroundColor = appointment.Approved ? "#51A351" : "#F99F1F"
             };
         }
     }
