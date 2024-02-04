@@ -85,7 +85,10 @@ export class CalendarComponent implements OnChanges {
         end: this.appointment.end,
         allDay: this.appointment.allDay,
         cardiologistId: this.cardiologistId,
-        description: this.appointment.description
+        description: this.appointment.description,
+        approve: false,
+        delete: false,
+        approved: this.appointment.approved
       }
       this.openModal(appointment, true);
     });
@@ -100,6 +103,9 @@ export class CalendarComponent implements OnChanges {
       end: selectInfo.endStr,
       allDay: selectInfo.allDay,
       cardiologistId: this.cardiologistId,
+      approve: false,
+      delete: false,
+      approved: false,
     }
     this.openModal(appointment);
   }
@@ -110,11 +116,13 @@ export class CalendarComponent implements OnChanges {
       data: { appointmentInfo: appointment, appointments: this.appointments, isEdit: isEdit },
     });
     this.modalRef.onClose.subscribe((appointmentInfo: any) => {
-      if (appointmentInfo.delete && isEdit) {
-        this.deleteAppointment(appointmentInfo.id);
-      } else {
-        if (!isEdit) this.createOrUpdateAppointment(appointmentInfo);
-        if (isEdit) this.createOrUpdateAppointment(appointmentInfo, true);
+      if (appointmentInfo) {
+        if (appointmentInfo.delete && isEdit) {
+          this.deleteAppointment(appointmentInfo.id);
+        } else {
+          if (!isEdit) this.createOrUpdateAppointment(appointmentInfo);
+          if (isEdit) this.createOrUpdateAppointment(appointmentInfo, true);
+        }
       }
     });
   }

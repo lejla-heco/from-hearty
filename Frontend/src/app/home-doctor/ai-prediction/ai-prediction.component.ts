@@ -11,6 +11,8 @@ import { PatientService } from '../../patient/patient.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Patient } from '../../patient/models/patient.model';
+import { AuthentificationHelper } from '../../authentification/authentification-helper';
+import { RoleType } from '../../login/models/login-token.model';
 
 @Component({
   selector: 'app-ai-prediction',
@@ -220,7 +222,8 @@ export class AiPredictionComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['../']);
+    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor) this.router.navigate(['../']);
+    else this.router.navigate(['/calendar']);
   }
 
   bookAnAppointment(): void {

@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../../../.shared/shared.module';
-import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { NgbModule, NgbDatepickerModule, NgbTimepickerModule, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Appointment } from '../../models/appointment.model';
 import { AuthentificationHelper } from '../../../authentification/authentification-helper';
 import { RoleType } from '../../../login/models/login-token.model';
+import { ConfirmationModalComponent } from '../popups/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-new-appointment',
   templateUrl: './new-appointment.component.html',
   styleUrl: './new-appointment.component.css',
   standalone: true,
-  imports: [SharedModule, NgbModule, NgbDatepickerModule, NgbTimepickerModule]
+  imports: [SharedModule, NgbModule, NgbDatepickerModule, NgbTimepickerModule],
+  providers: [MdbModalService]
 })
 export class NewAppointmentComponent implements OnInit {
   public appointmentInfo?: any;
@@ -22,7 +24,9 @@ export class NewAppointmentComponent implements OnInit {
   endDateModel: NgbDateStruct = { year: 0, month: 0, day: 0 };
   startTime = {};
   endTime = {};
-  constructor(public modalRef: MdbModalRef<NewAppointmentComponent>, public toastr: ToastrService) { }
+  modalRefConfirmation: MdbModalRef<ConfirmationModalComponent> | null = null;
+  constructor(public modalRef: MdbModalRef<NewAppointmentComponent>, public toastr: ToastrService,
+    private modalService: MdbModalService) { }
 
   ngOnInit(): void {
     this.formatDateStruct(new Date(this.appointmentInfo.start), this.startDateModel);
@@ -110,8 +114,36 @@ export class NewAppointmentComponent implements OnInit {
     return true;
   }
 
+  isVisibleApprove(): boolean {
+    return this.isVisible() && !this.appointmentInfo.approved;
+  }
+
+  isVisibleCancel(): boolean {
+    return this.isVisible();
+  }
+
   isVisible(): boolean {
-    return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog;
+    return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog
+  }
+
+  openApprove(): void {
+    let confirmationInfo: any = {
+      title: 'Approve the Appointment',
+      question: 'Are you sure you want to approve the appointment?',
+      action: 'Approve',
+      realise: false
+    };
+    this.openConfirmationModal(confirmationInfo);
+  }
+
+  openCancel(): void {
+    let confirmationInfo: any = {
+      title: 'Cancel the Appointment',
+      question: 'Are you sure you want to cancel the appointment?',
+      action: 'Cancel',
+      realise: false
+    };
+    this.openConfirmationModal(confirmationInfo);
   }
 
   approve(): void {
@@ -122,6 +154,17 @@ export class NewAppointmentComponent implements OnInit {
   cancel(): void {
     this.appointmentInfo.delete = true;
     this.modalRef.close(this.appointmentInfo);
+  }
+
+  openConfirmationModal(confirmationInfo: any): any {
+    this.modalRefConfirmation = this.modalService.open(ConfirmationModalComponent, {
+      modalClass: 'modal-sm',
+      data: { confirmationInfo: confirmationInfo },
+    });
+    this.modalRefConfirmation.onClose.subscribe((confirmationInfo: any) => {
+      if (confirmationInfo && confirmationInfo.realise && confirmationInfo.action === 'Approve') this.approve();
+      else if (confirmationInfo && confirmationInfo.realise && confirmationInfo.action === 'Cancel') this.cancel();
+    });
   }
 
 }

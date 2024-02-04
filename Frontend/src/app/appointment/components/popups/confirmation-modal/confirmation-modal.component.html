@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{confirmationInfo.title}}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRefConfirmationModal.close()"></button>
+</div>
+<div class="modal-body">{{confirmationInfo.question}}</div>
+<div class="modal-footer">
+    <button type="button" class="btn"
+        [ngClass]="{'btn-success': confirmationInfo.action==='Cancel', 'btn-danger': confirmationInfo.action==='Approve'}"
+        (click)="modalRefConfirmationModal.close()">No</button>
+    <button type="button" class="btn"
+        [ngClass]="{'btn-success': confirmationInfo.action==='Approve', 'btn-danger': confirmationInfo.action==='Cancel'}"
+        (click)="onYesButtonClick()">Yes</button>
+</div>
