@@ -25,6 +25,8 @@ export class NewAppointmentComponent implements OnInit {
   startTime = {};
   endTime = {};
   modalRefConfirmation: MdbModalRef<ConfirmationModalComponent> | null = null;
+  approveMessage: string = 'Are you sure you want to approve the appointment?';
+
   constructor(public modalRef: MdbModalRef<NewAppointmentComponent>, public toastr: ToastrService,
     private modalService: MdbModalService) { }
 
@@ -66,7 +68,15 @@ export class NewAppointmentComponent implements OnInit {
     return date;
   }
 
-  save() {
+  saveClicked(): void {
+    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor)
+      this.save();
+    else if (AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog) {
+      this.openApprove('Would you like to approve the newly created appointment?');
+    }
+  }
+
+  save(): void {
     this.appointmentInfo.start = this.formatDate(this.startDateModel, this.startTime);
     this.appointmentInfo.end = this.formatDate(this.endDateModel, this.endTime);
     if (this.validateDates() && this.validateAppointments()) {
@@ -115,21 +125,21 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   isVisibleApprove(): boolean {
-    return this.isVisible() && !this.appointmentInfo.approved;
+    return this.isVisible() && !this.appointmentInfo.approved && this.appointmentInfo.id;
   }
 
   isVisibleCancel(): boolean {
-    return this.isVisible();
+    return this.isVisible() && this.appointmentInfo.id;
   }
 
   isVisible(): boolean {
     return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog
   }
 
-  openApprove(): void {
+  openApprove(message: string = this.approveMessage): void {
     let confirmationInfo: any = {
       title: 'Approve the Appointment',
-      question: 'Are you sure you want to approve the appointment?',
+      question: message,
       action: 'Approve',
       realise: false
     };
