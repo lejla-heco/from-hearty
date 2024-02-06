@@ -1,10 +1,10 @@
 export class PredictionRequest {
     cp!: number;
-    trestBps: number = 1;
+    trestBps: number = 0;    
     chol: number = 1;
-    fbs: number = 1;
+    fbs: number = 3;
     restEcg!: number;
-    thalach!: number;
+    thalach: number = 75;
     exang!: number;
     oldPeak: number = 1;
     slope: number = 1;

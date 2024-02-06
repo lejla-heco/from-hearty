@@ -23,16 +23,6 @@ export class AiPredictionService {
         { value: 1, label: 'Yes' },
     ];
 
-    trestBps  = [
-        { value: 1, label: 'Optimal pressure (< 120/80 mmHg)' },
-        { value: 2, label: 'Normal pressure (120/80 mmHg)'},
-        { value: 3, label: 'Normal high blood pressure (130-139/85-89 mmHg)' },
-        { value: 4, label: 'Stage 1 hypertension (mild) (140-159/90-99 mmHg)' },
-        { value: 5, label: 'Stage 2 hypertension (moderate) (160-170/100-109 mmHg)' },
-        { value: 6, label: 'Stage 3 hypertension (severe) (> 180/110 mmHg)' },
-        { value: 7, label: 'Isolated systolic hypertension (> 140/ < 90 mmHg)' },
-    ];
-
 
     thalachOptions = [
         { value: 3, label: 'normal (60 - 100 beats per minute)' }, { value: 6, label: 'Increased (Tachycardia) (> 100 beats per minute) ' }, { value: 7, label: 'Decreased (Bradycardia) (< 60 beats per minute)' },

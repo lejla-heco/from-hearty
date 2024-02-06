@@ -30,6 +30,7 @@ export class AiPredictionComponent implements OnInit {
   predictionMessage: string = '';
   appointment: boolean = false;
   loading: boolean = false;
+  trestBpsLow: number = 0;
   patient?: Patient;
   modalRefResultsPopup: MdbModalRef<ResultsPopupComponent> | null = null;
 
@@ -68,6 +69,19 @@ export class AiPredictionComponent implements OnInit {
     this.aiPredictionService.predictionRequest.exang = event.target.checked ? 1 : 0;
   }
 
+  updateBloodValue(event: any): void {
+    const newValue = event.target.value; 
+
+    this.aiPredictionService.predictionRequest.trestBps = newValue;
+  }
+
+
+  updateBloodValueLow(event: any): void {
+    const newValue = event.target.value; 
+
+    this.trestBpsLow = newValue;
+  }
+
   clearPredictionForm(): void {
     this.aiPredictionService.predictionRequest = new PredictionRequest();
     this.toastr.info('Prediction form has been cleared!');
@@ -103,7 +117,8 @@ export class AiPredictionComponent implements OnInit {
 
   validateFields(showMessage: boolean = true): any {
     if (
-      /* this.aiPredictionService.predictionRequest.trestBps < 1 || */
+      this.aiPredictionService.predictionRequest.trestBps < 1 || 
+      this.trestBpsLow < 1 || 
       this.aiPredictionService.predictionRequest.chol < 1 ||
       this.aiPredictionService.predictionRequest.fbs < 1 ||
       this.aiPredictionService.predictionRequest.oldPeak < 1 ||
@@ -136,6 +151,18 @@ export class AiPredictionComponent implements OnInit {
     return cholColor
   }
 
+  getThalacColor(): string {
+    // Implement your logic to determine the color based on the slider value
+    const thalachValue = this.aiPredictionService.predictionRequest.thalach;
+    let thalachColor = ""
+    if (thalachValue < 60 || thalachValue > 100 ) {
+      thalachColor = 'red'
+    } else {
+      thalachColor = 'green'
+    }
+    return thalachColor
+  }
+
   getTextColorSugar(): string {
     // Implement your logic to determine the color based on the slider value
     const sugarValue = this.aiPredictionService.predictionRequest.fbs;
@@ -166,7 +193,7 @@ export class AiPredictionComponent implements OnInit {
     return caColor
   }
 
-  getSelectOptionClass(optionValue: number): string {
+  getSelectOptionClass(optionValue: any): string {
     let optionClass = ''
     if (optionValue == 0) {
       optionClass = 'normal-option'
@@ -178,7 +205,7 @@ export class AiPredictionComponent implements OnInit {
     return optionClass
   }
 
-  getSelectOptionThal(optionValue: number): string {
+  getSelectOptionThal(optionValue: any): string {
     let optionClass = ''
     if (optionValue == 0) {
       optionClass = 'normal-option'
@@ -188,7 +215,7 @@ export class AiPredictionComponent implements OnInit {
     return optionClass
   }
 
-  getSelectOptionClassHeartRate(optionValue: number): string {
+  getSelectOptionClassHeartRate(optionValue: any): string {
     let optionClass = ''
     if (optionValue == 3) {
       optionClass = 'normal-option'
@@ -198,7 +225,7 @@ export class AiPredictionComponent implements OnInit {
     return optionClass
   }
 
-  getSelectOptionClassPressure(optionValue: number): string {
+  getSelectOptionClassPressure(optionValue: any): string {
     let optionClass = ''
     if (optionValue == 1 || optionValue == 2) {
       optionClass = 'normal-option'
@@ -220,6 +247,28 @@ export class AiPredictionComponent implements OnInit {
       modalClass: 'modal-lg modal-dialog-scrollable',
       data: { predictionMessage: predictionMessage, patient: this.patient }
     });
+  }
+
+
+  //Old function
+  predictWithOpenAI(): void {
+    if (this.validateFields()) {
+      this.loading = true;
+      this.httpClient
+        .post(
+          Config.serverAddress + this.aiPredictionService.api.openAiPredict,
+          this.aiPredictionService.predictionRequest
+        )
+        .subscribe(
+          (response: any) => {
+            this.predictionMessage = response.choices[0].text;
+          },
+          (error) => {
+            this.predictionMessage = 'An error occurred while predicting with Open AI.';
+          }
+        )
+        .add(() => (this.loading = false));
+    }
   }
 
 }

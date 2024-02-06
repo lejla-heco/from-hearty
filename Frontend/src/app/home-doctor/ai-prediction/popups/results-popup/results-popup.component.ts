@@ -6,6 +6,7 @@ import { Patient } from '../../../../patient/models/patient.model';
 import { AiPredictionService } from '../../ai-prediction.service';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../../../configuration/config';
+import { PredictionRequest } from '../../models/prediction-request.model';
 
 @Component({
   selector: 'app-results-popup',
@@ -26,6 +27,19 @@ export class ResultsPopupComponent {
   bookAnAppointment(): void {
     this.router.navigate(['/appointment'], { queryParams: { patientId: this.patient?.id } });
     this.modalRefResults.close();
+  }
+
+  closeModalAndClearForm(): void {
+    // Close the modal
+    this.modalRefResults.close();
+
+    // Additional actions
+    this.clearPredictionForm();
+  }
+
+  clearPredictionForm(): void {
+    this.aiPredictionService.predictionRequest = new PredictionRequest();
+
   }
 
   predictWithOpenAI() {

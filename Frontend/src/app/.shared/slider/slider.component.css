@@ -10,6 +10,10 @@
     transition: opacity .2s;
 }
 
+.slider p {
+    font-size: 10px;
+}
+
 .slider:hover {
     opacity: 1;
 }

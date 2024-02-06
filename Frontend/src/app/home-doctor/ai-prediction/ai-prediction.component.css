@@ -2,6 +2,15 @@
     display: flex !important;
 }
 
+.form-predict label {
+    margin-bottom: 10px;
+    font-size: 11px;
+}
+
+.form-predict select, .form-predict input {
+    font-size: 11px;
+}
+
 .custom-form-padding {
     padding-right: 16px;
 }

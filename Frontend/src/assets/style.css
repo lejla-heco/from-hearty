@@ -6389,10 +6389,23 @@ fieldset:disabled .btn {
   pointer-events: none;
 }
 
+.slider-component p {
+  font-size: 11px;
+  margin-bottom: 0
+}
+
 .normal-label-text {
   color: green;
-  font-size: 12px
+  font-size: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
+
+.height-max-content {
+  height: max-content
+}
+
 .normal-option {
   color: green;
 }
