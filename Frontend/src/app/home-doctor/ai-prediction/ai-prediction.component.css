@@ -11,6 +11,10 @@
     font-size: 11px;
 }
 
+.margin-button {
+    margin-right: 10px
+}
+
 .custom-form-padding {
     padding-right: 16px;
 }

@@ -76,13 +76,13 @@
           </option>
         </select> -->
 
-        <div class="d-flex flex-wrap justify-content-between">
-        <div class="col-12 col-md-5">
+        <div class="d-flex display-flex flex-wrap justify-content-between">
+        <div class="col-5 col-md-5">
           <input class="form-control" type="number" id="high" name="high" [(ngModel)]="aiPredictionService.predictionRequest.trestBps"
           (change)="updateBloodValue($event)" required>
         </div>
 
-        <div class="col-12 col-md-5">
+        <div class="col-5 col-md-5">
           <input class="form-control" type="number" id="low" name="low" (change)="updateBloodValueLow($event)" required [(ngModel)]="this.trestBpsLow">
         </div>
         </div>
@@ -144,7 +144,7 @@
   </div>
 
   <div class="d-flex flex-row gap-1">
-    <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>
+    <button type="submit" class="btn btn-primary margin-button" [disabled]="!predictionForm.form.valid">Predict</button>
     <button data-bs-toggle="modal" data-bs-target="#book-an-appointment" [disabled]="!appointment" type="button" class="btn btn-primary ml-2">Book an Appointment</button>
   </div>
 
