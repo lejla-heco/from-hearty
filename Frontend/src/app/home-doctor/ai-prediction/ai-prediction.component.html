@@ -108,8 +108,8 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <label for="exang">Exercise Induced Angina (Exang)</label>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="exang" name="exang" [checked]="aiPredictionService.predictionRequest.exang" (change)="updateExangValue($event)" required>
+        <div>
+          <input type="checkbox" id="exang" name="exang" [checked]="aiPredictionService.predictionRequest.exang" (change)="updateExangValue($event)" required>
           <label class="form-check-label" for="exang">Exang</label>
         </div>
       </div>

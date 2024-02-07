@@ -11,6 +11,7 @@ export class LoginToken {
     validUntil!: Date;
     roleType!: RoleType;
     userId!: string;
+    mainId!: string;
 
     get isExpired(): boolean {
         return new Date() > new Date(this.validUntil);

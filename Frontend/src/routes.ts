@@ -9,15 +9,17 @@ import { AiPredictionComponent } from './app/home-doctor/ai-prediction/ai-predic
 import { ArchiveComponent } from './app/archive/archive.component';
 import { HouseDoctorDashboardComponent } from './app/dashboards/house-doctor-dashboard/house-doctor-dashboard.component';
 import { CardiologistDashboardComponent } from './app/dashboards/cardiologist-dashboard/cardiologist-dashboard.component';
+import { VideosComponent } from './app/documents/videos/videos.component';
 
 export const routes: Route[] = [
     { path: '', component: LoginComponent },
     { path: 'doctor-dashboard', component: HouseDoctorDashboardComponent },
     { path: 'cardiologist-dashboard', component: CardiologistDashboardComponent },
     { path: 'patient-example', component: PatientExampleComponent },
-    { path: 'appointment', component: AppointmentComponent }, 
+    { path: 'appointment', component: AppointmentComponent },
     { path: 'patients', component: PatientOverviewComponent },
-    { path: 'calendar', component: CardiologistCalendarComponent},
-    { path: 'ai-prediction', component: AiPredictionComponent},
-    { path: 'archives', component: ArchiveComponent}
+    { path: 'calendar', component: CardiologistCalendarComponent },
+    { path: 'ai-prediction', component: AiPredictionComponent },
+    { path: 'archives', component: ArchiveComponent },
+    { path: 'videos', component: VideosComponent }
 ];

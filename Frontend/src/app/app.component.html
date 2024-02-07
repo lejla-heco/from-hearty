@@ -100,15 +100,10 @@
                         <li> <a class="waves-effect waves-dark" href="#" routerLink="patients"><i
                                     class="fas fa-heartbeat"></i><span class="hide-menu">Patients</span></a></li>
 
-                        <li class="nav-small-cap">--- MEDIA</li>
+                        <li class="nav-small-cap">--- DOCUMENTS</li>
                         <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
-                                routerLink="doctor-dashboard"><i class="fas fa-film"></i><span class="hide-menu">Media
-                                    Admin</span></a></li>
-                        <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
-                                routerLink="cardiologist-dashboard"><i class="fab fa-youtube"></i><span
-                                    class="hide-menu">Media Overview</span></a></li>
-
-                        <li class="nav-small-cap">--- FILES</li>
+                                routerLink="videos"><i class="fab fa-youtube"></i><span
+                                    class="hide-menu">Videos</span></a></li>
                         <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
                                 routerLink="doctor-dashboard"><i class="far fa-file-archive"></i><span
                                     class="hide-menu">File System</span></a></li>

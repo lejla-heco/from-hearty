@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h5 *ngIf="!isEdit" class="modal-title" id="exampleModalLabel">Add new video</h5>
+    <h5 *ngIf="isEdit" class="modal-title" id="exampleModalLabel">Edit video information</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <form class="form-material form-horizontal">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group d-flex">
+                    <i class="far fa-edit m-r-10 align-self-center"></i>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Add title"
+                        [(ngModel)]="video.title" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group d-flex">
+                    <i class="fas fa-link m-r-10 align-self-center"></i>
+                    <input type="text" id="link" name="link" class="form-control" placeholder="Add link"
+                        [(ngModel)]="video.link" required>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+        Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="saveVideo()">Save</button>
+</div>
