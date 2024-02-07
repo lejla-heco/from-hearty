@@ -4,18 +4,29 @@
 />
 
 <body class="skin-megna fixed-layout">
-    <div *ngIf="isLoggedIn" id="main-wrapper">
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <button class="navbar-toggler custom-hamburger-display" type="button" (click)="toggleSidebar()">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-header d-flex display-flex justify-content-between align-items-center">
-                    <a class="navbar-brand"><b>
-                            <img src="./assets/images/logo.png" alt="logo" class="light-logo" />
-                        </b>
-                        <span class="hidden-xs"> FromHearty</span>
-                    </a>
+  <div *ngIf="isLoggedIn" id="main-wrapper">
+    <header class="topbar">
+      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <button
+          class="navbar-toggler custom-hamburger-display"
+          type="button"
+          (click)="toggleSidebar()"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="navbar-header d-flex display-flex justify-content-between align-items-center"
+        >
+          <a class="navbar-brand"
+            ><b>
+              <img
+                src="./assets/images/logo.png"
+                alt="logo"
+                class="light-logo"
+              />
+            </b>
+            <span class="hidden-xs"> FromHearty</span>
+          </a>
 
           <div
             (click)="toggleAccessibilitySettings()"
@@ -85,42 +96,70 @@
               <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="" alt="user"
                                 class=""></a> -->
-                            <div class="dropdown-menu dropdown-menu-end animated flipInY">
-                                <a class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item"><i class="ti-settings"></i> Account Settings</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <aside class="left-sidebar" [class.open]="isSidebarOpen">
-            <div class="scroll-sidebar">
-
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="nav-small-cap">--- PAGES</li>
-                        <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
-                                    class="fas fa-home"></i><span class="hide-menu">Home
-                                    Page</span></a></li>
-                        <li *ngIf="isCardiolog()"> <a class="waves-effect waves-dark" href="#" routerLink="calendar"><i
-                                    class="fas fa-calendar"></i><span class="hide-menu">Calendar</span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="#" routerLink="patients"><i
-                                    class="fas fa-heartbeat"></i><span class="hide-menu">Patients</span></a></li>
-                        <li class="nav-small-cap">--- SUPPORT</li>
-                        <li><a class="waves-effect waves-dark" aria-expanded="false" (click)="logout()"><i
-                                    class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <div class="page-wrapper">
-            <router-outlet></router-outlet>
+              <div class="dropdown-menu dropdown-menu-end animated flipInY">
+                <a class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"
+                  ><i class="ti-settings"></i> Account Settings</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logout()"
+                  ><i class="fa fa-power-off"></i> Logout</a
+                >
+              </div>
+            </li>
+          </ul>
         </div>
+      </nav>
+    </header>
+    <aside class="left-sidebar" [class.open]="isSidebarOpen">
+      <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">--- PAGES</li>
+            <li>
+              <a class="waves-effect waves-dark" href="#" routerLink="home-page"
+                ><i class="fas fa-home"></i
+                ><span class="hide-menu">Home Page</span></a
+              >
+            </li>
+            <li *ngIf="isCardiolog()">
+              <a class="waves-effect waves-dark" href="#" routerLink="calendar"
+                ><i class="fas fa-calendar"></i
+                ><span class="hide-menu">Calendar</span></a
+              >
+            </li>
+            <li>
+              <a class="waves-effect waves-dark" href="#" routerLink="patients"
+                ><i class="fas fa-heartbeat"></i
+                ><span class="hide-menu">Patients</span></a
+              >
+            </li>
+            <!-- <li>
+  <a class="waves-effect waves-dark" href="#" routerLink="documents"
+    ><i class="fas fa-file"></i
+    ><span class="hide-menu">Documents</span></a
+  >
+</li> -->
+
+            <li class="nav-small-cap">--- SUPPORT</li>
+            <li>
+              <a
+                class="waves-effect waves-dark"
+                aria-expanded="false"
+                (click)="logout()"
+                ><i class="fa fa-power-off"></i
+                ><span class="hide-menu">Log Out</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <div class="page-wrapper">
+      <router-outlet></router-outlet>
     </div>
+  </div>
 
   <app-login *ngIf="!isLoggedIn"></app-login>
 </body>
