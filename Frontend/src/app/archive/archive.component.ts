@@ -92,7 +92,6 @@ export class ArchiveComponent implements OnInit {
   getArchives(): void {
     this.httpClient.get(Config.serverAddress + this.aiPredictionService.api.predictionResult + '/' + this.patient!.id).subscribe((response: any) => {
       this.predictionResults = response;
-      console.log(this.predictionResults);
     });
   }
 

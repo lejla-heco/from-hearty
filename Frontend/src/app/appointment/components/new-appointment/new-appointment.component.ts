@@ -60,6 +60,16 @@ export class NewAppointmentComponent implements OnInit {
     return date;
   }
 
+  validateDateModels(dateModel: NgbDateStruct, time: any): boolean {
+    if (dateModel == null ||
+      dateModel.day == null ||
+      dateModel.year == null ||
+      time == null ||
+      time.hour == null ||
+      time.minute == null) return false;
+    return true;
+  }
+
   formatDateWithoutTime(dateModel: NgbDateStruct): Date {
     let date = new Date();
     date.setDate(dateModel.day);
@@ -80,6 +90,7 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   save(): void {
+    if (!this.validateFields()) return;
     this.appointmentInfo.start = this.formatDate(this.startDateModel, this.startTime);
     this.appointmentInfo.end = this.formatDate(this.endDateModel, this.endTime);
     if (this.validateDates() && this.validateAppointments()) {
@@ -179,6 +190,23 @@ export class NewAppointmentComponent implements OnInit {
       else if (confirmationInfo && !confirmationInfo.realise && confirmationInfo.action === 'Approve') this.save();
       else if (confirmationInfo && confirmationInfo.realise && confirmationInfo.action === 'Cancel') this.cancel();
     });
+  }
+
+  validateFields(): boolean {
+    if (
+      this.appointmentInfo.title == undefined ||
+      this.appointmentInfo.title == null ||
+      this.appointmentInfo.title.trim().length === 0
+    ) {
+      this.toastr.warning("Title is a mandatory field!");
+      return false;
+    } else if (!this.validateDateModels(this.startDateModel, this.startTime) ||
+      !this.validateDateModels(this.endDateModel, this.endTime)
+    ) {
+      this.toastr.warning("Dates are mandatory fields!");
+      return false;
+    }
+    return true;
   }
 
 }

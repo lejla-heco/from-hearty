@@ -68,7 +68,6 @@ export class AiPredictionComponent implements OnInit {
 
   updateExangValue(event: any): void {
     this.aiPredictionService.predictionRequest.exang = event.target.checked ? 1 : 0;
-    console.log(this.aiPredictionService.predictionRequest.exang)
   }
 
   updateBloodValue(event: any): void {
