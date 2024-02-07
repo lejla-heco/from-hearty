@@ -11,7 +11,11 @@ export class DocumentService {
   constructor(private http: HttpClient) {}
 
   downloadDocument(id: string) {
-    return this.http.get(this.rootUrl + '/download-document/' + id);
+    return this.http.get(this.rootUrl + '/download-document/' + id, {
+      reportProgress: true,
+      responseType: 'blob',
+      observe: 'events'
+    });
   }
 
   getUserDocuments(id: string) {

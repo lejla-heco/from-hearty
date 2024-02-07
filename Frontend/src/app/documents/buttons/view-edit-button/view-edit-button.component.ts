@@ -4,7 +4,8 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Router } from '@angular/router';
 import { DocumentModel } from '../../models/document.model';
-import { HttpResponse } from '@angular/common/http';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { DocumentService } from '../../document.service';
 
 @Component({
   selector: 'app-view-edit-button',
@@ -16,7 +17,8 @@ import { HttpResponse } from '@angular/common/http';
 export class ViewEditButtonComponent implements ICellRendererAngularComp {
   document!: DocumentModel;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private _documentService: DocumentService) {}
 
   agInit(params: ICellRendererParams): void {
     this.document = params.data;
@@ -33,7 +35,12 @@ export class ViewEditButtonComponent implements ICellRendererAngularComp {
     });
   }
   downloadDocument() {
-    
+    this._documentService.downloadDocument(this.document.id)
+      .subscribe((response: any) => {
+        if (response.type === HttpEventType.Response){
+          this.downloadFile(response);
+        }
+      })
   }
 
   private downloadFile(data: HttpResponse<Blob>) {
@@ -41,7 +48,7 @@ export class ViewEditButtonComponent implements ICellRendererAngularComp {
     const a = document.createElement('a');
     a.setAttribute('style', 'display:none;');
     document.body.appendChild(a);
-    a.download = 'Invoice.pdf';
+    a.download = this.document.name;
     a.href = URL.createObjectURL(downloadedFile);
     a.target = '_blank';
     a.click();

@@ -73,7 +73,7 @@ export class DocumentsComponent implements OnInit {
     this._documentService
       .getUserDocuments(this.userId)
       .subscribe((response: any) => {
-        this.documents = response.data;
+        this.documents = response;
       });
   }
 

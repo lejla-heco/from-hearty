@@ -6,7 +6,9 @@ using Service.Services;
 using Service.Mappers;
 using WebAPI.AIPredictEngine;
 using System.Globalization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace WebAPI.ApiControllers
 {
@@ -140,7 +142,7 @@ namespace WebAPI.ApiControllers
             {
                 Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
                 var appointments = context.Appointments
-                    .Where(appointment => appointment.CardiologistId == guidCardiologistId)
+                    .Where(appointment => appointment.CardiologistId == guidCardiologistId).AsEnumerable()
                     .Select(AppointmentMapper.MapAppointmentForCalendar)
                     .ToList();
 
@@ -176,8 +178,7 @@ namespace WebAPI.ApiControllers
             app.MapGet("/appointment/{appointmentId}", (string appointmentId, MyContext context) =>
             {
                 Guid.TryParse(appointmentId, out Guid guidAppointmentId);
-                var appointment = context.Appointments
-                    .Where(appointment => appointment.Id == guidAppointmentId).FirstOrDefault();
+                var appointment = context.Appointments.FirstOrDefault(appointment => appointment.Id == guidAppointmentId);
 
                 return appointment;
             });
@@ -352,8 +353,7 @@ namespace WebAPI.ApiControllers
             app.MapGet("/videos/{videoId}", (string videoId, MyContext context) =>
             {
                 Guid.TryParse(videoId, out Guid guidVideoId);
-                var video = context.Videos
-                    .Where(video => video.Id == guidVideoId).FirstOrDefault();
+                var video = context.Videos.FirstOrDefault(video => video.Id == guidVideoId);
 
                 return video;
             });
@@ -370,8 +370,7 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(videoId, out Guid guidVideoId);
 
                 var videoToDelete = context.Videos
-                    .Where(video => video.Id == guidVideoId)
-                    .FirstOrDefault();
+                    .FirstOrDefault(video => video.Id == guidVideoId);
 
                 if (videoToDelete != null)
                 {
@@ -395,6 +394,9 @@ namespace WebAPI.ApiControllers
             app.MapPost("/upload-document/{userId}", (string userId, [FromForm] IFormFile file, MyContext context) =>
             {
                 Guid.TryParse(userId, out Guid guidUserId);
+
+                var userGuid = guidUserId;
+
                 var extension  = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
                 var fileName = DateTime.Now.Ticks + "." + extension;
 
@@ -407,24 +409,59 @@ namespace WebAPI.ApiControllers
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
                     fileName);
 
-                var document = new Document
-                {
-                    Name = file.Name,
-                    Description = "description",
-                    CreatedDate = DateTime.Now,
-                    FileName = fileName,
-                    Extension = extension,
-                    UserId = guidUserId,
-                    IsRemoved = false
-                };
-                context.Documents.Add(document);
-
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                      file.CopyTo(stream);
                 }
+
+                var document = new Document
+                {
+                    Name = file.FileName,
+                    Description = "description",
+                    CreatedDate = DateTime.Now,
+                    FileName = fileName,
+                    Extension = extension,
+                    UserId = userGuid,
+                    IsRemoved = false
+                };
+                context.Documents.Add(document);
                 context.SaveChanges();
+
             }).DisableAntiforgery();
+
+            app.MapGet("/download-document/{fileId}", (string fileId, MyContext context) =>
+            {
+                Guid.TryParse(fileId, out Guid guidFileId);
+
+                var file = context.Documents.FirstOrDefault(d => d.Id == guidFileId);
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files", file.FileName);
+
+                if (!System.IO.File.Exists(filePath))
+                    throw new Exception("File not found");
+
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+
+                return Results.File(memory, GetContentType(filePath), file.Name);
+
+            });
+
+            static string GetContentType(string path)
+            {
+                var provider = new FileExtensionContentTypeProvider();
+
+                if (!provider.TryGetContentType(path, out var contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+
+                return contentType;
+            }
 
             #endregion
 

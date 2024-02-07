@@ -10,7 +10,6 @@ import { HouseDoctorDashboardComponent } from './app/dashboards/house-doctor-das
 import { CardiologistDashboardComponent } from './app/dashboards/cardiologist-dashboard/cardiologist-dashboard.component';
 import { VideosComponent } from './app/documents/videos/videos.component';
 import { DocumentsComponent } from './app/documents/documents.component';
-import { DocumentOverviewComponent } from './app/documents/document-overview/document-overview.component';
 import { HouseDoctorsComponent } from './app/contacts/house-doctors/house-doctors.component';
 import { CardiologistsComponent } from './app/contacts/cardiologists/cardiologists.component';
 
@@ -26,7 +25,6 @@ export const routes: Route[] = [
     { path: 'archives', component: ArchiveComponent },
     { path: 'videos', component: VideosComponent },
   	{ path: 'documents', component: DocumentsComponent },
-  	{ path: 'document-overview', component: DocumentOverviewComponent },
     { path: 'house-doctors', component: HouseDoctorsComponent },
     { path: 'cardiologists', component: CardiologistsComponent },
 ];
