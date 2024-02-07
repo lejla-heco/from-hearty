@@ -32,14 +32,6 @@ export class ResultsPopupComponent {
   closeModalAndClearForm(): void {
     // Close the modal
     this.modalRefResults.close();
-
-    // Additional actions
-    this.clearPredictionForm();
-  }
-
-  clearPredictionForm(): void {
-    this.aiPredictionService.predictionRequest = new PredictionRequest();
-
   }
 
   predictWithOpenAI() {

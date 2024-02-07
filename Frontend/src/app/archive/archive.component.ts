@@ -97,7 +97,7 @@ export class ArchiveComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['../']);
+    this.router.navigate(['/patients']);
   }
 
 }

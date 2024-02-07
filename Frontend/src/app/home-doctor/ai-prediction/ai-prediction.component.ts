@@ -253,13 +253,13 @@ export class AiPredictionComponent implements OnInit {
   }
 
   goBack(): void {
-    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor) this.router.navigate(['../']);
+    if (AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor) this.router.navigate(['./patients']);
     else this.router.navigate(['/calendar']);
   }
 
   openPredictModal(predictionMessage: any): any {
     this.modalRefResultsPopup = this.modalService.open(ResultsPopupComponent, {
-      modalClass: 'modal-lg modal-dialog-scrollable',
+      modalClass: 'modal-lg',
       data: { predictionMessage: predictionMessage, patient: this.patient }
     });
   }

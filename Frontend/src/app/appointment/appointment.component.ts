@@ -56,7 +56,7 @@ export class AppointmentComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['../']);
+    this.router.navigate(['./patients']);
   }
 
 }

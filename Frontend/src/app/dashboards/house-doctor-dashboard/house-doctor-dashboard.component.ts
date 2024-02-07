@@ -27,6 +27,9 @@ export class HouseDoctorDashboardComponent implements OnInit {
   public doughnutPercentagesChart!: any;
   public doughnutChartData: any[] = [];
 
+  public urgentPatientsBarChart!: any;
+  public urgentPatientsData: any = {};
+
   public userId = AuthentificationHelper.getLoginToken().userId;
 
   constructor(private httpClient: HttpClient, private aiPredictionService: AiPredictionService, private appointmentService: AppointmentService) {
@@ -37,6 +40,7 @@ export class HouseDoctorDashboardComponent implements OnInit {
     this.getPredictionsPerMonth();
     this.getApprovedAppointmentsPerMonth();
     this.getPredictionPercentages();
+    this.getUrgentPatients();
   }
 
   getPredictionsPerMonth(): void {
@@ -70,6 +74,13 @@ export class HouseDoctorDashboardComponent implements OnInit {
     });
   }
 
+  getUrgentPatients(): void {
+    this.httpClient.get(Config.serverAddress + this.aiPredictionService.api.urgentPatients).subscribe((response: any) => {
+      this.urgentPatientsData = response;
+      this.initUrgentPatientsBarChart();
+    });
+  }
+
   initDoughnutChart(): void {
     this.doughnutPercentagesChart = new Chart("canvas-doughnut", {
       type: 'doughnut',
@@ -94,6 +105,7 @@ export class HouseDoctorDashboardComponent implements OnInit {
       },
       options: {
         cutout: '60%',
+        aspectRatio: 2,
         plugins: {
           legend: {
             display: true,
@@ -103,7 +115,6 @@ export class HouseDoctorDashboardComponent implements OnInit {
       },
     });
   }
-
 
   initPredictionsPerMonthBarChart(): void {
     this.predictionsPerMonthBarChart = new Chart("canvas-predictions-per-month", {
@@ -174,6 +185,30 @@ export class HouseDoctorDashboardComponent implements OnInit {
             suggestedMax: 200
           }
         }
+      },
+    });
+  }
+
+  initUrgentPatientsBarChart(): void {
+    this.urgentPatientsBarChart = new Chart("canvas-urgent-patients", {
+      type: 'bar',
+      data: {
+        labels: this.urgentPatientsData.labels,
+        datasets: [
+          {
+            label: 'Probability percentage',
+            data: this.urgentPatientsData.data,
+          },
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
       },
     });
   }

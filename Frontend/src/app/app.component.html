@@ -99,6 +99,20 @@
                                     class="fas fa-calendar"></i><span class="hide-menu">Calendar</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" routerLink="patients"><i
                                     class="fas fa-heartbeat"></i><span class="hide-menu">Patients</span></a></li>
+
+                        <li class="nav-small-cap">--- MEDIA</li>
+                        <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
+                                routerLink="doctor-dashboard"><i class="fas fa-film"></i><span class="hide-menu">Media
+                                    Admin</span></a></li>
+                        <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
+                                routerLink="cardiologist-dashboard"><i class="fab fa-youtube"></i><span
+                                    class="hide-menu">Media Overview</span></a></li>
+
+                        <li class="nav-small-cap">--- FILES</li>
+                        <li *ngIf="isHouseDoctor() || isCardiolog()"> <a class="waves-effect waves-dark" href="#"
+                                routerLink="doctor-dashboard"><i class="fas fa-id-card-alt"></i><span
+                                    class="hide-menu">File System</span></a></li>
+
                         <li class="nav-small-cap">--- SUPPORT</li>
                         <li><a class="waves-effect waves-dark" aria-expanded="false" (click)="logout()"><i
                                     class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a></li>

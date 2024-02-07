@@ -36,5 +36,6 @@ export class AiPredictionService {
         predictionResult: '/prediction-result',
         predictionsPerMonth: '/predictions/house-doctor',
         predictionResultPercentages: '/prediction-result/percentage',
+        urgentPatients: '/prediction-result/patients'
     }
 }
