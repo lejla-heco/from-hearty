@@ -1,5 +1,7 @@
 using FromHeartyAI.DataStructures;
 using FromHeartyAI.ML_Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.ML.Transforms;
 using Service.Services;
 using Service.Mappers;
 using WebAPI.AIPredictEngine;
@@ -176,6 +178,55 @@ namespace WebAPI.ApiControllers
 
                 return predictionResults;
             });
+
+
+            #region Documents
+
+            app.MapGet("/user-documents/{userId}", (string userId, MyContext context) =>
+            {
+                Guid.TryParse(userId, out Guid guidUserId);
+                var documents = context.Documents
+                    .Where(d => d.UserId == guidUserId)
+                    .ToList();
+
+                return documents;
+            });
+
+            app.MapPost("/upload-document/{userId}", (string userId, [FromForm] IFormFile file, MyContext context) =>
+            {
+                Guid.TryParse(userId, out Guid guidUserId);
+                var extension  = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+                var fileName = DateTime.Now.Ticks + "." + extension;
+
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+                if (!Directory.Exists(pathBuilt))
+                {
+                    Directory.CreateDirectory(pathBuilt);
+                }
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
+                    fileName);
+
+                var document = new Document
+                {
+                    Name = file.Name,
+                    Description = "description",
+                    CreatedDate = DateTime.Now,
+                    FileName = fileName,
+                    Extension = extension,
+                    UserId = guidUserId,
+                    IsRemoved = false
+                };
+                context.Documents.Add(document);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                     file.CopyTo(stream);
+                }
+                context.SaveChanges();
+            }).DisableAntiforgery();
+
+            #endregion
 
         }
     }
