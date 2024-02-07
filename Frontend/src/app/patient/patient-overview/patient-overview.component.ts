@@ -47,7 +47,8 @@ export class PatientOverviewComponent {
       headerName: 'Ai Prediction',
       floatingFilter: false,
       filter: false,
-      minWidth: 250,
+      cellStyle: { textAlign: 'center' },
+      width: 95,
       cellRenderer: AiPredictionButtonComponent,
       hide: this.hideAIPredictionButton(),
       suppressColumnsToolPanel: this.hideAIPredictionButton(),
@@ -56,7 +57,8 @@ export class PatientOverviewComponent {
       headerName: 'Archives',
       floatingFilter: false,
       filter: false,
-      minWidth: 250,
+      width: 85,
+      cellStyle: { textAlign: 'center' },
       cellRenderer: ArchivesButtonComponent
     },
   ];

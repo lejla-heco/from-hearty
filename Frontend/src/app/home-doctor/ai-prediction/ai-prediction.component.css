@@ -7,7 +7,8 @@
     font-size: 11px;
 }
 
-.form-predict select, .form-predict input {
+.form-predict select,
+.form-predict input {
     font-size: 11px;
 }
 
@@ -27,17 +28,17 @@
 
 .custom-message-block {
     display: none;
-  }
-  
+}
+
 .custom-message-block.show-message {
     display: block;
 }
 
 .custom-message {
     padding: 15px;
-    border: 2px solid silver; 
-    color: #333; 
-    background-color: #f2f2f2; 
+    border: 2px solid silver;
+    color: #333;
+    background-color: #f2f2f2;
 }
 
 .loader-container {
@@ -51,7 +52,7 @@
     z-index: 1000;
     display: none;
 }
-  
+
 .loader-container.show-loader {
     display: flex;
     align-items: center;
@@ -65,11 +66,16 @@
     width: 50px;
     height: 50px;
     animation: spin 1s linear infinite;
-  }
-  
+}
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /*progressbar*/
@@ -138,6 +144,12 @@
 }
 
 /*Color number of the step and the connector before it*/
-#progressbar li.active:before, #progressbar li.active:after {
+#progressbar li.active:before,
+#progressbar li.active:after {
     background: skyblue;
+}
+
+.inline-elements {
+    display: inline-flex;
+    align-items: center;
 }
