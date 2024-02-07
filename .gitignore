@@ -39,3 +39,4 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 WebAPI/Logs/
+/WebAPI/Upload/files

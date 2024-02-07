@@ -49,7 +49,7 @@ namespace WebAPI
             application.UseHttpsRedirection();
 
             application.UseMyAuthorization();
-
+            application.UseRouting();
             application.MapEndpoints();
             application.MapAiExampleEndpoints();
             application.MapExampleEndpoints();

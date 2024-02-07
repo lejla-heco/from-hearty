@@ -1,4 +1,3 @@
-
 import { Route } from '@angular/router';
 import { LoginComponent } from './app/login/login.component';
 import { HomePageComponent } from './app/home-page/home-page.component';
@@ -8,14 +7,18 @@ import { CardiologistCalendarComponent } from './app/cardiologist/cardiologist-c
 import { PatientOverviewComponent } from './app/patient/patient-overview/patient-overview.component';
 import { AiPredictionComponent } from './app/home-doctor/ai-prediction/ai-prediction.component';
 import { ArchiveComponent } from './app/archive/archive.component';
+import { DocumentsComponent } from './app/documents/documents.component';
+import { DocumentOverviewComponent } from './app/documents/document-overview/document-overview.component';
 
 export const routes: Route[] = [
-    { path: '', component: LoginComponent },
-    { path: 'home-page', component: HomePageComponent },
-    { path: 'patient-example', component: PatientExampleComponent },
-    { path: 'appointment', component: AppointmentComponent },
-    { path: 'patients', component: PatientOverviewComponent },
-    { path: 'calendar', component: CardiologistCalendarComponent},
-    { path: 'ai-prediction', component: AiPredictionComponent},
-    { path: 'archives', component: ArchiveComponent}
+  { path: '', component: LoginComponent },
+  { path: 'home-page', component: HomePageComponent },
+  { path: 'patient-example', component: PatientExampleComponent },
+  { path: 'appointment', component: AppointmentComponent },
+  { path: 'patients', component: PatientOverviewComponent },
+  { path: 'calendar', component: CardiologistCalendarComponent },
+  { path: 'ai-prediction', component: AiPredictionComponent },
+  { path: 'archives', component: ArchiveComponent },
+  { path: 'documents', component: DocumentsComponent },
+  { path: 'document-overview', component: DocumentOverviewComponent },
 ];

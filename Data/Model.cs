@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 public class MyContext : DbContext
@@ -12,6 +13,7 @@ public class MyContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<PredictionResult> PredictionResults { get; set; }
     public DbSet<Video> Videos { get; set; }
+    public DbSet<Document> Documents { get; set; }
 
     public string DbPath { get; }
 
@@ -38,7 +40,7 @@ public class UserRole : IModel
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool IsRemoved { get; set; } = false;
     public required string Role { get; set; }
-    public List<User> User { get; } = [];
+    public List<User> User { get; } = new();
 }
 
 public class User : IModel
@@ -49,10 +51,10 @@ public class User : IModel
     public required string Password { get; set; }
     public required Guid UserRoleId { get; set; }
     public UserRole UserRole { get; set; } = default!;
-    public List<Patient> Patient { get; } = [];
-    public List<HouseDoctor> HouseDoctor { get; } = [];
-    public List<Cardiologist> Cardiologist { get; } = [];
-    public List<Video> Video { get; } = [];
+    public List<Patient> Patient { get; } = new();
+    public List<HouseDoctor> HouseDoctor { get; } = new();
+    public List<Cardiologist> Cardiologist { get; } = new();
+    public List<Video> Video { get; } = new ();
 }
 
 public class Patient : IModel
@@ -68,9 +70,9 @@ public class Patient : IModel
     public required DateTime BirthDate { get; set; }
     public required Guid HouseDoctorId { get; set; }
     public HouseDoctor HouseDoctor { get; set; } = default!;
-    public List<Finding> Findings { get; } = [];
-    public List<Appointment> Appointment { get; } = [];
-    public List<PredictionResult> PredictionResult { get; } = [];
+    public List<Finding> Findings { get; } = new();
+    public List<Appointment> Appointment { get; } = new();
+    public List<PredictionResult> PredictionResult { get; } = new();
 }
 
 public class Cardiologist : IModel
@@ -81,8 +83,7 @@ public class Cardiologist : IModel
     public User User { get; set; } = default!;
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public List<Finding> Findings { get; } = [];
-    public List<Appointment> Appointment { get; } = [];
+    public List<Finding> Findings { get; } = new();
 }
 
 public class HouseDoctor : IModel
@@ -93,9 +94,9 @@ public class HouseDoctor : IModel
     public User User { get; set; } = default!;
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public List<Patient> Patient { get; } = [];
-    public List<Finding> Findings { get; } = [];
-    public List<PredictionResult> PredictionResult { get; } = [];
+    public List<Patient> Patient { get; } = new();
+    public List<Finding> Findings { get; } = new();
+    public List<PredictionResult> PredictionResult { get; } = new();
 }
 
 public class Finding : IModel
@@ -200,4 +201,17 @@ public class Video : IModel
     public DateTime Created { get; set; } = DateTime.Now;
     public Guid UserId { get; set; }
     public User User { get; set; } = default!;
+}
+
+public class Document : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Name { get; set; }
+    public string FileName { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public string Extension { get; set; }
+    public Guid UserId { get; set; }
+    public virtual User User { get; set; }
+    public bool IsRemoved { get; set; } = false;
 }
