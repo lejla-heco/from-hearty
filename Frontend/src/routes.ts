@@ -11,6 +11,8 @@ import { CardiologistDashboardComponent } from './app/dashboards/cardiologist-da
 import { VideosComponent } from './app/documents/videos/videos.component';
 import { DocumentsComponent } from './app/documents/documents.component';
 import { DocumentOverviewComponent } from './app/documents/document-overview/document-overview.component';
+import { HouseDoctorsComponent } from './app/contacts/house-doctors/house-doctors.component';
+import { CardiologistsComponent } from './app/contacts/cardiologists/cardiologists.component';
 
 export const routes: Route[] = [
     { path: '', component: LoginComponent },
@@ -25,4 +27,6 @@ export const routes: Route[] = [
     { path: 'videos', component: VideosComponent },
   	{ path: 'documents', component: DocumentsComponent },
   	{ path: 'document-overview', component: DocumentOverviewComponent },
+    { path: 'house-doctors', component: HouseDoctorsComponent },
+    { path: 'cardiologists', component: CardiologistsComponent },
 ];
