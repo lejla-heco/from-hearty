@@ -14,6 +14,7 @@ import { Patient } from '../../patient/models/patient.model';
 import { AuthentificationHelper } from '../../authentification/authentification-helper';
 import { RoleType } from '../../login/models/login-token.model';
 import { ResultsPopupComponent } from './popups/results-popup/results-popup.component';
+import { PredictionResult } from '../../calendar/models/prediction-result.model';
 
 @Component({
   selector: 'app-ai-prediction',
@@ -67,6 +68,7 @@ export class AiPredictionComponent implements OnInit {
 
   updateExangValue(event: any): void {
     this.aiPredictionService.predictionRequest.exang = event.target.checked ? 1 : 0;
+    console.log(this.aiPredictionService.predictionRequest.exang)
   }
 
   updateBloodValue(event: any): void {
@@ -106,6 +108,7 @@ export class AiPredictionComponent implements OnInit {
             this.openPredictModal(this.predictionMessage);
             this.aiPredictionService.prediction = response;
             this.appointment = true;
+            this.createPredictionResult(response);
           },
           (error) => {
             this.predictionMessage = 'An error occurred while predicting.';
@@ -113,6 +116,18 @@ export class AiPredictionComponent implements OnInit {
         )
         .add(() => (this.loading = false));
     }
+  }
+
+  createPredictionResult(percentage: any): void {
+    let predictionResult: PredictionResult = new PredictionResult(this.aiPredictionService.predictionRequest);
+    predictionResult.percentage = percentage;
+    predictionResult.patientId = this.patient!.id;
+    predictionResult.houseDoctorId = AuthentificationHelper.getLoginToken().userId;
+    predictionResult.label = Math.round(this.aiPredictionService.prediction!/100);
+
+    this.httpClient.put(Config.serverAddress + this.aiPredictionService.api.predictionResult, predictionResult).subscribe((response: any) => {
+      this.toastr.success("The created prediction has been stored in the Archive!");
+    });
   }
 
   validateFields(showMessage: boolean = true): any {

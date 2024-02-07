@@ -5,7 +5,7 @@ export class PredictionRequest {
     fbs: number = 3;
     restEcg!: number;
     thalach: number = 75;
-    exang!: number;
+    exang: number = 0;
     oldPeak: number = 1;
     slope: number = 1;
     ca: number = 0;

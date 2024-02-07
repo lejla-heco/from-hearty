@@ -89,9 +89,12 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">--- PAGES</li>
-                        <li> <a class="waves-effect waves-dark" href="#" routerLink="home-page"><i
-                                    class="fas fa-home"></i><span class="hide-menu">Home
-                                    Page</span></a></li>
+                        <li *ngIf="isHouseDoctor()"> <a class="waves-effect waves-dark" href="#"
+                                routerLink="doctor-dashboard"><i class="far fa-chart-bar"></i><span
+                                    class="hide-menu">Dashboard</span></a></li>
+                        <li *ngIf="isCardiolog()"> <a class="waves-effect waves-dark" href="#"
+                                routerLink="cardiologist-dashboard"><i class="far fa-chart-bar"></i><span
+                                    class="hide-menu">Dashboard</span></a></li>
                         <li *ngIf="isCardiolog()"> <a class="waves-effect waves-dark" href="#" routerLink="calendar"><i
                                     class="fas fa-calendar"></i><span class="hide-menu">Calendar</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" routerLink="patients"><i

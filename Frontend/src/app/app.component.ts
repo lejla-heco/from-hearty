@@ -71,7 +71,11 @@ export class AppComponent implements DoCheck {
     this.accessibilityService.applySettings();
   }
 
-  isCardiolog() {
+  isCardiolog(): boolean {
     return AuthentificationHelper.getLoginToken().roleType == RoleType.Cardiolog;
+  }
+
+  isHouseDoctor(): boolean {
+    return AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor;
   }
 }

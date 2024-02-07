@@ -14,7 +14,8 @@ export class PredictionResult {
     ca!: number;
     thal!: number;
     label!: number;
-    cardiologistId?: string;
+    created!: Date;
+    percentage!: number;
     houseDoctorId?: string;
     patientId!: string;
 

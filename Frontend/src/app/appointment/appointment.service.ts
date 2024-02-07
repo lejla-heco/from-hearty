@@ -6,5 +6,7 @@ import { Injectable } from "@angular/core";
 export class AppointmentService {
     api = {
         cardiologists: '/cardiologists',
+        approvedAppointments: '/appointments/house-doctor/APPROVED',
+        pendingAppointments: '/appointments/house-doctor/PENDING',
     }
 }

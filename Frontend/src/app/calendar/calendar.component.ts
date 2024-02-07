@@ -112,7 +112,7 @@ export class CalendarComponent implements OnChanges {
 
   openModal(appointment: any, isEdit = false): any {
     this.modalRef = this.modalService.open(NewAppointmentComponent, {
-      modalClass: 'modal-xl',
+      //modalClass: 'modal-lg',
       data: { appointmentInfo: appointment, appointments: this.appointments, isEdit: isEdit },
     });
     this.modalRef.onClose.subscribe((appointmentInfo: any) => {
@@ -145,21 +145,6 @@ export class CalendarComponent implements OnChanges {
       if (!isEdit) this.toastr.success("Successfully booked an appointment!");
       else this.toastr.success("Successfully updated the appointment!");
       this.getAppointments();
-      if (this.roleType == RoleType.Doctor && !isEdit) {
-        this.createPredictionResult();
-      }
-    });
-  }
-
-  createPredictionResult(): void {
-    let predictionResult: PredictionResult = new PredictionResult(this.aiPredictionService.predictionRequest);
-    predictionResult.patientId = this.patient!.id;
-    predictionResult.houseDoctorId = AuthentificationHelper.getLoginToken().userId;
-    predictionResult.cardiologistId = this.cardiologistId;
-    predictionResult.label = Math.round(this.aiPredictionService.prediction!);
-
-    this.httpClient.put(Config.serverAddress + this.aiPredictionService.api.predictionResult, predictionResult).subscribe((response: any) => {
-      this.toastr.success("The created prediction has been stored in the Archive!");
     });
   }
 

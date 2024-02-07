@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { PredictionRequest } from "./models/prediction-request.model";
+import { ValueFormatterParams } from 'ag-grid-community';
+
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +33,8 @@ export class AiPredictionService {
     api = {
         predict: '/predict',
         openAiPredict: '/open-ai-predict',
-        predictionResult: '/prediction-result'
+        predictionResult: '/prediction-result',
+        predictionsPerMonth: '/predictions/house-doctor',
+        predictionResultPercentages: '/prediction-result/percentage',
     }
 }
