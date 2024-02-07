@@ -11,6 +11,7 @@ public class MyContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<PredictionResult> PredictionResults { get; set; }
+    public DbSet<Video> Videos { get; set; }
 
     public string DbPath { get; }
 
@@ -51,6 +52,7 @@ public class User : IModel
     public List<Patient> Patient { get; } = [];
     public List<HouseDoctor> HouseDoctor { get; } = [];
     public List<Cardiologist> Cardiologist { get; } = [];
+    public List<Video> Video { get; } = [];
 }
 
 public class Patient : IModel
@@ -186,4 +188,16 @@ public class PredictionResult : IModel
     public HouseDoctor? HouseDoctor { get; set; }
     public Guid PatientId { get; set; }
     public Patient Patient { get; set; } = default!;
+}
+
+
+public class Video : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public required string Title { get; set; }
+    public required string Link { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
 }

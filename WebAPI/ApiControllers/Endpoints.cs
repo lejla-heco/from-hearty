@@ -278,6 +278,48 @@ namespace WebAPI.ApiControllers
                 return new { data, labels };
             });
 
+            app.MapGet("/videos", (MyContext context) =>
+               context.Videos.Where(x => !x.IsRemoved).ToArray());
+
+            app.MapGet("/videos/user/{userId}", (string userId, MyContext context) =>
+            {
+                Guid.TryParse(userId, out Guid guidUserId);
+                var videos = context.Videos
+                    .Where(video => video.UserId == guidUserId).ToList();
+
+                return videos;
+            });
+
+            app.MapGet("/videos/{videoId}", (string videoId, MyContext context) =>
+            {
+                Guid.TryParse(videoId, out Guid guidVideoId);
+                var video = context.Videos
+                    .Where(video => video.Id == guidVideoId).FirstOrDefault();
+
+                return video;
+            });
+
+            app.MapPut("/videos", (Video video, MyContext context) =>
+            {
+                context.Videos.AddOrUpdate(video);
+                context.SaveChanges();
+                return video;
+            });
+
+            app.MapDelete("/videos/{videoId}", (string videoId, MyContext context) =>
+            {
+                Guid.TryParse(videoId, out Guid guidVideoId);
+
+                var videoToDelete = context.Videos
+                    .Where(video => video.Id == guidVideoId)
+                    .FirstOrDefault();
+
+                if (videoToDelete != null)
+                {
+                    context.Videos.Remove(videoToDelete);
+                    context.SaveChanges();
+                }
+            });
         }
     }
 }
