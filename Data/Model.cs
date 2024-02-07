@@ -12,6 +12,7 @@ public class MyContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<PredictionResult> PredictionResults { get; set; }
+    public DbSet<Video> Videos { get; set; }
     public DbSet<Document> Documents { get; set; }
 
     public string DbPath { get; }
@@ -53,6 +54,7 @@ public class User : IModel
     public List<Patient> Patient { get; } = new();
     public List<HouseDoctor> HouseDoctor { get; } = new();
     public List<Cardiologist> Cardiologist { get; } = new();
+    public List<Video> Video { get; } = new ();
 }
 
 public class Patient : IModel
@@ -82,8 +84,6 @@ public class Cardiologist : IModel
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public List<Finding> Findings { get; } = new();
-    public List<Appointment> Appointment { get; } = new();
-    public List<PredictionResult> PredictionResult { get; } = new();
 }
 
 public class HouseDoctor : IModel
@@ -160,6 +160,7 @@ public class Appointment : IModel
     public bool AllDay { get; set; } = false;
     public string? Description { get; set; }
     public bool Approved { get; set; } = false;
+    public DateTime Created { get; set; } = DateTime.Now;
     public Guid CardiologistId { get; set; }
     public Cardiologist Cardiologist { get; set; } = default!;
     public Guid PatientId { get; set; }
@@ -182,12 +183,24 @@ public class PredictionResult : IModel
     public float Ca { get; set; }
     public float Thal { get; set; }
     public float Label { get; set; }
-    public Guid? CardiologistId { get; set; }
-    public Cardiologist? Cardiologist { get; set; }
+    public DateTime Created {  get; set; } = DateTime.Now;
+    public float Percentage { get; set; }
     public Guid? HouseDoctorId { get; set; }
     public HouseDoctor? HouseDoctor { get; set; }
     public Guid PatientId { get; set; }
     public Patient Patient { get; set; } = default!;
+}
+
+
+public class Video : IModel
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsRemoved { get; set; } = false;
+    public required string Title { get; set; }
+    public required string Link { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
 }
 
 public class Document : IModel

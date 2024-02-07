@@ -3,18 +3,21 @@ using Microsoft.EntityFrameworkCore;
 
 public record LoginRequest(string Username, string Password);
 public enum RoleType { Doctor, Cardiolog, Patient };
-public record LoginToken(Guid Id, DateTime ValidUntil, String RoleType, Guid UserId);
+public record LoginToken(Guid Id, DateTime ValidUntil, String RoleType, Guid UserId, Guid MainId);
 public class LoginWrapper {
-    public LoginWrapper(LoginToken? loginToken, String roleType, Guid userId)
+    public LoginWrapper(LoginToken? loginToken, String roleType, Guid userId, Guid mainId)
     {
         this.LoginToken = loginToken;
         this.RoleType = roleType;
         this.UserId = userId;
+        this.MaidId = mainId;
     }
     
     public LoginToken? LoginToken { get; set; }
     public String RoleType { get; set; }
     public Guid UserId { get; set; }
+    public Guid MaidId { get; set; }
+
 }
 
 public class LoginService
@@ -57,8 +60,8 @@ public class LoginService
 
                 if (!this.loginWrapperByLoginRequest.TryGetValue(loginRequest.ToString(), out var loginWrapper))
                 {
-                    loginWrapperByLoginRequest.Add(loginRequest.ToString(), new LoginWrapper(null, roleType.Role, userId));
-                    loginWrapper = new LoginWrapper(null, roleType.Role, userId);
+                    loginWrapperByLoginRequest.Add(loginRequest.ToString(), new LoginWrapper(null, roleType.Role, userId, loggedInUser.Id));
+                    loginWrapper = new LoginWrapper(null, roleType.Role, userId, loggedInUser.Id);
                 }
 
                 if (loginWrapper.LoginToken?.ValidUntil < DateTime.Now)
@@ -70,7 +73,8 @@ public class LoginService
                         Guid.NewGuid(),
                         DateTime.Now.AddHours(12),
                         roleType.Role,
-                        userId
+                        userId,
+                        loggedInUser.Id
                     );
 
                     this.loginWrapperByLoginRequest[loginRequest.ToString()] = loginWrapper;

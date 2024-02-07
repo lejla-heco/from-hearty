@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240207083416_FixSpellingError")]
+    partial class FixSpellingError
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -87,44 +90,6 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Cardiologists");
-                });
-
-            modelBuilder.Entity("Document", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Finding", b =>
@@ -450,36 +415,6 @@ namespace Data.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("Video", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Link")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Videos");
-                });
-
             modelBuilder.Entity("Appointment", b =>
                 {
                     b.HasOne("Cardiologist", "Cardiologist")
@@ -503,17 +438,6 @@ namespace Data.Migrations
                 {
                     b.HasOne("User", "User")
                         .WithMany("Cardiologist")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Document", b =>
-                {
-                    b.HasOne("User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -625,17 +549,6 @@ namespace Data.Migrations
                     b.Navigation("UserRole");
                 });
 
-            modelBuilder.Entity("Video", b =>
-                {
-                    b.HasOne("User", "User")
-                        .WithMany("Video")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Cardiologist", b =>
                 {
                     b.Navigation("Appointment");
@@ -668,8 +581,6 @@ namespace Data.Migrations
                     b.Navigation("HouseDoctor");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("UserRole", b =>
