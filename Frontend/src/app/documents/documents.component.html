@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row page-titles">
+    <div class="col-12 col-sm-3 col-md-5 align-self-center">
+      <h4 class="text-themecolor">Documents</h4>
+    </div>
+    <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
+      <div class="d-flex display-flex justify-content-end align-items-center">
+        <ol class="breadcrumb justify-content-end">
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Documents</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-primary mb-3" (click)="fileInput.click()">
+  <i class="fa fa-file"></i> Upload
+</button>
+<input
+  #fileInput
+  type="file"
+  (change)="fileChangeEvent(fileInput.files)"
+  style="display: none"
+/>
+
+<div class="content">
+  <ag-grid-angular
+    [class]="themeClass"
+    [rowData]="documents"
+    [columnDefs]="colDefs"
+    domLayout="autoHeight"
+    [defaultColDef]="defaultColDef"
+    [pagination]="true"
+    [columnHoverHighlight]="true"
+    [autoSizeStrategy]="autoSizeStrategy"
+  >
+  </ag-grid-angular>
+</div>

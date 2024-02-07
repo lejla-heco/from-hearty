@@ -1,4 +1,3 @@
-
 import { Route } from '@angular/router';
 import { LoginComponent } from './app/login/login.component';
 import { PatientExampleComponent } from './app/home-doctor/patient-example/patient-example.component';
@@ -21,5 +20,7 @@ export const routes: Route[] = [
     { path: 'calendar', component: CardiologistCalendarComponent },
     { path: 'ai-prediction', component: AiPredictionComponent },
     { path: 'archives', component: ArchiveComponent },
-    { path: 'videos', component: VideosComponent }
+    { path: 'videos', component: VideosComponent },
+  	{ path: 'documents', component: DocumentsComponent },
+  	{ path: 'document-overview', component: DocumentOverviewComponent },
 ];
