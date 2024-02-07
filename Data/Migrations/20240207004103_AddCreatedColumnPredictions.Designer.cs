@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240207004103_AddCreatedColumnPredictions")]
+    partial class AddCreatedColumnPredictions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -310,6 +313,9 @@ namespace Data.Migrations
                     b.Property<float>("Ca")
                         .HasColumnType("REAL");
 
+                    b.Property<Guid?>("CardiologistId")
+                        .HasColumnType("TEXT");
+
                     b.Property<float>("Chol")
                         .HasColumnType("REAL");
 
@@ -340,9 +346,6 @@ namespace Data.Migrations
                     b.Property<Guid>("PatientId")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("Percentage")
-                        .HasColumnType("REAL");
-
                     b.Property<float>("RestEcg")
                         .HasColumnType("REAL");
 
@@ -359,6 +362,8 @@ namespace Data.Migrations
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CardiologistId");
 
                     b.HasIndex("HouseDoctorId");
 
@@ -520,6 +525,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("PredictionResult", b =>
                 {
+                    b.HasOne("Cardiologist", "Cardiologist")
+                        .WithMany("PredictionResult")
+                        .HasForeignKey("CardiologistId");
+
                     b.HasOne("HouseDoctor", "HouseDoctor")
                         .WithMany("PredictionResult")
                         .HasForeignKey("HouseDoctorId");
@@ -529,6 +538,8 @@ namespace Data.Migrations
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cardiologist");
 
                     b.Navigation("HouseDoctor");
 
@@ -551,6 +562,8 @@ namespace Data.Migrations
                     b.Navigation("Appointment");
 
                     b.Navigation("Findings");
+
+                    b.Navigation("PredictionResult");
                 });
 
             modelBuilder.Entity("HouseDoctor", b =>

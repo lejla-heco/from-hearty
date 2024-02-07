@@ -3,6 +3,7 @@ using FromHeartyAI.ML_Model;
 using Service.Services;
 using Service.Mappers;
 using WebAPI.AIPredictEngine;
+using System.Globalization;
 
 namespace WebAPI.ApiControllers
 {
@@ -172,10 +173,90 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(patientId, out Guid guidPatientId);
                 var predictionResults = context.PredictionResults
                     .Where(predictionResult => predictionResult.PatientId == guidPatientId)
+                    .OrderByDescending(predictionResult => predictionResult.Created)
                     .ToList();
 
                 return predictionResults;
             });
+
+            app.MapGet("/predictions/house-doctor/{houseDoctorId}", (string houseDoctorId, MyContext context) =>
+            {
+                Guid.TryParse(houseDoctorId, out Guid guidHouseDoctorId);
+
+                var allMonthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+                    .Where(monthName => !string.IsNullOrEmpty(monthName));
+
+                var predictionsByMonth = context.PredictionResults
+                    .Where(predictionResult => predictionResult.HouseDoctorId == guidHouseDoctorId)
+                    .AsEnumerable()
+                    .GroupBy(prediction => prediction.Created.Month)
+                    .OrderBy(group => group.Key)
+                    .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
+
+                foreach (var monthName in allMonthNames)
+                {
+                    if (!predictionsByMonth.ContainsKey(monthName))
+                    {
+                        predictionsByMonth.Add(monthName, 0);
+                    }
+                }
+
+                var data = predictionsByMonth.Select(pair => new { data = new int[] { pair.Value }, label = pair.Key });
+
+                return data.ToArray();
+            });
+
+            app.MapGet("/appointments/house-doctor/{status}", (string status, MyContext context) =>
+            {
+                bool approvedStatus = status.ToUpper() == "APPROVED";
+
+                var appointmentsPerMonth = context.Appointments
+                    .Where(appointment => appointment.Approved == approvedStatus)
+                    .AsEnumerable()
+                    .GroupBy(appointment => appointment.Created.Month)
+                    .OrderBy(group => group.Key)
+                    .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
+
+                var allMonths = CultureInfo.CurrentCulture.DateTimeFormat.MonthGenitiveNames;
+
+                var dataArray = allMonths.Select(month => appointmentsPerMonth.ContainsKey(month) ? appointmentsPerMonth[month] : 0).ToArray();
+
+                return dataArray;
+            });
+
+            app.MapGet("/appointments/cardiologist/{cardiologist}", (string cardiologist, MyContext context) =>
+            {
+                Guid.TryParse(cardiologist, out Guid guidCardiologistId);
+                var predictions = context.PredictionResults
+                    .Where(predictionResult => predictionResult.PatientId == guidCardiologistId)
+                    .ToList();
+
+                return predictions;
+            });
+
+
+            app.MapGet("/prediction-result/percentage/{houseDoctorId}", (string houseDoctorId, MyContext context) =>
+            {
+                Guid.TryParse(houseDoctorId, out Guid guidHouseDoctorId);
+                var predictions = context.PredictionResults
+                    .Where(predictionResult => predictionResult.HouseDoctorId == guidHouseDoctorId)
+                    .ToList();
+
+                var groupedPredictions = predictions
+                .GroupBy(prediction => prediction.Percentage switch
+                 {
+                     var p when p >= 0 && p <= 15 => 0,
+                     var p when p >= 16 && p <= 55 => 1,
+                    _ => 2
+                 })
+                .Select(group => group.Count()) 
+                .ToList();
+
+                var result = Enumerable.Range(0, 3).Select(index => groupedPredictions.ElementAtOrDefault(index)).ToArray();
+
+                return result;
+            });
+
 
         }
     }

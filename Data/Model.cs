@@ -81,7 +81,6 @@ public class Cardiologist : IModel
     public required string LastName { get; set; }
     public List<Finding> Findings { get; } = [];
     public List<Appointment> Appointment { get; } = [];
-    public List<PredictionResult> PredictionResult { get; } = [];
 }
 
 public class HouseDoctor : IModel
@@ -158,6 +157,7 @@ public class Appointment : IModel
     public bool AllDay { get; set; } = false;
     public string? Description { get; set; }
     public bool Approved { get; set; } = false;
+    public DateTime Created { get; set; } = DateTime.Now;
     public Guid CardiologistId { get; set; }
     public Cardiologist Cardiologist { get; set; } = default!;
     public Guid PatientId { get; set; }
@@ -180,8 +180,8 @@ public class PredictionResult : IModel
     public float Ca { get; set; }
     public float Thal { get; set; }
     public float Label { get; set; }
-    public Guid? CardiologistId { get; set; }
-    public Cardiologist? Cardiologist { get; set; }
+    public DateTime Created {  get; set; } = DateTime.Now;
+    public float Percentage { get; set; }
     public Guid? HouseDoctorId { get; set; }
     public HouseDoctor? HouseDoctor { get; set; }
     public Guid PatientId { get; set; }
