@@ -4,6 +4,7 @@ using Service.Services;
 using Service.Mappers;
 using WebAPI.AIPredictEngine;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.ApiControllers
 {
@@ -257,6 +258,25 @@ namespace WebAPI.ApiControllers
                 return result;
             });
 
+            app.MapGet("/prediction-result/patients", (MyContext context) =>
+            {
+                var topPredictions = context.PredictionResults
+                    .Include(x => x.Patient)
+                    .GroupBy(x => x.PatientId)
+                    .Select(group => new
+                    {
+                        PatientName = group.First().Patient.FirstName + " " + group.First().Patient.LastName,
+                        MaxPercentage = group.Max(x => x.Percentage)
+                    })
+                    .OrderByDescending(x => x.MaxPercentage)
+                    .Take(10)
+                    .ToList();
+
+                var data = topPredictions.Select(prediction => prediction.MaxPercentage).ToList();
+                var labels = topPredictions.Select(prediction => prediction.PatientName).ToList();
+
+                return new { data, labels };
+            });
 
         }
     }
