@@ -9,6 +9,8 @@ import { ArchiveComponent } from './app/archive/archive.component';
 import { HouseDoctorDashboardComponent } from './app/dashboards/house-doctor-dashboard/house-doctor-dashboard.component';
 import { CardiologistDashboardComponent } from './app/dashboards/cardiologist-dashboard/cardiologist-dashboard.component';
 import { VideosComponent } from './app/documents/videos/videos.component';
+import { DocumentsComponent } from './app/documents/documents.component';
+import { DocumentOverviewComponent } from './app/documents/document-overview/document-overview.component';
 
 export const routes: Route[] = [
     { path: '', component: LoginComponent },
