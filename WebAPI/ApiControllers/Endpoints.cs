@@ -45,7 +45,21 @@ namespace WebAPI.ApiControllers
             });
 
             app.MapGet("/cardiologists", (MyContext context) =>
-                context.Cardiologists.Where(x => !x.IsRemoved).ToArray());
+            {
+                var cardiologistsWithUsers = context.Cardiologists
+                    .Include(c => c.User)
+                    .Where(c => !c.IsRemoved) 
+                    .Select(cardiologist => new
+                    {
+                        cardiologist.Id,
+                        Email = cardiologist.User.Email,
+                        FirstName = cardiologist.FirstName,
+                        LastName = cardiologist.LastName
+                    })
+                    .ToArray();
+
+                return cardiologistsWithUsers;
+            });
 
             app.MapPut("/cardiologists", (Cardiologist cardiologist, MyContext context) =>
             {
@@ -55,7 +69,21 @@ namespace WebAPI.ApiControllers
             });
 
             app.MapGet("/house-doctors", (MyContext context) =>
-                context.HouseDoctors.Where(x => !x.IsRemoved).ToArray());
+            {
+                var houseDoctorsWithUsers = context.HouseDoctors
+                    .Include(hd => hd.User)
+                    .Where(hd => !hd.IsRemoved)
+                    .Select(hd => new
+                    {
+                        hd.Id,
+                        Email= hd.User.Email,
+                        FirstName = hd.FirstName,
+                        LastName = hd.LastName
+                    })
+                    .ToArray();
+
+                return houseDoctorsWithUsers;
+            });
 
             app.MapPut("/house-doctors", (HouseDoctor houseDoctor, MyContext context) =>
             {
@@ -288,7 +316,6 @@ namespace WebAPI.ApiControllers
 
                 return result;
             });
-
 
             app.MapGet("/prediction-result/patients", (MyContext context) =>
             {
