@@ -227,6 +227,33 @@ namespace WebAPI.ApiControllers
                 return dataArray;
             });
 
+            app.MapGet("/approved-appointments/cardiologist/{cardiologistId}", (string cardiologistId, MyContext context) =>
+            {
+                Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
+
+                var allMonthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+                    .Where(monthName => !string.IsNullOrEmpty(monthName));
+
+                var appointmentsByMonth = context.Appointments
+                    .Where(appointment => appointment.CardiologistId == guidCardiologistId && appointment.Approved)
+                    .AsEnumerable()
+                    .GroupBy(appointment => appointment.Created.Month)
+                    .OrderBy(group => group.Key)
+                    .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
+
+                foreach (var monthName in allMonthNames)
+                {
+                    if (!appointmentsByMonth.ContainsKey(monthName))
+                    {
+                        appointmentsByMonth.Add(monthName, 0);
+                    }
+                }
+
+                var data = appointmentsByMonth.Select(pair => new { data = new int[] { pair.Value }, label = pair.Key });
+
+                return data.ToArray();
+            });
+
             app.MapGet("/appointments/cardiologist/{cardiologist}", (string cardiologist, MyContext context) =>
             {
                 Guid.TryParse(cardiologist, out Guid guidCardiologistId);
