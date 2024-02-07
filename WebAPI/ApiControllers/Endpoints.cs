@@ -246,19 +246,22 @@ namespace WebAPI.ApiControllers
                     .ToList();
 
                 var groupedPredictions = predictions
-                .GroupBy(prediction => prediction.Percentage switch
-                 {
-                     var p when p >= 0 && p <= 15 => 0,
-                     var p when p >= 16 && p <= 55 => 1,
-                    _ => 2
-                 })
-                .Select(group => group.Count()) 
-                .ToList();
+                    .GroupBy(prediction => prediction.Percentage switch
+                    {
+                        var p when p >= 0 && p <= 15 => 0,
+                        var p when p >= 16 && p <= 55 => 1,
+                        _ => 2
+                    })
+                    .Select(group => new { GroupKey = group.Key, Count = group.Count() })
+                    .ToList();
 
-                var result = Enumerable.Range(0, 3).Select(index => groupedPredictions.ElementAtOrDefault(index)).ToArray();
+                var result = Enumerable.Range(0, 3)
+                    .Select(index => groupedPredictions.FirstOrDefault(x => x.GroupKey == index)?.Count ?? 0)
+                    .ToArray();
 
                 return result;
             });
+
 
             app.MapGet("/prediction-result/patients", (MyContext context) =>
             {
