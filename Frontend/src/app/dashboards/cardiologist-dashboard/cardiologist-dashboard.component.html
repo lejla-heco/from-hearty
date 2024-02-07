@@ -1,1 +1,44 @@
-<p>cardiologist-dashboard works!</p>
+<div class="container-fluid">
+    <div class="row page-titles">
+        <div class="col-12 col-sm-3 col-md-5 align-self-center">
+            <h4 class="text-themecolor">Dashboard</h4>
+        </div>
+        <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
+            <div class="d-flex display-flex justify-content-end align-items-center">
+                <ol class="breadcrumb justify-content-end">
+                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Approved appointments per month</h5>
+            <canvas id="approved-appointments-per-month"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Approved and pending appointments per month</h5>
+                <canvas id="canvas-appointment-status-per-month"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Top 10 most critical patients by probability percentages</h5>
+                <canvas id="canvas-urgent-patients"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

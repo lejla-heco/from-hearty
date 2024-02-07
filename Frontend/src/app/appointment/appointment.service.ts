@@ -8,5 +8,6 @@ export class AppointmentService {
         cardiologists: '/cardiologists',
         approvedAppointments: '/appointments/house-doctor/APPROVED',
         pendingAppointments: '/appointments/house-doctor/PENDING',
+        approvedAppointmentsByCardiologistId: '/approved-appointments/cardiologist'
     }
 }
