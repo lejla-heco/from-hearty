@@ -46,105 +46,105 @@ public static class ModelExtensions
             {
                 Id = Generator.NewGuid(),
                 Email = "malaya.bradley@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[0].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "charley.rosales@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[0].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "wilder.lynn@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[0].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "samira.peters@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[0].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "patrick.willis@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[0].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "alexia.weiss@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[1].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "koa.giles@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[1].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "daniel.beasley@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[1].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "autumn.griffith@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[1].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "franklin.acosta@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[1].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "kamiyah.house@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[2].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "abigail.atkins@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[2].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "lyanna.jacobs@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[2].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "madisyn.solis@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[2].Id,
             },
             new()
             {
                 Id = Generator.NewGuid(),
                 Email = "maliyah.poole@edu.fit.ba",
-                Password = "1234",
+                Password = "IC2024",
                 UserRoleId = userRoles[2].Id,
             }
         };
