@@ -16,6 +16,15 @@
     margin-right: 10px
 }
 
+.predict-result {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.exang-margin {
+    margin-left: 7px;
+}
+
 .custom-form-padding {
     padding-right: 16px;
 }

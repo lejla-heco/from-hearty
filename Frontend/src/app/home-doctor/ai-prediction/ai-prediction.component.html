@@ -37,12 +37,12 @@
           <option *ngFor="let option of this.aiPredictionService.cpOptions" [value]="option.value">{{ option.label }}</option>
         </select>
       </div>
+
       <div class="form-group col-12 col-lg-11 custom-form-padding">
-        <div class="d-flex justify-content-between">
-          <label>*Fasting Blood Sugar (Fbs) </label>
-          <span class="normal-label-text"> (Normal: 3 - 6 mmol / L)</span>
-        </div>
-        <slider class="slider-component" [maxValue]=23 [(value)]="aiPredictionService.predictionRequest.fbs" [style.color]="getTextColorSugar()"></slider>
+        <label for="cp">*Fasting Blood Sugar (Fbs)</label>
+        <select class="form-control" id="cp" name="cp" [(ngModel)]="aiPredictionService.predictionRequest.fbs" required>
+          <option *ngFor="let option of this.aiPredictionService.fbs" [value]="option.value">{{ option.label }}</option>
+        </select>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <div class="d-flex justify-content-between">
@@ -53,7 +53,7 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
-        <slider class="slider-component" [(value)]="aiPredictionService.predictionRequest.oldPeak"></slider>
+        <slider class="slider-component" [maxValue]=6 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.oldPeak"></slider>
       </div>
     </div>
 
@@ -88,7 +88,7 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <label for="slope">*Slope of the Peak Exercise ST Segment (Slope)</label>
-        <slider class="slider-component" [(value)]="aiPredictionService.predictionRequest.slope"></slider>
+        <slider class="slider-component" [maxValue]=2 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.slope"></slider>
       </div>
     </div>
 
@@ -101,16 +101,16 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <label for="thalach">*Thalassemia (Thal) </label>
-        <span class="normal-label-text"> (Normal: No)</span>
-        <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal" required>
+<!--         <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal" required>
           <option *ngFor="let option of this.aiPredictionService.thal" [value]="option.value" [ngClass]="getSelectOptionThal(option.value)">{{ option.label }}</option>
-        </select>
+        </select> -->
+        <slider class="slider-component" [maxValue]=3 [minValue]=1 [(value)]="aiPredictionService.predictionRequest.thal"></slider>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <label for="exang">Exercise Induced Angina (Exang)</label>
         <div>
           <input type="checkbox" id="exang" name="exang" [checked]="aiPredictionService.predictionRequest.exang" (change)="updateExangValue($event)" required>
-          <label class="form-check-label" for="exang">Exang</label>
+          <label class="form-check-label exang-margin" for="exang">Exang</label>
         </div>
       </div>
     </div>

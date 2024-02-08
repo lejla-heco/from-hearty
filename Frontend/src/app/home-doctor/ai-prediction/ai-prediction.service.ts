@@ -25,6 +25,11 @@ export class AiPredictionService {
         { value: 1, label: 'Yes' },
     ];
 
+    fbs = [
+        { value: 0, label: 'No' },
+        { value: 1, label: 'Yes' },
+    ];
+
 
     thalachOptions = [
         { value: 3, label: 'normal (60 - 100 beats per minute)' }, { value: 6, label: 'Increased (Tachycardia) (> 100 beats per minute) ' }, { value: 7, label: 'Decreased (Bradycardia) (< 60 beats per minute)' },

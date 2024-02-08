@@ -5,7 +5,7 @@
 <div class="modal-body">
     <div class="justify-content-center align-items-center" [class.show-message]="predictionMessage">
         <div class="custom-message">
-            {{ predictionMessage }}
+            <div [innerHTML]="predictionMessage"></div>
         </div>
     </div>
 </div>

@@ -21,7 +21,6 @@ export class ResultsPopupComponent {
   loading: boolean = false;
   constructor(private httpClient: HttpClient, public modalRefResults: MdbModalRef<ResultsPopupComponent>, 
     private router: Router, private aiPredictionService: AiPredictionService) {
-
   }
 
   bookAnAppointment(): void {

@@ -88,6 +88,7 @@ export class AiPredictionComponent implements OnInit {
     this.toastr.info('Prediction form has been cleared!');
     this.predictionMessage = '';
     this.appointment = false;
+    this.trestBpsLow = 0
   }
 
   predict(): void {
@@ -101,9 +102,9 @@ export class AiPredictionComponent implements OnInit {
         .subscribe(
           (response: any) => {
             this.predictionMessage =
-              'The likelihood percentage of the patient suffering from cardiovascular disease is: ' +
-              response +
-              '%';
+            'The likelihood percentage of the patient suffering from cardiovascular disease is: <span class="predict-result">' +
+            response +
+            '%</span>';
             this.openPredictModal(this.predictionMessage);
             this.aiPredictionService.prediction = response;
             this.appointment = true;
@@ -134,9 +135,8 @@ export class AiPredictionComponent implements OnInit {
       this.aiPredictionService.predictionRequest.trestBps < 1 || 
       this.trestBpsLow < 1 || 
       this.aiPredictionService.predictionRequest.chol < 1 ||
-      this.aiPredictionService.predictionRequest.fbs < 1 ||
-      this.aiPredictionService.predictionRequest.oldPeak < 1 ||
-      this.aiPredictionService.predictionRequest.slope < 1 /* ||
+      this.aiPredictionService.predictionRequest.oldPeak < 1 
+       /* ||
       this.aiPredictionService.predictionRequest.ca < 1 */ /* ||
       this.aiPredictionService.predictionRequest.thal < 1 */
     ) {
