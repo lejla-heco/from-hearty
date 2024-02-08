@@ -21,6 +21,8 @@
 </div>
 
 <div class="form-group form-element">
+    <div class="explanation-text">After selecting the cardiolosit please click on the target date you want the appointment to add after which you will be able to use a form to adjust details and provide a description.</div>
+
     <label for="cp">Select a cardiologist:</label>
     <select class="form-control" id="cardiologist" name="cardiologist" [(ngModel)]="selected" required>
         <option *ngFor="let option of this.cardiologists" [value]="option.id">{{ option.firstName + ' '

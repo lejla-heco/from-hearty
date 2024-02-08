@@ -15,6 +15,8 @@
 </div>
 
 <div class="form-group form-element">
+    <div class="explanation-text">Please use this view to approve or cancel appointments for patients. You can also use the functionality to move an appointment to a different date etc. When an apointment is yellow is still has not been approved. After it has been approved it turns out green.</div>
+
     <label for="patient">Select a patient:</label>
     <select class="form-control" id="patient" name="patient" (change)="onPatientSelectionChange($event)" required>
         <option *ngFor="let option of this.patients" [value]="option.id">{{ option.firstName + ' '

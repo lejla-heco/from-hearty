@@ -30228,3 +30228,10 @@ File: scss
   padding-left: 20px;
   padding-right: 20px;
 }
+
+
+.explanation-text
+{
+    margin-bottom: 30px;
+    font-size: 20px;
+}

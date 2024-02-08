@@ -20,6 +20,8 @@
 <input #fileInput type="file" (change)="fileChangeEvent(fileInput.files)" style="display: none" />
 
 <div class="content">
+  <div class="explanation-text">In order to presist files you can use the upload file button, here you can store all files which are relevant for you as the doctor.</div>
+
   <ag-grid-angular [class]="themeClass" [rowData]="documents" [columnDefs]="colDefs" domLayout="autoHeight"
     [defaultColDef]="defaultColDef" [pagination]="true" [columnHoverHighlight]="true"
     [autoSizeStrategy]="autoSizeStrategy">
