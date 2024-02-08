@@ -1,13 +1,20 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="card">
           <div class="card-header">
-            <h4 class="text-center">Login</h4>
+            <div class="center-div">
+              <img src="./assets/images/logo.png" alt="logo" />
+              <span style="color: #0e55ae">From</span><span style="color: #c9090f">Hearty</span>
+            </div>
+
+            <h4 class="text-center">Sign in with your FromHearty Account</h4>
           </div>
           <div class="card-body">
             <form>
               <div class="form-group">
+                <img src="./assets/images/user.png" alt="user" class="center-image" />
+
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" name="username" [(ngModel)]="loginRequest.username" required>
               </div>
@@ -16,7 +23,7 @@
                 <input type="password" class="form-control" id="password" name="password" [(ngModel)]="loginRequest.password" required>
               </div>
               <div class="text-center mt-3">
-                <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">Sign in</button>
               </div>
             </form>
           </div>
