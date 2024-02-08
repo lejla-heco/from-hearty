@@ -46,14 +46,21 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <div class="d-flex justify-content-between">
+          <span class="slider-label">
+
           <label>*Number of Major Vessels Colored by Fluoroscopy (Ca) </label>
           <span class="normal-label-text"> (Normal: 0)</span>
+        </span>
+
         </div>
         <slider class="slider-component" [maxValue]=3 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.ca" [style.color]="getTextColorCa()"></slider>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
-        <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
-        <slider class="slider-component" [maxValue]=6 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.oldPeak"></slider>
+        <span class="slider-label">
+          <label for="oldPeak">*ST Depression Induced by Exercise Relative to Rest (Old Peak)</label>
+        </span>
+          <slider class="slider-component" [maxValue]=6 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.oldPeak"></slider>
+        
       </div>
     </div>
 
@@ -74,20 +81,29 @@
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <div class="d-flex justify-content-between">
+          <span class="slider-label">
+
           <label for="chol">*Serum Cholesterol (Chol) </label>
           <span class="normal-label-text"> (Normal: < 5 mmol / L)</span>
+        </span>
+
         </div>
         <slider class="slider-component" [maxValue]="300" [(value)]="aiPredictionService.predictionRequest.chol" [style.color]="getTextColor()"></slider>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
         <div class="d-flex justify-content-between">
-          <label for="thalach">*Maximum Heart Rate Achieved (Thalach) </label>
-          <span class="normal-label-text"> (Normal: 60-100 bpm)</span>
+          <span class="slider-label">
+            <label for="thalach">*Maximum Heart Rate Achieved (Thalach) </label>
+            <span class="normal-label-text"> (Normal: 60-100 bpm)</span>
+          </span>
         </div>
         <slider [maxValue]=200 class="slider-component" [style.color]="getThalacColor()" [(value)]="aiPredictionService.predictionRequest.thalach"></slider>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
+        <span class="slider-label">
+
         <label for="slope">*Slope of the Peak Exercise ST Segment (Slope)</label>
+      </span>
         <slider class="slider-component" [maxValue]=2 [minValue]=0 [(value)]="aiPredictionService.predictionRequest.slope"></slider>
       </div>
     </div>
@@ -100,7 +116,10 @@
         </select>
       </div>
       <div class="form-group col-12 col-lg-11 custom-form-padding">
-        <label for="thalach">*Thalassemia (Thal) </label>
+        <span class="slider-label">
+          <label for="thalach">*Thalassemia (Thal) </label>
+        </span>
+
 <!--         <select class="form-control" id="thalach" name="thalach" [(ngModel)]="aiPredictionService.predictionRequest.thal" required>
           <option *ngFor="let option of this.aiPredictionService.thal" [value]="option.value" [ngClass]="getSelectOptionThal(option.value)">{{ option.label }}</option>
         </select> -->

@@ -6397,6 +6397,7 @@ fieldset:disabled .btn {
 .normal-label-text {
   color: green;
   font-size: 8px;
+  padding-left: 2px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;

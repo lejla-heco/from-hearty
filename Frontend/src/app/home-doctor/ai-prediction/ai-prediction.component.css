@@ -157,3 +157,11 @@
     display: inline-flex;
     align-items: center;
 }
+
+.slider-label
+{
+    padding-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+}
