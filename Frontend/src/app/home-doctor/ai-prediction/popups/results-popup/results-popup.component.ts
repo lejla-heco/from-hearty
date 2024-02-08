@@ -6,7 +6,6 @@ import { Patient } from '../../../../patient/models/patient.model';
 import { AiPredictionService } from '../../ai-prediction.service';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../../../configuration/config';
-import { PredictionRequest } from '../../models/prediction-request.model';
 
 @Component({
   selector: 'app-results-popup',
@@ -16,8 +15,9 @@ import { PredictionRequest } from '../../models/prediction-request.model';
   imports: [SharedModule]
 })
 export class ResultsPopupComponent {
-  predictionMessage!: string;
+  predictionMessages: string[] = [''];
   patient?: Patient;
+  isUsingOpenAI: boolean = false;
   loading: boolean = false;
   constructor(private httpClient: HttpClient, public modalRefResults: MdbModalRef<ResultsPopupComponent>, 
     private router: Router, private aiPredictionService: AiPredictionService) {
@@ -35,6 +35,7 @@ export class ResultsPopupComponent {
 
   predictWithOpenAI() {
     this.loading = true;
+    this.isUsingOpenAI = true;
     let request: any = this.aiPredictionService.predictionRequest;
     request.percentage = this.aiPredictionService.prediction;
     this.httpClient
@@ -44,10 +45,13 @@ export class ResultsPopupComponent {
       )
       .subscribe(
         (response: any) => {
-          this.predictionMessage = response.choices[0].text;
+          this.predictionMessages.push(response.choices[0].text);
         },
         (error) => {
-          this.predictionMessage = 'An error occurred while predicting with Open AI.';
+          this.predictionMessages[0] = 'An error occurred while predicting with Open AI.';
+          for (let i = 1; i < this.predictionMessages.length; i++) {
+            this.predictionMessages[i] = '';
+          }
         }
       )
       .add(() => (this.loading = false));

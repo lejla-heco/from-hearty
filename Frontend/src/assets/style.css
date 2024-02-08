@@ -6410,10 +6410,25 @@ fieldset:disabled .btn {
   color: green;
 }
 
+
 .predict-result {
-  font-weight: bold !important;
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 45px;
+  display: block;
 }
+
+.predict-result-good {
+  color: green;
+}
+
+.predict-result-average {
+  color: orange;
+}
+
+.predict-result-bad {
+  color: red;
+}
+
 
 .bad-option {
   color: orange

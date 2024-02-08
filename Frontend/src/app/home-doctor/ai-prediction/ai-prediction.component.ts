@@ -101,8 +101,9 @@ export class AiPredictionComponent implements OnInit {
         )
         .subscribe(
           (response: any) => {
+            console.log('response', response);
             this.predictionMessage =
-            'The likelihood percentage of the patient suffering from cardiovascular disease is: <span class="predict-result">' +
+            `The likelihood percentage of the patient suffering from cardiovascular disease is: <span class="predict-result ${response > 65 ? 'predict-result-bad' : (response < 45 ? 'predict-result-good' : 'predict-result-average')}">` +
             response +
             '%</span>';
             this.openPredictModal(this.predictionMessage);
@@ -259,7 +260,7 @@ export class AiPredictionComponent implements OnInit {
   openPredictModal(predictionMessage: any): any {
     this.modalRefResultsPopup = this.modalService.open(ResultsPopupComponent, {
       modalClass: 'modal-lg',
-      data: { predictionMessage: predictionMessage, patient: this.patient }
+      data: { predictionMessages: [predictionMessage], patient: this.patient }
     });
   }
 

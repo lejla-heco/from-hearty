@@ -10,7 +10,6 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private router: Router) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('interceptor called');
         if (req.url.endsWith('/login')) {
             return next.handle(req);
         }
