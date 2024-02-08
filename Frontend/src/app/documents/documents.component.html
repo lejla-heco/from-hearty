@@ -6,34 +6,22 @@
     <div class="col-12 col-sm-9 col-md-7 align-self-center text-end">
       <div class="d-flex display-flex justify-content-end align-items-center">
         <ol class="breadcrumb justify-content-end">
-          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item">Documents</li>
           <li class="breadcrumb-item active">File system</li>
         </ol>
+        <button class="btn btn-info" style="margin-left: 10px;" (click)="fileInput.click()">
+          <i class="fas fa-upload"></i> Upload
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<button class="btn btn-primary mb-3" style="margin-left: 10px;" (click)="fileInput.click()">
-  <i class="fa fa-file"></i> Upload
-</button>
-<input
-  #fileInput
-  type="file"
-  (change)="fileChangeEvent(fileInput.files)"
-  style="display: none"
-/>
+<input #fileInput type="file" (change)="fileChangeEvent(fileInput.files)" style="display: none" />
 
 <div class="content">
-  <ag-grid-angular
-    [class]="themeClass"
-    [rowData]="documents"
-    [columnDefs]="colDefs"
-    domLayout="autoHeight"
-    [defaultColDef]="defaultColDef"
-    [pagination]="true"
-    [columnHoverHighlight]="true"
-    [autoSizeStrategy]="autoSizeStrategy"
-  >
+  <ag-grid-angular [class]="themeClass" [rowData]="documents" [columnDefs]="colDefs" domLayout="autoHeight"
+    [defaultColDef]="defaultColDef" [pagination]="true" [columnHoverHighlight]="true"
+    [autoSizeStrategy]="autoSizeStrategy">
   </ag-grid-angular>
 </div>
