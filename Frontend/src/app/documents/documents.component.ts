@@ -34,12 +34,17 @@ export class DocumentsComponent implements OnInit {
   colDefs: ColDef<any>[] = [
     { field: 'id', hide: true },
     { field: 'name' },
-    { field: 'createdDate', valueFormatter: this.dateFormatter },
+    { 
+      field: 'createdDate', 
+      valueFormatter: this.dateFormatter,
+      maxWidth: 350
+    },
     {
-      headerName: 'Actions',
+      headerName: 'Download',
       floatingFilter: false,
       filter: false,
-      minWidth: 250,
+      width: 40,
+      cellStyle: { textAlign: 'center' },
       cellRenderer: ViewEditButtonComponent,
     },
   ];
