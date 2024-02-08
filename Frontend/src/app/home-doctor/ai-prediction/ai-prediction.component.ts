@@ -103,7 +103,9 @@ export class AiPredictionComponent implements OnInit {
           (response: any) => {
             console.log('response', response);
             this.predictionMessage =
-            `The likelihood percentage of the patient suffering from cardiovascular disease is: <span class="predict-result ${response > 65 ? 'predict-result-bad' : (response < 45 ? 'predict-result-good' : 'predict-result-average')}">` +
+            "The likelihood percentage of the patient suffering from cardiovascular disease is: " +
+            `<div><img src="./assets/icons/smily/${response > 65 ? 'bad.svg' : (response < 45 ? 'good.svg' : 'average.svg')}" alt="smily" class="predict-result mt-3"/></div>` + 
+            `<span class="predict-result ${response > 65 ? 'predict-result-bad' : (response < 45 ? 'predict-result-good' : 'predict-result-average')}">` +
             response +
             '%</span>';
             this.openPredictModal(this.predictionMessage);

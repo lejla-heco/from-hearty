@@ -6414,6 +6414,9 @@ fieldset:disabled .btn {
 .predict-result {
   font-weight: bold;
   font-size: 45px;
+  margin: auto;
+  text-align: center;
+  margin: auto;
   display: block;
 }
 
