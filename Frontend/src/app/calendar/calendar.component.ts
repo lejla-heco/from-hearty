@@ -186,7 +186,7 @@ export class CalendarComponent implements OnChanges {
       selectMirror: true,
       dayMaxEvents: true,
       slotMinTime: '08:00:00',
-      slotMaxTime: '19:00:00',
+      slotMaxTime: '17:00:00',
       select: this.handleDateSelect.bind(this),
       eventClick: this.handleEventClick.bind(this),
       eventsSet: this.handleEvents.bind(this),

@@ -66,7 +66,14 @@ export class NewAppointmentComponent implements OnInit {
       dateModel.year == null ||
       time == null ||
       time.hour == null ||
-      time.minute == null) return false;
+      time.minute == null) {
+      this.toastr.warning("Dates are mandatory fields!");
+      return false;
+    }
+    if (time.hour < 8 || (time.hour >= 17 && time.minute > 0)) {
+      this.toastr.error("It is possible to book an appointment only during working hours (from 8 am to 5 pm)!");
+      return false;
+    }
     return true;
   }
 
@@ -202,10 +209,7 @@ export class NewAppointmentComponent implements OnInit {
       return false;
     } else if (!this.validateDateModels(this.startDateModel, this.startTime) ||
       !this.validateDateModels(this.endDateModel, this.endTime)
-    ) {
-      this.toastr.warning("Dates are mandatory fields!");
-      return false;
-    }
+    ) return false;
     return true;
   }
 
