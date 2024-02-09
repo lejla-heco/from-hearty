@@ -182,7 +182,7 @@ export class HouseDoctorDashboardComponent implements OnInit {
               text: 'Value'
             },
             suggestedMin: 0,
-            suggestedMax: 200
+            suggestedMax: 10
           }
         }
       },
