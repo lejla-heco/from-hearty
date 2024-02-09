@@ -14,14 +14,19 @@
             <span class="hidden-xs"> FromHearty</span>
           </a>
 
-          <div (click)="toggleAccessibilitySettings()" style="
-              display: flex;
-              align-items: center;
-              cursor: pointer;
-              margin-right: 20px;
-            ">
-            <i *ngIf="isAccessibilityOn" class="fas fa-eye-slash" style="font-size: 18px; color: white"></i>
-            <i *ngIf="!isAccessibilityOn" class="fas fa-eye" style="font-size: 18px; color: white"></i>
+          <div class="d-flex align-items-center">
+            <div (click)="toggleAccessibilitySettings()" style="
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                margin-right: 20px;
+              ">
+              <i *ngIf="isAccessibilityOn" class="fas fa-eye-slash" style="font-size: 18px; color: white"></i>
+              <i *ngIf="!isAccessibilityOn" class="fas fa-eye" style="font-size: 18px; color: white"></i>
+            </div>
+
+            <button class="btn btn-outline-light" style="margin-right: 20px" (click)="downloadUserManual()"><i
+                class="fas fa-download"></i> User Manual</button>
           </div>
         </div>
         <div class="navbar-collapse">
@@ -111,18 +116,19 @@
                   class="hide-menu">Videos</span></a>
             </li>
             <li *ngIf="isHouseDoctor() || isCardiolog()">
-              <a class="waves-effect waves-dark" routerLink="documents"><i class="far fa-file-archive"></i><span class="hide-menu">File
+              <a class="waves-effect waves-dark" routerLink="documents"><i class="far fa-file-archive"></i><span
+                  class="hide-menu">File
                   System</span></a>
             </li>
 
             <li class="nav-small-cap">--- CONTACTS</li>
             <li>
-              <a class="waves-effect waves-dark" href="#" routerLink="house-doctors"><i class="fas fa-stethoscope"></i><span
-                  class="hide-menu">House Doctors</span></a>
+              <a class="waves-effect waves-dark" href="#" routerLink="house-doctors"><i
+                  class="fas fa-stethoscope"></i><span class="hide-menu">House Doctors</span></a>
             </li>
             <li>
-              <a class="waves-effect waves-dark" routerLink="cardiologists"><i class="fas fa-hand-holding-heart"></i><span
-                  class="hide-menu">Cardiologists</span></a>
+              <a class="waves-effect waves-dark" routerLink="cardiologists"><i
+                  class="fas fa-hand-holding-heart"></i><span class="hide-menu">Cardiologists</span></a>
             </li>
 
             <li class="nav-small-cap">--- SUPPORT</li>
