@@ -399,14 +399,13 @@ namespace WebAPI.ApiControllers
 
                 var extension  = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
                 var fileName = DateTime.Now.Ticks + "." + extension;
-
-                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload", "files");
                 if (!Directory.Exists(pathBuilt))
                 {
                     Directory.CreateDirectory(pathBuilt);
                 }
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload", "files",
                     fileName);
 
                 using (var stream = new FileStream(path, FileMode.Create))
@@ -435,7 +434,7 @@ namespace WebAPI.ApiControllers
 
                 var file = context.Documents.FirstOrDefault(d => d.Id == guidFileId);
 
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files", file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload", "files", file!.FileName);
 
                 if (!System.IO.File.Exists(filePath))
                     throw new Exception("File not found");
