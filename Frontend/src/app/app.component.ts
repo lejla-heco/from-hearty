@@ -9,6 +9,7 @@ import { Config } from './configuration/config';
 import { RoleType } from './login/models/login-token.model';
 import { AccessibilityService } from './app.accessibilityservice';
 import { AccessibilityServiceInit } from './app.accessibilityserviceinit';
+import { DocumentService } from './documents/document.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class AppComponent implements DoCheck {
     private loginService: LoginService,
     private accessibilityService: AccessibilityService,
     private accessibilityServiceInit: AccessibilityServiceInit,
+    private documentService: DocumentService
   ) { }
 
   ngDoCheck() {
@@ -77,5 +79,9 @@ export class AppComponent implements DoCheck {
 
   isHouseDoctor(): boolean {
     return AuthentificationHelper.getLoginToken().roleType == RoleType.Doctor;
+  }
+
+  downloadUserManual(): void {
+    this.documentService.downloadUserManualDocument();
   }
 }

@@ -17,6 +17,7 @@ import { AuthentificationHelper } from '../authentification/authentification-hel
 import { Config } from '../configuration/config';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-documents',
@@ -51,7 +52,8 @@ export class DocumentsComponent implements OnInit {
 
   constructor(
     private _documentService: DocumentService,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +98,7 @@ export class DocumentsComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.getDocuments();
+          this.toastr.success("Document successfully uploaded!")
         })
       )
       .subscribe();
