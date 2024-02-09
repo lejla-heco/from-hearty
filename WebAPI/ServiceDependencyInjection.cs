@@ -52,7 +52,7 @@ namespace WebAPI
             application.UseRouting();
             application.MapEndpoints();
             application.MapAiExampleEndpoints();
-            application.MapExampleEndpoints();
+            // application.MapExampleEndpoints();
             application.TryMigrateAndSeedData();
 
             return application;
