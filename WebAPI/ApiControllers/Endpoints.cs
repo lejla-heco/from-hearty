@@ -216,24 +216,16 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(houseDoctorId, out Guid guidHouseDoctorId);
 
                 var allMonthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
-                    .Where(monthName => !string.IsNullOrEmpty(monthName));
+                .Where(monthName => !string.IsNullOrEmpty(monthName))
+                .Select((monthName, index) => new { MonthName = monthName, MonthNumber = index + 1 });
 
-                var predictionsByMonth = context.PredictionResults
-                    .Where(predictionResult => predictionResult.HouseDoctorId == guidHouseDoctorId)
+                var predictionsPerMonth = context.PredictionResults
+                    .Where(prediction => prediction.HouseDoctorId == guidHouseDoctorId)
                     .AsEnumerable()
                     .GroupBy(prediction => prediction.Created.Month)
-                    .OrderBy(group => group.Key)
-                    .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
+                    .ToDictionary(group => group.Key, group => group.Count());
 
-                foreach (var monthName in allMonthNames)
-                {
-                    if (!predictionsByMonth.ContainsKey(monthName))
-                    {
-                        predictionsByMonth.Add(monthName, 0);
-                    }
-                }
-
-                var data = predictionsByMonth.Select(pair => new { data = new int[] { pair.Value }, label = pair.Key });
+                var data = allMonthNames.Select(month => new { data = new int[] { predictionsPerMonth.ContainsKey(month.MonthNumber) ? predictionsPerMonth[month.MonthNumber] : 0 }, label = month.MonthName });
 
                 return data.ToArray();
             });
@@ -245,7 +237,7 @@ namespace WebAPI.ApiControllers
                 var appointmentsPerMonth = context.Appointments
                     .Where(appointment => appointment.Approved == approvedStatus)
                     .AsEnumerable()
-                    .GroupBy(appointment => appointment.Created.Month)
+                    .GroupBy(appointment => appointment.Start.Month)
                     .OrderBy(group => group.Key)
                     .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
 
@@ -261,26 +253,19 @@ namespace WebAPI.ApiControllers
                 Guid.TryParse(cardiologistId, out Guid guidCardiologistId);
 
                 var allMonthNames = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
-                    .Where(monthName => !string.IsNullOrEmpty(monthName));
+                .Where(monthName => !string.IsNullOrEmpty(monthName))
+                .Select((monthName, index) => new { MonthName = monthName, MonthNumber = index + 1 });
 
                 var appointmentsByMonth = context.Appointments
                     .Where(appointment => appointment.CardiologistId == guidCardiologistId && appointment.Approved)
                     .AsEnumerable()
-                    .GroupBy(appointment => appointment.Created.Month)
-                    .OrderBy(group => group.Key)
-                    .ToDictionary(group => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key), group => group.Count());
+                    .GroupBy(appointment => appointment.Start.Month)
+                    .ToDictionary(group => group.Key, group => group.Count());
 
-                foreach (var monthName in allMonthNames)
-                {
-                    if (!appointmentsByMonth.ContainsKey(monthName))
-                    {
-                        appointmentsByMonth.Add(monthName, 0);
-                    }
-                }
-
-                var data = appointmentsByMonth.Select(pair => new { data = new int[] { pair.Value }, label = pair.Key });
+                var data = allMonthNames.Select(month => new { data = new int[] { appointmentsByMonth.ContainsKey(month.MonthNumber) ? appointmentsByMonth[month.MonthNumber] : 0 }, label = month.MonthName });
 
                 return data.ToArray();
+
             });
 
             app.MapGet("/appointments/cardiologist/{cardiologist}", (string cardiologist, MyContext context) =>
