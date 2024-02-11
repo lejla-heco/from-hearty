@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, HostListener } from '@angular/core';
 import { AuthentificationHelper } from './authentification/authentification-helper';
 import { Router, RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { RoleType } from './login/models/login-token.model';
 import { AccessibilityService } from './app.accessibilityservice';
 import { AccessibilityServiceInit } from './app.accessibilityserviceinit';
 import { DocumentService } from './documents/document.service';
+import { EMPTY, catchError, of, timeout } from 'rxjs';
 
 
 @Component({
@@ -39,6 +40,12 @@ export class AppComponent implements DoCheck {
     private documentService: DocumentService
   ) { }
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler() {
+    this.logout();
+    sessionStorage.clear();
+  }
+
   ngDoCheck() {
     if (this.isAccessibilityOn == true) {
       this.accessibilityServiceInit.applySettings();
@@ -53,6 +60,13 @@ export class AppComponent implements DoCheck {
   logout(): void {
     this.httpClient
       .get<boolean>(Config.serverAddress + this.loginService.api.logout)
+      .pipe(
+        timeout(1_500),
+        catchError(error => {
+          console.error(error);
+          return of(false);
+        })
+      )
       .subscribe(response => {
         console.log('Logout API was successful? ', response);
         AuthentificationHelper.clearLocalStorage();
