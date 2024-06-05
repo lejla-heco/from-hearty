@@ -39,7 +39,7 @@ export class NewAppointmentComponent implements OnInit {
 
   formatDateStruct(date: Date, dateModel: NgbDateStruct): void {
     dateModel.day = date.getDate();
-    dateModel.month = date.getMonth() + 1;
+    dateModel.month = date.getMonth();
     dateModel.year = date.getFullYear();
   }
 
@@ -51,7 +51,7 @@ export class NewAppointmentComponent implements OnInit {
   formatDate(dateModel: NgbDateStruct, time: any): Date {
     let date = new Date();
     date.setDate(dateModel.day);
-    date.setMonth(dateModel.month - 1);
+    date.setMonth(dateModel.month);
     date.setFullYear(dateModel.year);
     date.setHours(time.hour);
     date.setMinutes(time.minute);
@@ -80,7 +80,7 @@ export class NewAppointmentComponent implements OnInit {
   formatDateWithoutTime(dateModel: NgbDateStruct): Date {
     let date = new Date();
     date.setDate(dateModel.day);
-    date.setMonth(dateModel.month - 1);
+    date.setMonth(dateModel.month);
     date.setFullYear(dateModel.year);
     return date;
   }
@@ -101,8 +101,8 @@ export class NewAppointmentComponent implements OnInit {
     this.appointmentInfo.start = this.formatDate(this.startDateModel, this.startTime);
     this.appointmentInfo.end = this.formatDate(this.endDateModel, this.endTime);
     if (this.validateDates() && this.validateAppointments()) {
-      this.appointmentInfo.start.setHours(this.appointmentInfo.start.getHours() + 1);
-      this.appointmentInfo.end.setHours(this.appointmentInfo.end.getHours() + 1);
+      this.appointmentInfo.start.setHours(this.appointmentInfo.start.getHours());
+      this.appointmentInfo.end.setHours(this.appointmentInfo.end.getHours());
       this.modalRef.close(this.appointmentInfo);
     }
   }

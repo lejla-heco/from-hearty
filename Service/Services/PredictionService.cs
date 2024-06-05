@@ -22,7 +22,7 @@ namespace Service.Services
             {
                 ThrowOnAnyError = true,
                 MaxTimeout = 100000, // 100 seconds
-                Authenticator = new JwtAuthenticator("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")
+                Authenticator = new JwtAuthenticator("sk-proj-tlWt7GvMUuMlQAXPg3aNT3BlbkFJ3tWC421Hk3HpbI5jjvhP")
             };
 
             var client = new RestClient(options);

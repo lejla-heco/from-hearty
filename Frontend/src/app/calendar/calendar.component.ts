@@ -191,6 +191,7 @@ export class CalendarComponent implements OnChanges {
       eventClick: this.handleEventClick.bind(this),
       eventsSet: this.handleEvents.bind(this),
       height: "auto",
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
     });
   }
 

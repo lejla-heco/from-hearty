@@ -179,7 +179,8 @@ namespace WebAPI.ApiControllers
             {
                 Guid.TryParse(appointmentId, out Guid guidAppointmentId);
                 var appointment = context.Appointments.FirstOrDefault(appointment => appointment.Id == guidAppointmentId);
-
+                appointment.Start = appointment.Start.ToLocalTime();
+                appointment.End = appointment.End.ToLocalTime();
                 return appointment;
             });
 
